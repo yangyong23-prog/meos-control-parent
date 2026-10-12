@@ -1,0 +1,3 @@
+{"file":".trellis/spec/backend/cache-object-model.md","reason":"复核对象表与缓存键关联的业务不变量"}
+{"file":".trellis/spec/backend/database-guidelines.md","reason":"复核分片 SQL、参数绑定和 Mapper 位置"}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"复核注释、限定符和空值契约"}

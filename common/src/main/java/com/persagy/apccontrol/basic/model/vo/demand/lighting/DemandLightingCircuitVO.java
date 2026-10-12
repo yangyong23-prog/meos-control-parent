@@ -1,0 +1,25 @@
+package com.persagy.apccontrol.basic.model.vo.demand.lighting;
+
+import com.persagy.apccontrol.basic.structure.demand.enumeration.lighting.DemandLightingCircuitSettingModeEnum;
+import com.persagy.apccontrol.basic.model.vo.rwd.DtpRwdCircuitVO;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+/**
+ * 需求管理-照明需求-照明回路VO
+ *
+ * @author JiYinchuan
+ * @since 24Q1 T3S2-5.18.0
+ */
+@Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+@Schema(title = "需求管理-照明需求-照明回路VO")
+public class DemandLightingCircuitVO extends DtpRwdCircuitVO {
+
+    @Schema(description = "配置模式")
+    private DemandLightingCircuitSettingModeEnum settingMode;
+
+}

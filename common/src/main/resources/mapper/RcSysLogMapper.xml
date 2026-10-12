@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.RcSysLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.RcSysLog">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="groupCode" column="group_code" jdbcType="VARCHAR"/>
+        <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="systemId" column="system_id" jdbcType="VARCHAR"/>
+        <result property="systemType" column="system_type" jdbcType="VARCHAR"/>
+        <result property="objectId" column="object_id" jdbcType="VARCHAR"/>
+        <result property="localId" column="local_id" jdbcType="VARCHAR"/>
+        <result property="localName" column="local_name" jdbcType="VARCHAR"/>
+        <result property="classCode" column="class_code" jdbcType="VARCHAR"/>
+        <result property="className" column="class_name" jdbcType="VARCHAR"/>
+<!--        <result property="infoCode" column="info_code" jdbcType="VARCHAR"/>-->
+<!--        <result property="infoName" column="info_name" jdbcType="VARCHAR"/>-->
+<!--        <result property="infoValue" column="info_value" jdbcType="VARCHAR"/>-->
+        <result property="logSource" column="log_source" jdbcType="VARCHAR"/>
+        <result property="logType" column="log_type" jdbcType="VARCHAR"/>
+        <result property="dataType" column="data_type" jdbcType="VARCHAR"/>
+        <result property="operateType" column="operate_type" jdbcType="VARCHAR"/>
+        <result property="operateReason" column="operate_reason" jdbcType="VARCHAR"/>
+        <result property="pointInfo" column="point_info" typeHandler="com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler"/>
+        <result property="contentInfo" column="content_info" jdbcType="VARCHAR"/>
+        <result property="resultInfo" column="result_info" typeHandler="com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler"/>
+        <result property="ip" column="ip" jdbcType="VARCHAR"/>
+        <result property="extendInfo" column="extend_info" typeHandler="com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="synTime" column="syn_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, group_code, project_id, system_id, system_type, object_id, local_id, local_name, class_code, class_name, log_source, log_type,
+        data_type, operate_type, operate_reason, point_info, content_info, result_info, ip, extend_info, create_user,create_time, syn_time
+    </sql>
+
+
+    <select id="querySystemOperationRecords" resultType="com.persagy.apccontrol.basic.model.vo.system.SystemOperationRecordsVO">
+        select <include refid="Base_Column_List" /> from rc_sys_log
+        <where>
+            project_id = #{model.projectId}
+            <if test="model.runMode != null and model.runMode != ''">
+                and type = #{model.recordType}
+            </if>
+            <if test='model.runMode == null or model.runMode == ""'>
+                    and type like concat('%', #{model.recordType}, '%')
+            </if>
+            <choose>
+                <when test='model.recordType == "demand_change"'>
+                    <if test="model.word != null and model.word != ''">
+                        and create_user like concat('%', #{model.word}, '%')
+                    </if>
+                </when>
+                <otherwise>
+                    <if test="model.word != null and model.word != ''">
+                    and (create_user like concat('%', #{model.word}, '%') or obj_msg like concat('%', #{model.word}, '%'))
+                    </if>
+                </otherwise>
+            </choose>
+            <if test="model.operatType != null and model.operatType != ''">
+                and operate_type = #{model.operatType}
+            </if>
+            and create_time &gt;= #{model.startTime} and create_time &lt;= #{model.endTime}
+            order by create_time desc
+        </where>
+    </select>
+
+</mapper>

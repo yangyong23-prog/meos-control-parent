@@ -1,0 +1,36 @@
+# ------------------------- Paas Setting -------------------------
+paas:
+  database:
+    tenantDatabasePrefix: ${persagy.db_name.meos_control}
+    multiTenantType: SCHEMA
+    tenantLocation: HEAD # 多租户 集团名称在前面
+    isNotWrite: false
+    isBlockAttack: false
+    isSeata: false
+    id-type: HU_TOOL
+    ignoreTables:
+      - info_code_config
+      - common_config
+      - graph_icon
+      - graph_legend
+      - equipment_info_code_config
+      - equipment_info_code_group
+      - equipment_info_code_template_type
+      - object_info_code_config
+      - object_info_code_group
+      - object_info_code_template_type
+  log: # 详情看：OptLogProperties
+    # 开启记录操作日志
+    enabled: false
+    # 记录到什么地方  DB:mysql LOGGER:日志文件
+    type: LOGGER
+  xss:
+    # 是否开启 xss 过滤器, 开启后特殊字符会被转义
+    enable: false
+  lock:
+    enabled: true
+    address: redis://${redis.host}:${redis.port}
+    password: ${redis.password}
+    database: ${redis.meos_database.five}
+  async:
+    enabled: false

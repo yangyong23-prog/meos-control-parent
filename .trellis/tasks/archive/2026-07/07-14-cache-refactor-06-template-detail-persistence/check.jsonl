@@ -1,0 +1,4 @@
+{"file":".trellis/spec/backend/cache-object-model.md","reason":"复核结果 JSON、自包含递归结构和单模板替换范围"}
+{"file":".trellis/spec/backend/database-guidelines.md","reason":"复核完整业务键 SQL、查询 500 条分片、写入 1000 条分片和 Mapper 位置"}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"复核 Javadoc、关键注释、限定符和空值契约"}
+{"file":".trellis/spec/backend/error-handling.md","reason":"复核序列化和反序列化失败传播"}

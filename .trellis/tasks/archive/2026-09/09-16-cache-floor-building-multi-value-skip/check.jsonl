@@ -1,0 +1,2 @@
+{"file": ".trellis/spec/backend/cache-object-model.md", "reason": "校验改动是否违反缓存对象模型字段契约（独立列唯一来源、JSON 禁写字段）"}
+{"file": ".trellis/spec/backend/quality-guidelines.md", "reason": "校验代码质量与命名、注释规范"}

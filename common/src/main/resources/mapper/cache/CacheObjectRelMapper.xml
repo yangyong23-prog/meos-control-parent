@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.cache.CacheObjectRelMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.cache.CacheObjectRel">
+        <id column="id" property="id"/>
+        <result column="project_id" property="projectId"/>
+        <result column="object_id" property="objectId"/>
+        <result column="graph_code" property="graphCode"/>
+        <result column="rel_code" property="relCode"/>
+        <result column="rel_object_id" property="relObjectId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" property="updateUser"/>
+    </resultMap>
+
+    <select id="listByFrom" resultMap="BaseResultMap">
+        select
+        <include refid="SelectColumns"/>
+        from cache_object_rel
+        where project_id = #{projectId}
+        and object_id in
+        <!-- Service 保证主体 ID 非空，避免生成空 IN，同时保持索引前导条件简单。 -->
+        <foreach collection="param.objectIds" item="objectId" open="(" separator="," close=")">
+            #{objectId}
+        </foreach>
+        <include refid="RelationTypeConditions"/>
+    </select>
+
+    <select id="listByTo" resultMap="BaseResultMap">
+        select
+        <include refid="SelectColumns"/>
+        from cache_object_rel
+        where project_id = #{projectId}
+        and rel_object_id in
+        <!-- Service 保证目标 ID 非空；反向查询只改变入口，不交换返回字段。 -->
+        <foreach collection="param.relObjectIds" item="relObjectId" open="(" separator="," close=")">
+            #{relObjectId}
+        </foreach>
+        <include refid="RelationTypeConditions"/>
+    </select>
+
+    <insert id="insertBatch">
+        insert into cache_object_rel
+        (
+        id,
+        project_id,
+        object_id,
+        graph_code,
+        rel_code,
+        rel_object_id,
+        create_time,
+        create_user,
+        update_time,
+        update_user
+        )
+        values
+        <foreach collection="relations" item="relation" separator=",">
+            (
+            #{relation.id},
+            #{relation.projectId},
+            #{relation.objectId},
+            #{relation.graphCode},
+            #{relation.relCode},
+            #{relation.relObjectId},
+            #{relation.createTime},
+            #{relation.createUser},
+            #{relation.updateTime},
+            #{relation.updateUser}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteForward">
+        delete from cache_object_rel
+        where project_id = #{projectId}
+        and object_id in
+        <foreach collection="objectIds" item="objectId" open="(" separator="," close=")">
+            #{objectId}
+        </foreach>
+        and graph_code = #{graphCode}
+        and rel_code = #{relCode}
+    </delete>
+
+    <delete id="deleteReverse">
+        delete from cache_object_rel
+        where project_id = #{projectId}
+        and rel_object_id in
+        <foreach collection="relObjectIds" item="relObjectId" open="(" separator="," close=")">
+            #{relObjectId}
+        </foreach>
+        and graph_code = #{graphCode}
+        and rel_code = #{relCode}
+    </delete>
+
+    <delete id="deleteScopes">
+        delete from cache_object_rel
+        where project_id = #{projectId}
+        and (
+        <foreach collection="scopes" item="scope" separator=" or ">
+            (object_id = #{scope.objectId}
+            and graph_code = #{scope.graphCode}
+            and rel_code = #{scope.relCode})
+        </foreach>
+        )
+    </delete>
+
+    <sql id="SelectColumns">
+        <choose>
+            <when test="withColumns != null and withColumns.length != 0">
+                <foreach collection="withColumns" item="withColumn" separator=",">
+                    ${withColumn}
+                </foreach>
+            </when>
+            <otherwise>
+                *
+            </otherwise>
+        </choose>
+    </sql>
+
+    <sql id="RelationTypeConditions">
+        <if test="param.graphCode != null and param.graphCode != ''">
+            and graph_code = #{param.graphCode}
+        </if>
+        <if test="param.relCode != null and param.relCode != ''">
+            and rel_code = #{param.relCode}
+        </if>
+    </sql>
+</mapper>

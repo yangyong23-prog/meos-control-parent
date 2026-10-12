@@ -1,0 +1,28 @@
+# ------------------------- Knife4j Setting -------------------------
+knife4j:
+  enable: true
+  setting:
+    # Ui默认显示语言,目前主要有两种:中文(zh-CN)、英文(en-US)
+    language: zh_cn
+    # 是否显示界面中SwaggerModel功能
+    enable-swagger-models: true
+    # 重命名SwaggerModel名称
+    swagger-model-name: 实体类列表
+    # 是否显示界面中"文档管理"功能
+    enable-document-manage: true
+    # 是否在每个Debug调试栏后显示刷新变量按钮,默认不显示
+    enable-reload-cache-parameter: true
+    # 是否开启界面中对某接口的版本控制,如果开启, 后端变化后Ui界面会存在小蓝点
+    enable-version: true
+    # 是否开启请求参数缓存
+    enable-request-cache: true
+    # 是否显示Footer
+    enable-footer: true
+    # 是否开启自定义Footer
+    enable-footer-custom: true
+    # 自定义Footer内容
+    footer-custom-content: © 2016 Persagy.All rights reserved 博锐尚格 版权所有
+    # 启用调试
+    enable-debug: true
+    # 显示服务分组
+    enable-group: true

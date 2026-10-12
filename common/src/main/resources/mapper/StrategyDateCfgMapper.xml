@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.StrategyDateCfgMapper">
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.strategy.StrategyDateCfg">
+        <!--@mbg.generated-->
+        <!--@Table strategy_date_cfg-->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="strategy_id" jdbcType="INTEGER" property="strategyId"/>
+        <result column="date" jdbcType="DATE" property="date"/>
+        <result column="ignore_plan_ids" jdbcType="VARCHAR" property="ignorePlanIds"
+                typeHandler="com.persagy.apccontrol.basic.config.dao.handler.SplitStringToListTypeHandler"/>
+        <result column="st" jdbcType="VARCHAR" property="st"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+        <result column="sync_time" jdbcType="TIMESTAMP" property="syncTime"/>
+        <result column="sync_message" jdbcType="VARCHAR" property="syncMessage"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id,
+        strategy_id,
+        `date`,
+        ignore_plan_ids,
+        st,
+        create_time,
+        update_time,
+        create_user,
+        update_user,
+        sync_time,
+        sync_message
+    </sql>
+
+    <select id="count" resultType="int">
+        select count(*)
+        from strategy_date_cfg
+        <where>
+            <include refid="StrategyDateCfgQueryDaoParam"/>
+        </where>
+    </select>
+
+    <select id="statisticDateInValid" resultType="java.time.LocalDate">
+        select distinct `date`
+        from strategy_date_cfg sdc
+        left join strategy_plan_cfg spc on sdc.strategy_id = spc.strategy_id
+        where sdc.strategy_id in
+        <foreach collection="strategyIds" item="strategyId" open="(" close=")" separator=",">
+            #{strategyId}
+        </foreach>
+        and sdc.ignore_plan_ids is null or (sdc.ignore_plan_ids is not null and spc.id not in (sdc.ignore_plan_ids))
+        and sdc.st = '${@com.persagy.apccontrol.basic.model.base.StateTypeEnum@VALID}'
+        and spc.st = '${@com.persagy.apccontrol.basic.model.base.StateTypeEnum@VALID}'
+    </select>
+
+    <select id="listIds" resultType="java.lang.String">
+        select id
+        from strategy_date_cfg
+        <where>
+            <include refid="StrategyDateCfgQueryDaoParam"/>
+        </where>
+    </select>
+
+    <select id="list" resultMap="BaseResultMap">
+        select *
+        from strategy_date_cfg
+        <where>
+            <include refid="StrategyDateCfgQueryDaoParam"/>
+        </where>
+        order by `date`
+    </select>
+
+    <select id="listNotSynced" resultMap="BaseResultMap">
+        select *
+        from strategy_date_cfg
+        <where>
+            <include refid="StrategyDateCfgQueryDaoParam"/>
+            and (sync_time is null or update_time &gt; sync_time)
+        </where>
+        order by `date`
+        limit 100
+    </select>
+
+    <delete id="delByStrategyId">
+        delete
+        from strategy_date_cfg
+        where strategy_id in
+        <foreach collection="strategyIds" item="strategyId" open="(" close=")" separator=",">
+            #{strategyId}
+        </foreach>
+    </delete>
+
+    <sql id="StrategyDateCfgQueryDaoParam">
+        <!--@sql select * from strategy_date_cfg where -->
+        <if test="param.strategyId != null">
+            strategy_id = #{param.strategyId}
+        </if>
+        <if test="param.strategyIds != null and param.strategyIds.size() != 0">
+            and strategy_id in
+            <foreach collection="param.strategyIds" item="strategyId" open="(" close=")" separator=",">
+                #{strategyId}
+            </foreach>
+        </if>
+        <if test="param.date != null">
+            and `date` = #{param.date}
+        </if>
+        <if test="param.beginDate != null">
+            and `date` &gt;= #{param.beginDate}
+        </if>
+        <if test="param.endDate != null">
+            and `date` &lt; #{param.endDate}
+        </if>
+        <if test="param.dates != null and param.dates.size() != 0">
+            and `date` in
+            <foreach collection="param.dates" item="itemDate" open="(" close=")" separator=",">
+                #{itemDate}
+            </foreach>
+        </if>
+        <if test="param.status != null">
+            and st = #{param.status}
+        </if>
+    </sql>
+</mapper>

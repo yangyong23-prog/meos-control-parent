@@ -1,0 +1,5 @@
+{"file":".trellis/spec/backend/cache-object-model.md","reason":"保持 SECURITY 静态缓存、READY、关系、模型图字段和异常边界契约。"}
+{"file":".trellis/spec/backend/demand-config-result-precompute.md","reason":"保持 ARMING/PASSING 支持集合、结果 miss 和无需求 READY 契约。"}
+{"file":".trellis/spec/backend/running-monitor-strategy.md","reason":"保持安防运行监测对象范围和动态数据实时边界。"}
+{"file":".trellis/spec/backend/rwd-relation-direction.md","reason":"保持 service_space 与 in_space 关系方向一致。"}
+{"file":".trellis/tasks/08-12-security-monitoring-performance/research/automated-validation-evidence.md","reason":"复用已完成提交、58 个聚焦测试和剩余发布环境验证项。"}

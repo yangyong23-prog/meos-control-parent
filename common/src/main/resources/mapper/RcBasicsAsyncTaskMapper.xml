@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.RcBasicsAsyncTaskMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.RcBasicsAsyncTask">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="architectureCode" column="architecture_code" jdbcType="VARCHAR"/>
+        <result property="floorCode" column="floor_code" jdbcType="VARCHAR"/>
+        <result property="roomCode" column="room_code" jdbcType="VARCHAR"/>
+        <result property="facilityCode" column="facility_code" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="sys" column="sys" jdbcType="VARCHAR"/>
+        <result property="taskSt" column="task_st" jdbcType="VARCHAR"/>
+        <result property="spEl" column="sp_el" jdbcType="VARCHAR"/>
+        <result property="executeSt" column="execute_st" jdbcType="VARCHAR"/>
+        <result property="timeFrequency" column="time_frequency" jdbcType="INTEGER"/>
+        <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="ctx" column="ctx" jdbcType="VARCHAR"/>
+        <result property="extendInfo" column="extend_info" jdbcType="VARCHAR"/>
+        <result property="memo" column="memo" jdbcType="VARCHAR"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="synTime" column="syn_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,project_id,architecture_code,
+        floor_code,room_code,facility_code,
+        type,sys,task_st,
+        sp_el,execute_st,time_frequency,
+        start_time,end_time,ctx,
+        extend_info,memo,create_user,
+        create_time,update_time,syn_time
+    </sql>
+
+    <select id="queryProjectTaskList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from rc_basics_async_task
+        WHERE
+        execute_st in ('init','underway')
+        and task_st = 'valid'
+        and sys = #{sys}
+        and (project_id = #{projectId} or project_id is null)
+        <![CDATA[
+        and  update_time <= date_sub(now(), interval time_frequency minute)
+          ]]>
+        LIMIT 500;
+    </select>
+
+</mapper>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.EquipRecordMapper">
+
+    <select id="list" resultMap="BaseResultMap">
+        select *
+        from equip_record
+        <where>
+            <include refid="EquipRecordQueryDaoParam"/>
+        </where>
+        <if test="param.isDesc == null or param.isDesc == 1">
+            order by change_content ->> '$.execTime' desc
+        </if>
+        <if test="param.isDesc == 0">
+            order by change_content ->> '$.execTime' asc
+        </if>
+    </select>
+
+    <select id="listRecentRunningStatus" resultType="java.lang.String">
+        select change_content ->> '$.infoValue' as infoValue
+        from equip_record
+        <where>
+            <include refid="EquipRecordQueryDaoParam"/>
+        </where>
+        order by change_content ->> '$.execTime' desc
+        limit 1
+    </select>
+    <select id="getEquipRecordByInfoCodeDesc" resultMap="BaseResultMap">
+        SELECT *
+        FROM (
+        SELECT *,ROW_NUMBER() OVER(PARTITION BY obj_id, info_code ORDER BY change_content ->> '$.execTime' DESC) as rn
+        FROM equip_record
+        where
+        group_code = #{groupCode}
+        and project_id = #{projectId}
+        and obj_id in
+        <foreach collection="objId" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        and exec_status = 1
+        <if test="infoCode != null">
+            and info_code in
+            <foreach collection="infoCode" item="code" index="index" open="(" close=")" separator=",">
+                #{code}
+            </foreach>
+        </if>
+        ) subquery
+        WHERE rn = 1;
+    </select>
+
+    <select id="queryDeleteEquipRecord" resultMap="BaseResultMap">
+        select *
+        from equip_record
+        where id in (SELECT id
+                     FROM (SELECT *,
+                                  ROW_NUMBER() OVER (PARTITION BY obj_id, info_code ORDER BY change_content ->> '$.execTime' DESC) as rn
+                           FROM equip_record
+                           where exec_status = 1) subquery
+                     WHERE rn > 1);
+    </select>
+    <select id="getEquipRecordByInfoCodeDescList" resultMap="BaseResultMap">
+        SELECT *
+        FROM (
+        SELECT *,ROW_NUMBER() OVER(PARTITION BY obj_id, info_code ORDER BY change_content ->> '$.execTime' DESC) as rn
+        FROM equip_record
+        where
+        group_code = #{groupCode}
+        and project_id = #{projectId}
+        and obj_id in
+        <foreach collection="objId" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        and exec_status = #{execStatus}
+        and info_code = #{infoCode}
+        ) subquery
+        WHERE rn = 1;
+    </select>
+
+
+    <update id="updateExecTimeByEqId">
+        UPDATE equip_record
+        SET change_content = JSON_SET(change_content, '$.execTime', #{execTime}),
+        modified_time = #{updateTime},
+        modifier = #{userId}
+        WHERE exec_status = -1
+        <if test="infoCode != null and infoCode != ''">
+            and JSON_CONTAINS(change_content, #{infoCode})
+        </if>
+        <if test="updateIdList != null and updateIdList != ''">
+            and id in
+            <foreach collection="updateIdList" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="objIdList != null and objIdList != ''">
+            and obj_id in
+            <foreach collection="objIdList" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="groupCode != null and groupCode != ''">
+            and group_code = #{groupCode}
+        </if>
+        <if test="projectId != null and projectId != ''">
+            and project_id = #{projectId}
+        </if>
+    </update>
+
+    <sql id="EquipRecordQueryDaoParam">
+        <!--@sql select * from equip_record where -->
+        <if test="param.groupCode != null and param.groupCode != ''">
+            group_code = #{param.groupCode}
+        </if>
+        <if test="param.projectId != null and param.projectId != ''">
+            and project_id = #{param.projectId}
+        </if>
+        <if test="param.systemId != null and param.systemId != ''">
+            and system_id = #{param.systemId}
+        </if>
+        <if test="param.systemIds != null">
+            and system_id in
+            <foreach collection="param.systemIds" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="param.systemCode != null and param.systemCode != ''">
+            and system_code = #{param.systemCode}
+        </if>
+        <if test="param.systemCodes != null">
+            and system_code in
+            <foreach collection="param.systemCodes" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="param.objId != null and param.objId != ''">
+            and obj_id = #{param.objId}
+        </if>
+        <if test="param.objIds != null">
+            and obj_id in
+            <foreach collection="param.objIds" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="param.execStatus != null and param.execStatus != ''">
+            and exec_status = #{param.execStatus}
+        </if>
+        <if test="param.execStatuses != null">
+            and exec_status in
+            <foreach collection="param.execStatuses" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="param.changeContent != null">
+            <if test="param.changeContent.execTime != null and param.changeContent.execTime != ''">
+                and change_content -> '$.execTime' = #{param.changeContent.execTime}
+            </if>
+            <if test="param.changeContent.infoCode != null and param.changeContent.infoCode != ''">
+                and change_content -> '$.infoCode' = #{param.changeContent.infoCode}
+            </if>
+            <if test="param.changeContent.infoValue != null and param.changeContent.infoValue != ''">
+                and change_content -> '$.infoValue' = #{param.changeContent.infoValue}
+            </if>
+        </if>
+        <if test="param.beginExecuteTime != null">
+            and change_content -> '$.execTime' &gt;= '${param.beginExecuteTime.format(@cn.hutool.core.date.DatePattern@PURE_DATETIME_FORMATTER)}'
+        </if>
+        <if test="param.endExecuteTime != null">
+            and change_content -> '$.execTime' &lt; '${param.endExecuteTime.format(@cn.hutool.core.date.DatePattern@PURE_DATETIME_FORMATTER)}'
+        </if>
+
+        <if test="param.beginModifiedTime != null">
+            and modified_time  &gt;= '${param.beginModifiedTime.format(@cn.hutool.core.date.DatePattern@PURE_DATETIME_FORMATTER)}'
+        </if>
+        <if test="param.endModifiedTime != null">
+            and modified_time  &lt; '${param.endModifiedTime.format(@cn.hutool.core.date.DatePattern@PURE_DATETIME_FORMATTER)}'
+        </if>
+
+    </sql>
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.EquipRecord">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="groupCode" column="group_code" jdbcType="VARCHAR"/>
+        <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="systemId" column="system_id" jdbcType="VARCHAR"/>
+        <result property="systemCode" column="system_code" jdbcType="VARCHAR"/>
+        <result property="objId" column="obj_id" jdbcType="VARCHAR"/>
+        <result property="classCode" column="class_code" jdbcType="VARCHAR"/>
+        <result property="changeContent" column="change_content" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="execStatus" column="exec_status" jdbcType="INTEGER"/>
+        <result property="creator" column="creator" jdbcType="VARCHAR"/>
+        <result property="creationTime" column="creation_time" jdbcType="VARCHAR"/>
+        <result property="modifiedTime" column="modified_time" jdbcType="VARCHAR"/>
+        <result property="modifier" column="modifier" jdbcType="VARCHAR"/>
+        <result property="extend" column="extend" jdbcType="OTHER"/>
+        <result property="infoCode" column="info_code" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, group_code, project_id, system_code, obj_id, class_code, change_content, exec_status, creator,
+        creation_time, modified_time, modifier, extend, infoCode
+    </sql>
+</mapper>

@@ -1,0 +1,2 @@
+{"file": ".trellis/spec/backend/cache-object-model.md", "reason": "缓存写入字段选择契约（JSON Storage Field Selection 段）：listRwdQueryFields 语义、混合 classCode 范围字段并集规则、写服务 UPSERT 覆盖行为、READY 时序"}
+{"file": ".trellis/spec/backend/index.md", "reason": "后端规范索引，确认缓存对象模型相关规范范围"}

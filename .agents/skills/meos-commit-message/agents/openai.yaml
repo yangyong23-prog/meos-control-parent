@@ -1,0 +1,7 @@
+interface:
+  display_name: "MEOS 提交信息"
+  short_description: "按MEOS规范生成提交信息，并补充提交说明"
+  default_prompt: "Use $meos-commit-message to generate and confirm a MEOS commit message before committing; present the change reason, solution, and impact scope as informational context for every commit type without asking the user to confirm it separately."
+
+policy:
+  allow_implicit_invocation: true

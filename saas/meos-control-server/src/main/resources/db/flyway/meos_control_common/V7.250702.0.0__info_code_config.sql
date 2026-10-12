@@ -1,0 +1,1 @@
+DELETE FROM `info_code_config` WHERE id in ("WESSFLflowMediumType","WESSFLpowerType");

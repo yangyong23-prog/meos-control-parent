@@ -1,0 +1,9 @@
+{"file": ".trellis/workflow.md", "reason": "Trellis task workflow and implementation phase requirements"}
+{"file": ".trellis/spec/backend/index.md", "reason": "Backend task entry point and mandatory project conventions"}
+{"file": ".trellis/spec/backend/database-guidelines.md", "reason": "Mapper, query batching, XML batch insert, and insert default contracts"}
+{"file": ".trellis/spec/backend/quality-guidelines.md", "reason": "JSpecify, Javadoc, context, object mapping, this/super, and method-order conventions"}
+{"file": ".trellis/spec/backend/logging-guidelines.md", "reason": "Failure logging and normal-path log volume requirements"}
+{"file": ".trellis/spec/backend/error-handling.md", "reason": "Business absence, exception propagation, and failure visibility rules"}
+{"file": ".trellis/spec/backend/demand-config-result-precompute.md", "reason": "Demand result read, refresh, snapshot, locking, initialization, and support-boundary contracts"}
+{"file": ".trellis/tasks/07-07-demand-config-result-precompute/research/template-change-result-refresh-overreach.md", "reason": "Template event refresh decision record"}
+{"file": ".trellis/tasks/07-07-demand-config-result-precompute/research/add-or-update-delete-refresh-safety.md", "reason": "Configuration delete event and result refresh safety analysis"}

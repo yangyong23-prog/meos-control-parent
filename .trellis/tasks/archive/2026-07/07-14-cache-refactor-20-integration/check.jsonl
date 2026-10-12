@@ -1,0 +1,6 @@
+{"file":".trellis/spec/backend/cache-object-model.md","reason":"逐项核对缓存模型完整契约和测试要求"}
+{"file":".trellis/spec/backend/error-handling.md","reason":"检查异常国际化、传播和降级边界"}
+{"file":".trellis/spec/backend/logging-guidelines.md","reason":"检查日志组件和稳定业务键输出"}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"检查 Javadoc、this/super、空值和代码质量"}
+{"file":".trellis/spec/backend/database-guidelines.md","reason":"检查批量、索引和事务约束"}
+{"file":".trellis/tasks/07-14-cache-refactor-20-integration/research/integration-validation-results.md","reason":"核对真实 MySQL 结构与性能证据"}

@@ -1,0 +1,4 @@
+{"file":".trellis/spec/backend/cache-object-model.md","reason":"复核关系范围、索引和不删除共享对象边界"}
+{"file":".trellis/spec/backend/database-guidelines.md","reason":"复核批量 SQL、参数绑定和 Mapper 位置"}
+{"file":".trellis/spec/backend/rwd-relation-direction.md","reason":"复核正向与反向字段语义未被交换"}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"复核注释、限定符和空值契约"}

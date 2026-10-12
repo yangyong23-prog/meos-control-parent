@@ -1,0 +1,5 @@
+{"file": "docs/design/demand-management/extension-guide.md", "reason": "需求管理扩展权威指南：新增需求大类的 7 步流程与检查点，本次实现严格按其执行"}
+{"file": "docs/design/demand-management/strategy-and-business-types.md", "reason": "需求策略与模板类型清单：新模板类型必须补齐枚举、策略、配置 value object、默认配置与查询输出"}
+{"file": ".trellis/spec/backend/index.md", "reason": "Backend MUST-FOLLOW 规则：LogComponent、DateUtils.now()、DTO 模式、异常处理、批量查询"}
+{"file": ".trellis/spec/backend/running-monitor-strategy.md", "reason": "运行监测策略分发与对象范围约定：委托链 secondType→type→Strategy 的既有模式"}
+{"file": ".trellis/spec/backend/rwd-relation-direction.md", "reason": "RWD 关系查询方向规则：核查 Eq2Sp 服务空间关系方向与参数组合合法性"}

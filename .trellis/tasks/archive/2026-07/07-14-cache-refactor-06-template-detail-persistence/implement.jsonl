@@ -1,0 +1,5 @@
+{"file":".trellis/spec/backend/cache-object-model.md","reason":"模板对象明细 JSON、稳定 ID、业务键和范围替换边界"}
+{"file":".trellis/spec/backend/database-guidelines.md","reason":"完整业务键批量 SQL、分片插入和禁止 N+1 规范"}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"Javadoc、复杂转换注释、null 注解和 this/super 规范"}
+{"file":".trellis/spec/backend/error-handling.md","reason":"JSON 转换失败必须抛出且不能伪装成缓存未命中"}
+{"file":".trellis/spec/backend/infocode-rwd-take-value.md","reason":"InfoCode RWD 对象详情和动态配置边界"}

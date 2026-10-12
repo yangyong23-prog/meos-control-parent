@@ -1,0 +1,2 @@
+{"file": ".trellis/spec/backend/cache-object-model.md", "reason": "缓存对象模型独立列与 JSON 字段契约：本任务修改 cache_object 与 cache_object_model_view 的 building_id/floor_id 多值写入语义"}
+{"file": ".trellis/spec/backend/quality-guidelines.md", "reason": "后端质量规范：注释与命名等基础模式要求"}

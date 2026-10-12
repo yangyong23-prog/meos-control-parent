@@ -1,0 +1,4 @@
+{"file": ".trellis/spec/backend/index.md", "reason": "后端硬性规约（MUST FOLLOW）：DTO/日志组件/异常处理/日期工具/查询模式，新增字段实现必须遵守"}
+{"file": ".trellis/spec/backend/demand-config-result-precompute.md", "reason": "预计算结果链路契约：配置 JSON 稳定字段与读写边界；新字段必须随稳定 JSON 贯通，不得破坏结果表/快照约定"}
+{"file": "docs/design/demand-management/gateway-lifecycle-inheritance.md", "reason": "需求配置保存/继承机制（FIELD 级逐字段合并），确认新字段自动参与向上引用"}
+{"file": "docs/design/demand-management/strategy-and-business-types.md", "reason": "DemandConfigAnalyzeStrategy 与模板类型策略结构，确认穹顶 VO 字段扩展位置与解析链路"}

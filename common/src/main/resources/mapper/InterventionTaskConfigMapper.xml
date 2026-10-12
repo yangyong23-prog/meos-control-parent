@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.intervention.InterventionTaskConfigMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.intervention.InterventionTaskConfig">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+            <result property="taskId" column="task_id" jdbcType="BIGINT"/>
+            <result property="taskName" column="task_name" jdbcType="VARCHAR"/>
+            <result property="runningMonitorType" column="running_monitor_type" jdbcType="VARCHAR"/>
+            <result property="runningMonitorSecondType" column="running_monitor_second_type" jdbcType="VARCHAR"/>
+            <result property="dataType" column="data_type" jdbcType="INTEGER"/>
+            <result property="instanceType" column="instance_type" jdbcType="VARCHAR"/>
+            <result property="instanceId" column="instance_id" jdbcType="VARCHAR"/>
+            <result property="beginTime" column="begin_time" jdbcType="TIMESTAMP"/>
+            <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+            <result column="config_data" jdbcType="VARCHAR" property="configData"
+                    typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+            <result property="reason" column="reason" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,project_id,task_id,
+        task_name,running_monitor_type,running_monitor_second_type,
+        data_type,instance_type,instance_id,
+        begin_time,end_time,config_data,
+        reason,create_time,create_user,
+        update_time,update_user
+    </sql>
+</mapper>

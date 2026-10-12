@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.RcBasicsConfigLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.RcBasicsConfigLog">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+        <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="childType" column="child_type" jdbcType="VARCHAR"/>
+        <result property="st" column="st" jdbcType="VARCHAR"/>
+        <result property="architectureCode" column="architecture_code" jdbcType="VARCHAR"/>
+        <result property="floorCode" column="floor_code" jdbcType="VARCHAR"/>
+        <result property="roomCode" column="room_code" jdbcType="VARCHAR"/>
+        <result property="facilityCode" column="facility_code" jdbcType="VARCHAR"/>
+        <result property="systemId" column="system_id" jdbcType="VARCHAR"/>
+        <result property="spEl" column="sp_el" jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time" jdbcType="VARCHAR"/>
+        <result property="endTime" column="end_time" jdbcType="VARCHAR"/>
+        <result property="md" column="md" jdbcType="VARCHAR"/>
+        <result property="result" column="result" jdbcType="VARCHAR"/>
+        <result property="extendInfo" column="extend_info" jdbcType="VARCHAR"/>
+        <result property="memo" column="memo" jdbcType="VARCHAR"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="synTime" column="syn_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,parent_id,project_id,
+        type,child_type,st,
+        architecture_code,floor_code,room_code,
+        facility_code,sp_el,md,
+        result,extend_info,memo,
+        create_user,create_time,syn_time,start_time,endTime,system_id
+    </sql>
+    <select id="queryOperationRecordsList" resultType="com.persagy.apccontrol.basic.model.vo.system.SystemOperationRecordsVO">
+        select a.create_user,a.create_time,a.system_id as objectName,a.type as operateType,a.result as content,a.memo as memo,(select b.result from rc_basics_config_log b where b.id=a.parent_id) as beforeModify
+        from rc_basics_config_log a
+        <where>
+        a.project_id = #{model.projectId}  and a.type in ('expert_rules','ino_environment')
+        <if test="model.operatType != null and model.operatType != ''">
+            and a.type = #{model.operatType}
+        </if>
+        and a.create_time &gt;= #{model.startTime} and a.create_time &lt;= #{model.endTime}
+        order by a.create_time desc
+        </where>
+    </select>
+</mapper>

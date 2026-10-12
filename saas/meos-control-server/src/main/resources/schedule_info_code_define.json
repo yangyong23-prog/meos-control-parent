@@ -1,0 +1,623 @@
+{
+    "ACAC": [
+        {
+            "code": "coolingSupplySwitchSet",
+            "aliasCode": "coolingSupplySwitchSet",
+          "name": "key_2bcc276acb6640699130bef61698ce0f",
+            "dataSource": [
+                {
+                    "code": "0",
+                  "name": "key_runninglog_off"
+                },
+                {
+                    "code": "1",
+                  "name": "key_runninglog_on"
+                }
+            ]
+        },
+        {
+            "code": "dischargeCoolingSwitchSet",
+            "aliasCode": "dischargeCoolingSwitchSet",
+          "name": "key_21079122f3f647daa6defabdc410ffbb",
+            "dataSource": [
+                {
+                    "code": "0",
+                  "name": "key_runninglog_off"
+                },
+                {
+                    "code": "1",
+                  "name": "key_runninglog_on"
+                }
+            ]
+        },
+        {
+            "code": "coolingStorageSwitchSet",
+            "aliasCode": "coolingStorageSwitchSet",
+          "name": "key_bf21dbe74ba44ceca868742267d9039e",
+            "dataSource": [
+                {
+                    "code": "0",
+                  "name": "key_runninglog_off"
+                },
+                {
+                    "code": "1",
+                  "name": "key_runninglog_on"
+                }
+            ]
+        },
+        {
+            "code": "primaryChillWaterMainSupplyTemp",
+            "aliasCode": "primaryChillWaterMainSupplyTemp",
+          "name": "key_1f6878377c1c4113a1ea1d942c04aa61",
+            "unit": "℃",
+            "scale": 1
+        },
+        {
+            "code": "chillWaterOutTempSet",
+            "aliasCode": "chillWaterOutTempSet",
+          "name": "key_chill_water_out_temp_set",
+            "unit": "℃",
+            "scale": 1
+        },
+        {
+            "code": "chillWaterDetaTemp",
+            "aliasCode": "chillWaterDetaTemp",
+          "name": "key_fd764bdffee34190a5dd3839483f79b8",
+            "unit": "℃",
+            "scale": 1
+        },
+        {
+            "code": "chillWaterDetaTempSet",
+            "aliasCode": "chillWaterDetaTempSet",
+          "name": "key_cef8eb4aa8d04f63ad90fdc6195fb09c",
+            "unit": "℃",
+            "scale": 1
+        },
+        {
+            "code": "chillWaterDetaPress",
+            "aliasCode": "chillWaterDetaPress",
+          "name": "key_4ad868c4085443f78fcf941144038179",
+            "unit": "kPa",
+            "scale": 3
+        },
+        {
+            "code": "chillWaterDetaPressSet",
+            "aliasCode": "chillWaterDetaPressSet",
+          "name": "key_8f7243ab398f46b6b0380ffa7d043078",
+            "unit": "kPa",
+            "scale": 3
+        },
+        {
+            "code": "worstTerminalDetaPress",
+            "aliasCode": "worstTerminalDetaPress",
+          "name": "key_dcebfdd38ab74a128ebb1f99e18031be",
+            "unit": "kPa",
+            "scale": 1
+        },
+        {
+            "code": "worstTerminalDetaPressSet",
+            "aliasCode": "worstTerminalDetaPressSet",
+          "name": "key_83c37a7733284c83a1e23c0671d857e5",
+            "unit": "kPa",
+            "scale": 1
+        },
+        {
+            "code": "BASE",
+            "aliasCode": "BASE",
+          "name": "key_3eea8a31cd3243a6900dd2fa17c7acc5"
+        },
+        {
+            "code": "ACCCCC",
+            "aliasCode": "ACCCCC",
+          "name": "key_centrifugal_chiller_running_number"
+        },
+        {
+            "code": "ACCCSC",
+            "aliasCode": "ACCCSC",
+          "name": "key_screw_chiller_running_number"
+        },
+        {
+            "code": "BASE_DUAL",
+            "aliasCode": "BASE_DUAL",
+          "name": "key_dual_condition_mode_chiller_running_number"
+        },
+        {
+            "code": "ACCCCC_DUAL",
+            "aliasCode": "ACCCCC_DUAL",
+          "name": "key_dual_condition_mode_chiller_running_number"
+        },
+        {
+            "code": "ACCCSC_DUAL",
+            "aliasCode": "ACCCSC_DUAL",
+          "name": "key_dual_condition_mode_chiller_running_number"
+        },
+        {
+            "code": "ACAHC",
+            "aliasCode": "ACAHC",
+          "name": "key_air_source_heat_pump_control_group_running_number"
+        },
+        {
+            "code": "ACCCGH",
+            "aliasCode": "ACCCGH",
+          "name": "key_ground_source_heat_pump_running_number"
+        },
+        {
+            "code": "ACCCGH_DUAL",
+            "aliasCode": "ACCCGH_DUAL",
+          "name": "key_dual_condition_mode_chiller_running_number"
+        },
+        {
+            "code": "ACCCWH",
+            "aliasCode": "ACCCWH",
+          "name": "key_water_source_heat_pump_running_number"
+        },
+        {
+            "code": "ACCCWH_DUAL",
+            "aliasCode": "ACCCWH_DUAL",
+          "name": "key_dual_condition_mode_chiller_running_number"
+        },
+        {
+            "code": "ACCCAC",
+            "aliasCode": "ACCCAC",
+          "name": "key_absorption_chiller_running_number"
+        },
+        {
+            "code": "baseNumSet",
+            "aliasCode": "baseNumSet",
+          "name": "key_9211360821ed401f9ba5d0725fb7b59a"
+        },
+        {
+            "code": "baseNum",
+            "aliasCode": "baseNum",
+          "name": "key_base_load_chiller_large_unit_count"
+        },
+        {
+            "code": "baseSNumSet",
+            "aliasCode": "baseSNumSet",
+          "name": "key_6c9bea376ed94ccc8e372882329c7e61"
+        },
+        {
+            "code": "baseSNum",
+            "aliasCode": "baseSNum",
+          "name": "key_ase_load_chiller_small_unit_count"
+        },
+        {
+            "code": "baseDualNumSet",
+            "aliasCode": "baseDualNumSet",
+          "name": "key_a6b984e719ea40368277285816a505c9"
+        },
+        {
+            "code": "baseDualNum",
+            "aliasCode": "baseDualNum",
+          "name": "key_dual_mode_base_load_chiller_large_unit_count"
+        },
+        {
+            "code": "baseDualSNumSet",
+            "aliasCode": "baseDualSNumSet",
+          "name": "key_d892625285d84ba28fea4d2a3f37de14"
+        },
+        {
+            "code": "baseDualSNum",
+            "aliasCode": "baseDualSNum",
+          "name": "key_dual_mode_base_load_chiller_small_unit_count"
+        },
+        {
+            "code": "acccccNumSet",
+            "aliasCode": "acccccNumSet",
+          "name": "key_d045fd89973d4f569c80388e9018803d"
+        },
+        {
+            "code": "acccccNum",
+            "aliasCode": "acccccNum",
+          "name": "key_base_load_centrifugal_chiller_large_unit_count"
+        },
+        {
+            "code": "acccccM1NumSet",
+            "aliasCode": "acccccM1NumSet",
+          "name": "key_ff595d19d49e4e8584fb8d420ae5c360"
+        },
+        {
+            "code": "acccccM1Num",
+            "aliasCode": "acccccM1Num",
+          "name": "key_base_load_centrifugal_chiller_medium_unit_count"
+        },
+        {
+            "code": "acccccSNumSet",
+            "aliasCode": "acccccSNumSet",
+          "name": "key_d1500ee1c167470f9d436a655888d401"
+        },
+        {
+            "code": "acccccSNum",
+            "aliasCode": "acccccSNum",
+          "name": "key_base_load_centrifugal_chiller_small_unit_count"
+        },
+        {
+            "code": "acccccDualNumSet",
+            "aliasCode": "acccccDualNumSet",
+          "name": "key_62b94e936b0b42e183f21ae60aa4e209"
+        },
+        {
+            "code": "acccccDualNum",
+            "aliasCode": "acccccDualNum",
+          "name": "key_dual_mode_centrifugal_chiller_large_unit_count"
+        },
+        {
+            "code": "acccccDualM1NumSet",
+            "aliasCode": "acccccDualM1NumSet",
+          "name": "key_3c59fa8d80e14d3e916131100d0fb68b"
+        },
+        {
+            "code": "acccccDualM1Num",
+            "aliasCode": "acccccDualM1Num",
+          "name": "key_dual_mode_centrifugal_chiller_medium_unit_count"
+        },
+        {
+            "code": "acccccDualSNumSet",
+            "aliasCode": "acccccDualSNumSet",
+          "name": "key_0e751919dfc94d25b4b3de53d74770fc"
+        },
+        {
+            "code": "acccccDualSNum",
+            "aliasCode": "acccccDualSNum",
+          "name": "key_dual_mode_centrifugal_chiller_small_unit_count"
+        },
+        {
+            "code": "acccscNumSet",
+            "aliasCode": "acccscNumSet",
+          "name": "key_a2792e46dffe4fd490b9baca0ae98217"
+        },
+        {
+            "code": "acccscNum",
+            "aliasCode": "acccscNum",
+          "name": "key_base_load_screw_chiller_large_unit_count"
+        },
+        {
+            "code": "acccscM1NumSet",
+            "aliasCode": "acccscM1NumSet",
+          "name": "key_bc9ef37db5474caa912b99cd9b20351b"
+        },
+        {
+            "code": "acccscM1Num",
+            "aliasCode": "acccscM1Num",
+          "name": "key_base_load_screw_chiller_medium_unit_count"
+        },
+        {
+            "code": "acccscSNumSet",
+            "aliasCode": "acccscSNumSet",
+          "name": "key_d3f88a05cf8d42c49839a8eeff9a13ba"
+        },
+        {
+            "code": "acccscSNum",
+            "aliasCode": "acccscSNum",
+          "name": "key_base_load_screw_chiller_small_unit_count"
+        },
+        {
+            "code": "acccscDualNumSet",
+            "aliasCode": "acccscDualNumSet",
+          "name": "key_d2bad3ce679c4196be38a1a4d5a7d887"
+        },
+        {
+            "code": "acccscDualNum",
+            "aliasCode": "acccscDualNum",
+          "name": "key_dual_mode_screw_chiller_large_unit_count"
+        },
+        {
+            "code": "acccscDualM1NumSet",
+            "aliasCode": "acccscDualM1NumSet",
+          "name": "key_b234733562da4136a0b46eca71c6c539"
+        },
+        {
+            "code": "acccscDualM1Num",
+            "aliasCode": "acccscDualM1Num",
+          "name": "key_dual_mode_screw_chiller_medium_unit_count"
+        },
+        {
+            "code": "acccscDualSNumSet",
+            "aliasCode": "acccscDualSNumSet",
+          "name": "key_4b3b614f7997424b8e6d301ed0eea397"
+        },
+        {
+            "code": "acccscDualSNum",
+            "aliasCode": "acccscDualSNum",
+          "name": "key_dual_mode_screw_chiller_small_unit_count"
+        },
+        {
+            "code": "acccwhNumSet",
+            "aliasCode": "acccwhNumSet",
+          "name": "key_40a603828066496d931c55287bfa2dd8"
+        },
+        {
+            "code": "acccwhNum",
+            "aliasCode": "acccwhNum",
+          "name": "key_base_load_water_source_heat_pump_unit_large_unit_count"
+        },
+        {
+            "code": "acccwhM1NumSet",
+            "aliasCode": "acccwhM1NumSet",
+          "name": "key_f64f7cb17522419da2ce39af0c5383c8"
+        },
+        {
+            "code": "acccwhM1Num",
+            "aliasCode": "acccwhM1Num",
+          "name": "key_base_load_water_source_heat_pump_unit_medium_unit_count"
+        },
+        {
+            "code": "acccwhSNumSet",
+            "aliasCode": "acccwhSNumSet",
+          "name": "key_8733acd1b888475a9f4681690f4d2d73"
+        },
+        {
+            "code": "acccwhSNum",
+            "aliasCode": "acccwhSNum",
+          "name": "key_base_load_water_source_heat_pump_unit_small_unit_count"
+        },
+        {
+            "code": "acccwhDualNumSet",
+            "aliasCode": "acccwhDualNumSet",
+          "name": "key_dual_mode_water_source_heat_pump_unit_large_unit_count_setting_cooling"
+        },
+        {
+            "code": "acccwhDualNum",
+            "aliasCode": "acccwhDualNum",
+          "name": "key_dual_mode_water_source_heat_pump_unit_large_unit_count"
+        },
+        {
+            "code": "acccwhDualM1NumSet",
+            "aliasCode": "acccwhDualM1NumSet",
+          "name": "key_dual_mode_water_source_heat_pump_unit_medium_unit_count_setting_cooling"
+        },
+        {
+            "code": "acccwhDualM1Num",
+            "aliasCode": "acccwhDualM1Num",
+          "name": "key_dual_mode_water_source_heat_pump_unit_medium_unit_count"
+        },
+        {
+            "code": "acccwhDualSNumSet",
+            "aliasCode": "acccwhDualSNumSet",
+          "name": "key_dual_mode_water_source_heat_pump_unit_small_unit_count_setting_cooling"
+        },
+        {
+            "code": "acccwhDualSNum",
+            "aliasCode": "acccwhDualSNum",
+          "name": "key_dual_mode_water_source_heat_pump_unit_small_unit_count"
+        },
+        {
+            "code": "acccghNumSet",
+            "aliasCode": "acccghNumSet",
+          "name": "key_0070a861afa6422eb96fbc2646377d1e"
+        },
+        {
+            "code": "acccghNum",
+            "aliasCode": "acccghNum",
+          "name": "key_base_load_ground_source_heat_pump_unit_large_unit_count"
+        },
+        {
+            "code": "acccghM1NumSet",
+            "aliasCode": "acccghM1NumSet",
+          "name": "key_57c344c51e514354b5ee31b2bb591eb0"
+        },
+        {
+            "code": "acccghM1Num",
+            "aliasCode": "acccghM1Num",
+          "name": "key_base_load_ground_source_heat_pump_unit_medium_unit_count"
+        },
+        {
+            "code": "acccghSNumSet",
+            "aliasCode": "acccghSNumSet",
+          "name": "key_28fa84ea75ea4eb78c2e4b37b4ac18f2"
+        },
+        {
+            "code": "acccghSNum",
+            "aliasCode": "acccghSNum",
+          "name": "key_base_load_ground_source_heat_pump_unit_small_unit_count"
+        },
+        {
+            "code": "acccghDualNumSet",
+            "aliasCode": "acccghDualNumSet",
+          "name": "key_70fe3a191f1545b78830afac25515451"
+        },
+        {
+            "code": "acccghDualNum",
+            "aliasCode": "acccghDualNum",
+          "name": "key_dual_mode_ground_source_heat_pump_unit_large_unit_count"
+        },
+        {
+            "code": "acccghDualM1NumSet",
+            "aliasCode": "acccghDualM1NumSet",
+          "name": "key_450a859ac0bc4af2aa7929379e319972"
+        },
+        {
+            "code": "acccghDualM1Num",
+            "aliasCode": "acccghDualM1Num",
+          "name": "key_dual_mode_ground_source_heat_pump_unit_medium_unit_count"
+        },
+        {
+            "code": "acccghDualSNumSet",
+            "aliasCode": "acccghDualSNumSet",
+          "name": "key_c4abc1e2c7cc469e951abd7661af9728"
+        },
+        {
+            "code": "acccghDualSNum",
+            "aliasCode": "acccghDualSNum",
+          "name": "key_dual_mode_ground_source_heat_pump_unit_small_unit_count"
+        },
+        {
+            "code": "acahcNumSet",
+            "aliasCode": "acahcNumSet",
+          "name": "key_9309c80f92a14425b82d73661f683108"
+        },
+        {
+            "code": "acahcNum",
+            "aliasCode": "acahcNum",
+          "name": "key_air_source_heat_pump_control_group_large_unit_count"
+        },
+        {
+            "code": "acahcM1NumSet",
+            "aliasCode": "acahcM1NumSet",
+          "name": "key_7a70b6c52ae743e68b5404e6c62bba20"
+        },
+        {
+            "code": "acahcM1Num",
+            "aliasCode": "acahcM1Num",
+          "name": "key_air_source_heat_pump_control_group_medium_unit_count"
+        },
+        {
+            "code": "acahcSNumSet",
+            "aliasCode": "acahcSNumSet",
+          "name": "key_c8e7b9c2fd82483084a85a3f24ef819b"
+        },
+        {
+            "code": "acahcSNum",
+            "aliasCode": "acahcSNum",
+          "name": "key_air_source_heat_pump_control_group_small_unit_count"
+        },
+        {
+            "code": "acccacNumSet",
+            "aliasCode": "acccacNumSet",
+          "name": "key_450291af10e54d1d8280097a3eeb1659"
+        },
+        {
+            "code": "acccacNum",
+            "aliasCode": "acccacNum",
+          "name": "key_absorption_chiller_large_unit_count"
+        },
+        {
+            "code": "acccacM1NumSet",
+            "aliasCode": "acccacM1NumSet",
+          "name": "key_b8b7cc770f7147e385c8a3f3ce4bc3b0"
+        },
+        {
+            "code": "acccacM1Num",
+            "aliasCode": "acccacM1Num",
+          "name": "key_absorption_chiller_medium_unit_count"
+        },
+        {
+            "code": "acccacSNumSet",
+            "aliasCode": "acccacSNumSet",
+          "name": "key_3c08bb1ce61c43e385f6943d379f7500"
+        },
+        {
+            "code": "acccacSNum",
+            "aliasCode": "acccacSNum",
+          "name": "key_absorption_chiller_small_unit_count"
+        }
+    ],
+    "ACCPC": [
+        {
+            "code": "enableCtrl",
+            "aliasCode": "enableCtrl",
+          "name": "key_bd0ff3d0eae3476a8d079b1586220bfd",
+            "dataSource": [
+                {
+                    "code": "0",
+                  "name": "key_runninglog_off"
+                },
+                {
+                    "code": "1",
+                  "name": "key_runninglog_on"
+                }
+            ]
+        },
+        {
+            "code": "freqSetCtrl",
+            "aliasCode": "equipFreqSet",
+          "name": "key_frequency_set_command",
+            "unit": "Hz",
+            "scale": 1
+        },
+        {
+            "code": "branchDetaTemp",
+            "aliasCode": "branchDetaTemp",
+          "name": "key_0bad0d117622430594550a47a9a2da4c",
+            "unit": "℃",
+            "scale": 1
+        },
+        {
+            "code": "branchDetaTempSet",
+            "aliasCode": "chillWaterDetaTempSet",
+          "name": "key_40ac6744dea44b1f8fac755b30e0c594",
+            "unit": "℃",
+            "scale": 1
+        },
+        {
+            "code": "branchDetaPress",
+            "aliasCode": "branchDetaPress",
+          "name": "key_2030ebbe33b64218be465226dcb44f06",
+            "unit": "kPa",
+            "scale": 1
+        },
+        {
+            "code": "branchDetaPressSet",
+            "aliasCode": "chillWaterDetaPressSet",
+          "name": "key_638d30800b2c470dbff0c81521cd6f0e",
+            "unit": "kPa",
+            "scale": 1
+        },
+        {
+            "code": "worstTerminalDetaPress",
+            "aliasCode": "worstTerminalDetaPress",
+          "name": "key_dcebfdd38ab74a128ebb1f99e18031be",
+            "unit": "kPa",
+            "scale": 1
+        },
+        {
+            "code": "worstTerminalDetaPressSet",
+            "aliasCode": "worstTerminalDetaPressSet",
+          "name": "key_83c37a7733284c83a1e23c0671d857e5",
+            "unit": "kPa",
+            "scale": 1
+        },
+        {
+            "code": "PUMP_GROUP_BASE",
+            "aliasCode": "PUMP_GROUP_BASE",
+          "name": "key_water_pump_running_number"
+        },
+        {
+            "code": "runNumSet",
+            "aliasCode": "runNumSet",
+          "name": "key_large_machine_quantity_setting"
+        },
+        {
+            "code": "runNum",
+            "aliasCode": "runNum",
+          "name": "key_1a85012f95fd49d497b99de0b8830b42"
+        },
+        {
+            "code": "runM1NumSet",
+            "aliasCode": "runM1NumSet",
+          "name": "key_medium_machine_quantity_setting"
+        },
+        {
+            "code": "runM1Num",
+            "aliasCode": "runM1Num",
+          "name": "key_medium_machine_quantity"
+        },
+        {
+            "code": "runSNumSet",
+            "aliasCode": "runSNumSet",
+          "name": "key_small_machine_quantity_setting"
+        },
+        {
+            "code": "runSNum",
+            "aliasCode": "runSNum",
+          "name": "key_small_machine_quantity"
+        }
+    ],
+    "ACZone": [
+        {
+            "code": "airConditionDemand",
+            "aliasCode": "airConditionDemand",
+          "name": "key_air_conditioning_zone_switch_setting",
+            "dataSource": [
+                {
+                    "code": "0",
+                  "name": "key_runninglog_off"
+                },
+                {
+                    "code": "1",
+                  "name": "key_runninglog_on"
+                }
+            ]
+        }
+    ]
+}

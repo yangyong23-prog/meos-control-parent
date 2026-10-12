@@ -1,0 +1,30 @@
+{
+  "id": "security-monitoring-performance",
+  "name": "security-monitoring-performance",
+  "title": "安防运行监测性能优化",
+  "description": "复用统一缓存对象模型和需求配置结果，优化安防运行监测首屏静态数据、关系、需求配置与动态统计查询链路。",
+  "status": "completed",
+  "dev_type": null,
+  "scope": "common/security,cacherwd,demand,security-frontend-coordination",
+  "package": null,
+  "priority": "P1",
+  "creator": "jiyinchuan",
+  "assignee": "jiyinchuan",
+  "createdAt": "2026-08-12",
+  "completedAt": "2026-08-17",
+  "branch": null,
+  "base_branch": "master",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [
+    "08-12-security-dynamic-statistics",
+    "08-12-security-static-cache",
+    "08-12-security-dashboard-demand"
+  ],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {}
+}

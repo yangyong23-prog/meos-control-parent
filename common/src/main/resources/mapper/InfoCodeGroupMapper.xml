@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.infocodeconfig.InfoCodeGroupMapper">
+    <resultMap id="BaseResultMap"
+               type="com.persagy.apccontrol.basic.model.entity.infocodeconfig.InfoCodeGroup">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="group_code" jdbcType="VARCHAR" property="groupCode"/>
+        <result column="group_name" jdbcType="VARCHAR" property="groupName"/>
+        <result column="show_style" jdbcType="LONGVARCHAR" property="showStyle"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result column="sequence" jdbcType="INTEGER" property="sequence"/>
+        <result column="rel_parent_id" jdbcType="BIGINT" property="relParentId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+    </resultMap>
+</mapper>

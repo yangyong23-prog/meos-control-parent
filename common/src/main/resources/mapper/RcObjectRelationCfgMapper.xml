@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.RcObjectRelationCfgMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.RcObjectRelationCfg">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="groupCode" column="group_code" jdbcType="VARCHAR"/>
+        <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="systemId" column="system_id" jdbcType="VARCHAR"/>
+        <result property="systemType" column="system_type" jdbcType="VARCHAR"/>
+        <result property="masterClassCode" column="master_class_code" jdbcType="VARCHAR"/>
+        <result property="masterClassName" column="master_class_name" jdbcType="VARCHAR"/>
+        <result property="slaveClassCode" column="slave_class_code" jdbcType="VARCHAR"/>
+        <result property="slaveClassName" column="slave_class_name" jdbcType="VARCHAR"/>
+        <result property="graphCode" column="graph_code" jdbcType="VARCHAR"/>
+        <result property="graphName" column="graph_name" jdbcType="VARCHAR"/>
+        <result property="relCode" column="rel_code" jdbcType="VARCHAR"/>
+        <result property="relName" column="rel_name" jdbcType="VARCHAR"/>
+        <result property="relDirection" column="rel_direction" jdbcType="VARCHAR"/>
+        <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
+        <result property="extendInfo" column="extend_info" typeHandler="com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="synTime" column="sys_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, group_code, project_id, system_id, system_type, master_class_code, master_class_name, slave_class_code, slave_class_name, graph_code, graph_name,
+        rel_code, rel_name, rel_direction, group_name, extend_info, create_time, sys_time
+    </sql>
+
+</mapper>

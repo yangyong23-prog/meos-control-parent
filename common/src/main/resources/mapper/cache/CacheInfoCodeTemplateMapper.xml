@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.cache.CacheInfoCodeTemplateMapper">
+
+    <insert id="insertBatch">
+        insert into cache_info_code_template
+        (
+        id,
+        project_id,
+        running_monitor_type,
+        running_monitor_second_type,
+        custom_key,
+        data_json,
+        rel_template_id,
+        create_time,
+        create_user,
+        update_time,
+        update_user
+        )
+        values
+        <foreach collection="templates" item="template" separator=",">
+            (
+            #{template.id},
+            #{template.projectId},
+            #{template.runningMonitorType},
+            #{template.runningMonitorSecondType},
+            #{template.customKey},
+            #{template.dataJson,
+            typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},
+            #{template.relTemplateId},
+            #{template.createTime},
+            #{template.createUser},
+            #{template.updateTime},
+            #{template.updateUser}
+            )
+        </foreach>
+    </insert>
+</mapper>

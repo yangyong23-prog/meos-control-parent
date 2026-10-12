@@ -1,0 +1,89 @@
+# 引擎图标host,需要修改为对应环境host
+system.legend.icon.host: ${external-url.paas.paas-filetransfer.service}/downloadFromDB/
+# minio的图标host
+edge.graph.pic.host: ${external-url.paas.paas-datatransfer.service}/downloadFile?fileURL=${minio.url}
+
+# 边缘端异常事件服务
+persagy.serviceName.exp: yiheng-server-edge
+
+# 风险事件配置
+persagy.serviceName.yihengCompute: yiheng-compute-server-edge
+paas.projectId: ${project.id}
+paas.groupCode: ${project.groupcode}
+paas.projectName: ${project.projectName:}
+
+# 弱电系统关系配置
+weak-power:
+  # 最大层级深度限制
+  max-hierarchy-depth: 10
+  # 动态关系配置
+  relations:
+    - master: "服务器"
+      masterCode: "WEICSV"
+      graphType: "WENetwork"
+      edgeType: "Normal"
+      slaveTypes:              # to端可能出现的所有类型
+        - "服务器"
+        - "网关"
+        - "DDC直接数字控制器"
+        - "PLC可编程逻辑控制器"
+        - "数据采集器"
+        - "各类传感器"
+      remark: ~
+    - master: "网关"
+      masterCode: "WENCGW"
+      graphType: "WENetwork"
+      edgeType: "Normal"
+      slaveTypes:
+        - "传感器等"
+        - "服务器"
+        - "控制器"
+        - "采集器"
+      remark: ~
+    - master: "DDC直接数字控制器"
+      masterCode: "WEFCDD"
+      graphType: "MechCtrl"
+      edgeType: "EqCtrl"
+      slaveTypes:
+        - "末端冷机等设备实例"
+      remark: "两种关系都需要查询，结果取并集"
+    - master: "DDC直接数字控制器"
+      masterCode: "WEFCDD"
+      graphType: "WENetwork"
+      edgeType: "Normal"
+      slaveTypes:
+        - "各类传感器"
+        - "电水表"
+        - "服务器网关等"
+      remark: "两种关系都需要查询，结果取并集"
+    - master: "PLC可编程逻辑控制器"
+      masterCode: "WEFCPL"
+      graphType: "MechCtrl"
+      edgeType: "EqCtrl"
+      slaveTypes:
+        - "水泵等设备实例等"
+      remark: "两种关系都需要查询，结果取并集"
+    - master: "PLC可编程逻辑控制器"
+      masterCode: "WEFCPL"
+      graphType: "WENetwork"
+      edgeType: "Normal"
+      slaveTypes:
+        - "各类传感器"
+        - "服务器网关等"
+      remark: ~
+    - master: "数据采集器"
+      masterCode: "WEFCDC"
+      graphType: "WENetwork"
+      edgeType: "Normal"
+      slaveTypes:
+        - "各类传感器"
+        - "服务器网关等"
+      remark: ~
+
+  # 中间设备类型（需要继续查询的设备）
+  intermediate-device-types:
+    - "WEICSV"  # 服务器
+    - "WENCGW"  # 网关
+    - "WEFCDD"  # DDC直接数字控制器
+    - "WEFCPL"  # PLC可编程逻辑控制器
+    - "WEFCDC"  # 数据采集器

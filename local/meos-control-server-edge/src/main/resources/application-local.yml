@@ -1,0 +1,24 @@
+# ------------------------- Spring Setting -------------------------
+spring:
+  datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        reset-enable: true
+      web-stat-filter:
+        enabled: true
+        profile-enable: true
+      aop-patterns:
+        - com.persagy.apccontrol.*
+    dynamic:
+      p6spy: false
+logging:
+  level:
+    'com.persagy.apccontrol': trace
+project:
+  rabbit:
+    listeners:
+      lighting-config-change:
+        enabled: false
+        queue: meos.lighting_config_changed_apc_queue_local
+        auto-delete: true

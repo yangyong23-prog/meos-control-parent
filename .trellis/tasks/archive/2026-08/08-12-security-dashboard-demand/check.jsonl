@@ -1,0 +1,4 @@
+{"file":".trellis/spec/backend/cache-object-model.md","reason":"检查 READY/未 READY 路由、缓存空范围和动态字段边界。"}
+{"file":".trellis/spec/backend/demand-config-result-precompute.md","reason":"检查支持类型、结果 miss、刷新事件和实时回退语义。"}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"检查跨层一致性、批量查询、异常传播和聚焦测试。"}
+{"file":".trellis/spec/backend/rwd-relation-direction.md","reason":"检查缓存与 RWD 关系方向保持一致。"}

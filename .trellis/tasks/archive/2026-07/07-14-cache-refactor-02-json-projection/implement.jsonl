@@ -1,0 +1,4 @@
+{"file":".trellis/spec/backend/cache-object-model.md","reason":"实现对象与模型视图 JSON 字段、公共列和重建契约。"}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"新增纯转换组件和单元测试，需遵循空值、JSpecify、Javadoc 与对象转换规范。"}
+{"file":".trellis/spec/backend/running-monitor-strategy.md","reason":"首版字段 Map 只覆盖当前末端和照明运行监测对象范围。"}
+{"file":".trellis/spec/guides/code-reuse-thinking-guide.md","reason":"对象与视图复用投影算法，但必须保持字段配置独立。"}

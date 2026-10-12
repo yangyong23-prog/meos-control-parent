@@ -1,0 +1,5 @@
+{"file":".trellis/spec/backend/cache-object-model.md","reason":"检查 SECURITY READY/未 READY、空集合、关系和模型图字段读取契约。"}
+{"file":".trellis/spec/backend/demand-config-result-precompute.md","reason":"检查安防需求结果支持范围、结果 miss 和无实时回退语义。"}
+{"file":".trellis/spec/backend/running-monitor-strategy.md","reason":"检查动态 IoT、规则、异常事件和对象范围保持实时。"}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"检查测试、编译、Javadoc 和跨层一致性。"}
+{"file":".trellis/tasks/08-12-security-monitoring-performance/research/automated-validation-evidence.md","reason":"核对代码侧自动验证证据和发布环境待验证项。"}

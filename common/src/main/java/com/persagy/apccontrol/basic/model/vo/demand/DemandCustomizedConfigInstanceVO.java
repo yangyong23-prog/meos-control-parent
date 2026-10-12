@@ -1,0 +1,25 @@
+package com.persagy.apccontrol.basic.model.vo.demand;
+
+import com.persagy.apccontrol.basic.model.dto.rwd.DtpRwdObjectDTO;
+import com.persagy.apccontrol.basic.structure.demand.enumeration.DemandInstanceTypeEnum;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+/**
+ * 需求管理-自定义配置实例VO
+ *
+ * @author JiYinchuan
+ * @since 5.241102.0
+ */
+@Data
+@ToString
+@EqualsAndHashCode(callSuper = true)
+@Schema(title = "需求管理-自定义配置实例VO")
+public class DemandCustomizedConfigInstanceVO extends DtpRwdObjectDTO {
+
+    @Schema(description = "实例类型")
+    private DemandInstanceTypeEnum instanceType;
+
+}

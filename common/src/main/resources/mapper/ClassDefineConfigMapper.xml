@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.ClassDefineConfigMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.ClassDefineConfig">
+        <id property="classCode" column="class_code" jdbcType="VARCHAR"/>
+        <result property="groupCode" column="group_code" jdbcType="VARCHAR"/>
+        <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="refClassCode" column="ref_class_code" jdbcType="VARCHAR"/>
+        <result property="className" column="class_name" jdbcType="VARCHAR"/>
+        <result property="ordered" column="ordered" jdbcType="INTEGER"/>
+        <result property="extendInfo" column="extend_info" typeHandler="com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        group_code, project_id, class_code, ref_class_code, class_name, ordered, extend_info, create_time, update_time
+    </sql>
+
+</mapper>

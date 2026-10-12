@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.StrategyCfgMapper">
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.strategy.StrategyCfg">
+        <!--@mbg.generated-->
+        <!--@Table strategy_cfg-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="project_id" jdbcType="VARCHAR" property="projectId"/>
+        <result column="system_type" jdbcType="VARCHAR" property="systemType"/>
+        <result column="system_id" jdbcType="VARCHAR" property="systemId"/>
+        <result column="business_type" jdbcType="VARCHAR" property="businessType"/>
+        <result column="strategy_type" jdbcType="VARCHAR" property="strategyType"/>
+        <result column="object_id" jdbcType="VARCHAR" property="objectId"/>
+        <result column="class_code" jdbcType="VARCHAR" property="classCode"/>
+        <result column="st" jdbcType="VARCHAR" property="st"/>
+        <result column="memo" jdbcType="LONGVARCHAR" property="memo"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="sync_time" jdbcType="TIMESTAMP" property="syncTime"/>
+        <result column="sync_message" jdbcType="VARCHAR" property="syncMessage"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id,
+        project_id,
+        system_type,
+        system_id,
+        business_type,
+        strategy_type,
+        object_id,
+        class_code,
+        st,
+        memo,
+        create_user,
+        update_user,
+        create_time,
+        update_time,
+        sync_time,
+        sync_message
+    </sql>
+
+    <!--suppress checkSelectColumnExistInMybatisResultmap -->
+    <select id="get" resultMap="BaseResultMap">
+        select *
+        from strategy_cfg
+        <where>
+            <include refid="StrategyCfgQueryDaoParam"/>
+        </where>
+    </select>
+
+    <select id="listIds" resultType="java.lang.Long">
+        select id
+        from strategy_cfg
+        <where>
+            <include refid="StrategyCfgQueryDaoParam"/>
+        </where>
+    </select>
+
+    <select id="list" resultMap="BaseResultMap">
+        select *
+        from strategy_cfg
+        <where>
+            <include refid="StrategyCfgQueryDaoParam"/>
+        </where>
+    </select>
+
+    <select id="listNotSynced" resultMap="BaseResultMap">
+        select *
+        from strategy_cfg
+        <where>
+            <include refid="StrategyCfgQueryDaoParam"/>
+            and (sync_time is null or update_time &gt; sync_time)
+            limit 100
+        </where>
+    </select>
+
+    <sql id="StrategyCfgQueryDaoParam">
+        <!--@sql select * from strategy_cfg where -->
+        <if test="param.projectId != null">
+            project_id = #{param.projectId}
+        </if>
+        <if test="param.systemType != null">
+            and system_type = #{param.systemType}
+        </if>
+        <if test="param.systemId != null and param.systemId != ''">
+            and system_id = #{param.systemId}
+        </if>
+        <if test="param.businessType != null">
+            and business_type = #{param.businessType}
+        </if>
+        <if test="param.strategyType != null">
+            and strategy_type = #{param.strategyType}
+        </if>
+        <if test="param.objectId != null and param.objectId != ''">
+            and object_id = #{param.objectId}
+        </if>
+        <if test="param.status != null">
+            and st = #{param.status}
+        </if>
+    </sql>
+</mapper>

@@ -1,0 +1,6 @@
+{"file":".trellis/spec/backend/cache-object-model.md","reason":"缓存对象模型写入、READY、读取和同步边界主规范"}
+{"file":".trellis/spec/backend/error-handling.md","reason":"BusinessException、fail-safe 与读写异常边界"}
+{"file":".trellis/spec/backend/database-guidelines.md","reason":"批量 SQL、索引和 N+1 约束"}
+{"file":".trellis/spec/backend/rwd-relation-direction.md","reason":"末端和照明关系方向约束"}
+{"file":".trellis/spec/backend/running-monitor-strategy.md","reason":"运行监测消费者与对象范围约束"}
+{"file":".trellis/tasks/07-14-cache-refactor-20-integration/research/integration-validation-results.md","reason":"万级数据、SQL 长度、执行计划和事务测量结果"}

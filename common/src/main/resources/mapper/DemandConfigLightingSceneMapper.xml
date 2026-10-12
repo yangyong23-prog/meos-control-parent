@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.demand.DemandConfigLightingSceneMapper">
+    <resultMap id="BaseResultMap"
+               type="com.persagy.apccontrol.basic.model.entity.demand.lighting.DemandConfigLightingScene">
+        <!--@mbg.generated-->
+        <!--@Table demand_config_lighting_scene-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="project_id" jdbcType="VARCHAR" property="projectId"/>
+        <result column="demand_type" jdbcType="VARCHAR" property="demandType"/>
+        <result column="demand_template_type" jdbcType="VARCHAR" property="demandTemplateType"/>
+        <result column="begin_time" jdbcType="LONGVARCHAR" property="beginTime"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result column="end_time" jdbcType="LONGVARCHAR" property="endTime"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result column="scene_name" jdbcType="VARCHAR" property="sceneName"/>
+        <result column="sequence" jdbcType="INTEGER" property="sequence"/>
+        <result column="rel_demand_template_id" jdbcType="BIGINT" property="relDemandTemplateId"/>
+        <result column="st" jdbcType="VARCHAR" property="st"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+    </resultMap>
+
+    <select id="get" resultMap="BaseResultMap">
+        select *
+        from demand_config_lighting_scene
+        <where>
+            <include refid="DemandConfigLightingSceneQueryDaoParam"/>
+        </where>
+    </select>
+
+    <select id="list" resultMap="BaseResultMap">
+        select *
+        from demand_config_lighting_scene
+        <where>
+            <include refid="DemandConfigLightingSceneQueryDaoParam"/>
+        </where>
+    </select>
+
+    <sql id="DemandConfigLightingSceneQueryDaoParam">
+        <!--@sql select * from demand_config_lighting_scene where -->
+        <if test="param.id != null">
+            id = #{param.id}
+        </if>
+        <if test="param.ids != null and param.ids.size() != 0">
+            and id in
+            <foreach collection="param.ids" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        <if test="param.projectId != null and param.projectId != ''">
+            and project_id = #{param.projectId}
+        </if>
+        <if test="param.demandType != null">
+            and demand_type = #{param.demandType}
+        </if>
+        <if test="param.demandTemplateType != null">
+            and demand_template_type = #{param.demandTemplateType}
+        </if>
+        <if test="param.demandTemplateTag != null and param.demandTemplateTag != ''">
+            and demand_template_tag = #{param.demandTemplateTag}
+        </if>
+        <if test="param.relDemandTemplateId != null">
+            and rel_demand_template_id = #{param.relDemandTemplateId}
+        </if>
+        <if test="param.relDemandTemplateIds != null and param.relDemandTemplateIds.size() != 0">
+            and rel_demand_template_id in
+            <foreach collection="param.relDemandTemplateIds" item="relDemandTemplateId" open="(" separator=","
+                     close=")">
+                #{relDemandTemplateId}
+            </foreach>
+        </if>
+        <if test="param.st != null">
+            and st = #{param.st}
+        </if>
+    </sql>
+</mapper>

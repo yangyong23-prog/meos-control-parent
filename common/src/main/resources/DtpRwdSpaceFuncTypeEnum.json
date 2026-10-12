@@ -1,0 +1,3981 @@
+{
+  "defineDataSourceList": [
+    {
+      "defineId": "118431",
+      "enumIndex": "38446dd8b2a548938e7cfe83aa8d7cc6",
+      "enumKey": "SFT-01.00.00",
+      "enumValue": "建筑附属功能",
+      "children": [
+        {
+          "parentEnumIndex": "38446dd8b2a548938e7cfe83aa8d7cc6",
+          "defineId": "118431",
+          "enumIndex": "79fc104cfbec47da8060a686620151f5",
+          "enumKey": "SFT-01.01.00",
+          "enumValue": "大厅",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-01.00.00"
+        },
+        {
+          "parentEnumIndex": "38446dd8b2a548938e7cfe83aa8d7cc6",
+          "defineId": "118431",
+          "enumIndex": "af63fbaca65a4a5da5bb8db9e97c10d2",
+          "enumKey": "SFT-01.02.00",
+          "enumValue": "中庭",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-01.00.00"
+        },
+        {
+          "parentEnumIndex": "38446dd8b2a548938e7cfe83aa8d7cc6",
+          "defineId": "118431",
+          "enumIndex": "d17700f1499640b39cc792d0e971dcfe",
+          "enumKey": "SFT-01.03.00",
+          "enumValue": "接待服务空间",
+          "children": [
+            {
+              "parentEnumIndex": "d17700f1499640b39cc792d0e971dcfe",
+              "defineId": "118431",
+              "enumIndex": "22d9b4f05fca487293d6cbdfa97d8a44",
+              "enumKey": "SFT-01.03.01",
+              "enumValue": "接待中心",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.03.00"
+            },
+            {
+              "parentEnumIndex": "d17700f1499640b39cc792d0e971dcfe",
+              "defineId": "118431",
+              "enumIndex": "52ef46bd614f4b218f3e95112c0f9f38",
+              "enumKey": "SFT-01.03.02",
+              "enumValue": "咨询台",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.03.00"
+            },
+            {
+              "parentEnumIndex": "d17700f1499640b39cc792d0e971dcfe",
+              "defineId": "118431",
+              "enumIndex": "bab92f5c6de140f9aa21c86c18524ce2",
+              "enumKey": "SFT-01.03.03",
+              "enumValue": "客户服务中心",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.03.00"
+            },
+            {
+              "parentEnumIndex": "d17700f1499640b39cc792d0e971dcfe",
+              "defineId": "118431",
+              "enumIndex": "42e3c48040894e939633e44a856e9914",
+              "enumKey": "SFT-01.03.04",
+              "enumValue": "接待室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.03.00"
+            },
+            {
+              "parentEnumIndex": "d17700f1499640b39cc792d0e971dcfe",
+              "defineId": "118431",
+              "enumIndex": "e7759914b0bc499c95fc8daa8a83098c",
+              "enumKey": "SFT-01.03.05",
+              "enumValue": "值班室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.03.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-01.00.00"
+        },
+        {
+          "parentEnumIndex": "38446dd8b2a548938e7cfe83aa8d7cc6",
+          "defineId": "118431",
+          "enumIndex": "874976dc36124a52afc765bd7950044f",
+          "enumKey": "SFT-01.05.00",
+          "enumValue": "挑空",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-01.00.00"
+        },
+        {
+          "parentEnumIndex": "38446dd8b2a548938e7cfe83aa8d7cc6",
+          "defineId": "118431",
+          "enumIndex": "9ab9664bdaeb422a8faff718cdfeba82",
+          "enumKey": "SFT-01.06.00",
+          "enumValue": "卫生间",
+          "children": [
+            {
+              "parentEnumIndex": "9ab9664bdaeb422a8faff718cdfeba82",
+              "defineId": "118431",
+              "enumIndex": "c4096ebe60a04891bd039d75431e1324",
+              "enumKey": "SFT-01.06.01",
+              "enumValue": "男卫生间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.06.00"
+            },
+            {
+              "parentEnumIndex": "9ab9664bdaeb422a8faff718cdfeba82",
+              "defineId": "118431",
+              "enumIndex": "e8743e871c4b42b296a94365b1a05f9b",
+              "enumKey": "SFT-01.06.02",
+              "enumValue": "女卫生间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.06.00"
+            },
+            {
+              "parentEnumIndex": "9ab9664bdaeb422a8faff718cdfeba82",
+              "defineId": "118431",
+              "enumIndex": "11067f3a9d27456ab3e28c331894026e",
+              "enumKey": "SFT-01.06.03",
+              "enumValue": "无障碍卫生间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.06.00"
+            },
+            {
+              "parentEnumIndex": "9ab9664bdaeb422a8faff718cdfeba82",
+              "defineId": "118431",
+              "enumIndex": "444346ed11d74764a58d998b4f6e2403",
+              "enumKey": "SFT-01.06.04",
+              "enumValue": "洗手区",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.06.00"
+            },
+            {
+              "parentEnumIndex": "9ab9664bdaeb422a8faff718cdfeba82",
+              "defineId": "118431",
+              "enumIndex": "73d8e62f2f3b442fa255e4acaf85039d",
+              "enumKey": "SFT-01.06.05",
+              "enumValue": "中性卫生间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.06.00"
+            },
+            {
+              "parentEnumIndex": "9ab9664bdaeb422a8faff718cdfeba82",
+              "defineId": "118431",
+              "enumIndex": "3583b51eb8e44701891e52f2bdc09216",
+              "enumKey": "SFT-01.06.06",
+              "enumValue": "家用卫生间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.06.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-01.00.00"
+        },
+        {
+          "parentEnumIndex": "38446dd8b2a548938e7cfe83aa8d7cc6",
+          "defineId": "118431",
+          "enumIndex": "e0f8ad29602942ba85d301ff1361d5a0",
+          "enumKey": "SFT-01.07.00",
+          "enumValue": "休息空间",
+          "children": [
+            {
+              "parentEnumIndex": "e0f8ad29602942ba85d301ff1361d5a0",
+              "defineId": "118431",
+              "enumIndex": "e7778d2475bc459791ac29065d6682d0",
+              "enumKey": "SFT-01.07.01",
+              "enumValue": "休息区",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.07.00"
+            },
+            {
+              "parentEnumIndex": "e0f8ad29602942ba85d301ff1361d5a0",
+              "defineId": "118431",
+              "enumIndex": "cfa8b69bfe704a4a842c82971b27540d",
+              "enumKey": "SFT-01.07.02",
+              "enumValue": "休息室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.07.00"
+            },
+            {
+              "parentEnumIndex": "e0f8ad29602942ba85d301ff1361d5a0",
+              "defineId": "118431",
+              "enumIndex": "681dcaea827f4a879a3677d7f1817127",
+              "enumKey": "SFT-01.07.03",
+              "enumValue": "母婴室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.07.00"
+            },
+            {
+              "parentEnumIndex": "e0f8ad29602942ba85d301ff1361d5a0",
+              "defineId": "118431",
+              "enumIndex": "656981035e5e4eae8f753a1c0562ffa8",
+              "enumKey": "SFT-01.07.04",
+              "enumValue": "儿童活动室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.07.00"
+            },
+            {
+              "parentEnumIndex": "e0f8ad29602942ba85d301ff1361d5a0",
+              "defineId": "118431",
+              "enumIndex": "506172ab9a294a2bb1939ec8df12ee6f",
+              "enumKey": "SFT-01.07.05",
+              "enumValue": "更衣室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.07.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-01.00.00"
+        },
+        {
+          "parentEnumIndex": "38446dd8b2a548938e7cfe83aa8d7cc6",
+          "defineId": "118431",
+          "enumIndex": "204d8bd87923416c99e5e0d783c0af39",
+          "enumKey": "SFT-01.08.00",
+          "enumValue": "半开放区域",
+          "children": [
+            {
+              "parentEnumIndex": "204d8bd87923416c99e5e0d783c0af39",
+              "defineId": "118431",
+              "enumIndex": "dcacbf5029cc457382181b2470ae1a59",
+              "enumKey": "SFT-01.08.01",
+              "enumValue": "屋顶",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.08.00"
+            },
+            {
+              "parentEnumIndex": "204d8bd87923416c99e5e0d783c0af39",
+              "defineId": "118431",
+              "enumIndex": "8a6524f1efe74d398bc0cb5f494e379d",
+              "enumKey": "SFT-01.08.02",
+              "enumValue": "休闲平台",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.08.00"
+            },
+            {
+              "parentEnumIndex": "204d8bd87923416c99e5e0d783c0af39",
+              "defineId": "118431",
+              "enumIndex": "4bbb396d19dd4e6a8901cb2be81cf347",
+              "enumKey": "SFT-01.08.03",
+              "enumValue": "屋顶花园",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.08.00"
+            },
+            {
+              "parentEnumIndex": "204d8bd87923416c99e5e0d783c0af39",
+              "defineId": "118431",
+              "enumIndex": "90d5a6bad3e24b9f935c2c4051940c10",
+              "enumKey": "SFT-01.08.04",
+              "enumValue": "外广场",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.08.00"
+            },
+            {
+              "parentEnumIndex": "204d8bd87923416c99e5e0d783c0af39",
+              "defineId": "118431",
+              "enumIndex": "388d8eb1e6cd4e5fbdf75adc44f5dcde",
+              "enumKey": "SFT-01.08.05",
+              "enumValue": "绿化景观",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.08.00"
+            },
+            {
+              "parentEnumIndex": "204d8bd87923416c99e5e0d783c0af39",
+              "defineId": "118431",
+              "enumIndex": "a5f2b9c49e3e4c8d820e9e7002c56b1b",
+              "enumKey": "SFT-01.08.07",
+              "enumValue": "露台",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.08.00"
+            },
+            {
+              "parentEnumIndex": "204d8bd87923416c99e5e0d783c0af39",
+              "defineId": "118431",
+              "enumIndex": "e949827ebd3d4d4395be657458cee719",
+              "enumKey": "SFT-01.08.08",
+              "enumValue": "阳台",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.08.00"
+            },
+            {
+              "parentEnumIndex": "204d8bd87923416c99e5e0d783c0af39",
+              "defineId": "118431",
+              "enumIndex": "0678ee978bd74cb4a95683d115cee6d1",
+              "enumKey": "SFT-01.08.09",
+              "enumValue": "雨蓬",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.08.00"
+            },
+            {
+              "parentEnumIndex": "204d8bd87923416c99e5e0d783c0af39",
+              "defineId": "118431",
+              "enumIndex": "0905946f5609476ba5f9d5fcce7db1cf",
+              "enumKey": "SFT-01.08.10",
+              "enumValue": "消防救援场池",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.08.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-01.00.00"
+        },
+        {
+          "parentEnumIndex": "38446dd8b2a548938e7cfe83aa8d7cc6",
+          "defineId": "118431",
+          "enumIndex": "7b7e7b3eee6a4ffcb8f3052c4e5403bc",
+          "enumKey": "SFT-01.09.00",
+          "enumValue": "仓储空间",
+          "children": [
+            {
+              "parentEnumIndex": "7b7e7b3eee6a4ffcb8f3052c4e5403bc",
+              "defineId": "118431",
+              "enumIndex": "70226b19c348405598790c9e00985f03",
+              "enumKey": "SFT-01.09.01",
+              "enumValue": "仓库",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.09.00"
+            },
+            {
+              "parentEnumIndex": "7b7e7b3eee6a4ffcb8f3052c4e5403bc",
+              "defineId": "118431",
+              "enumIndex": "f2ee7326f0bc4c38aadd30d532927d20",
+              "enumKey": "SFT-01.09.02",
+              "enumValue": "物业仓库",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.09.00"
+            },
+            {
+              "parentEnumIndex": "7b7e7b3eee6a4ffcb8f3052c4e5403bc",
+              "defineId": "118431",
+              "enumIndex": "e072427243b8419d86970d16f9e62639",
+              "enumKey": "SFT-01.09.03",
+              "enumValue": "装卸区",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.09.00"
+            },
+            {
+              "parentEnumIndex": "7b7e7b3eee6a4ffcb8f3052c4e5403bc",
+              "defineId": "118431",
+              "enumIndex": "14cdf70626b84a76b3387e76c05d40d9",
+              "enumKey": "SFT-01.09.04",
+              "enumValue": "储藏室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.09.00"
+            },
+            {
+              "parentEnumIndex": "7b7e7b3eee6a4ffcb8f3052c4e5403bc",
+              "defineId": "118431",
+              "enumIndex": "47afaa05b40e4bfc90a5097fbf3d72fa",
+              "enumKey": "SFT-01.09.05",
+              "enumValue": "衣帽寄存处",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.09.00"
+            },
+            {
+              "parentEnumIndex": "7b7e7b3eee6a4ffcb8f3052c4e5403bc",
+              "defineId": "118431",
+              "enumIndex": "16cc53df27e44cf78bc6e345ca3ba4ad",
+              "enumKey": "SFT-01.09.06",
+              "enumValue": "行李寄存处",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.09.00"
+            },
+            {
+              "parentEnumIndex": "7b7e7b3eee6a4ffcb8f3052c4e5403bc",
+              "defineId": "118431",
+              "enumIndex": "e1e5f91589354abe800211f6f6e910de",
+              "enumKey": "SFT-01.09.07",
+              "enumValue": "物流服务站点",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.09.00"
+            },
+            {
+              "parentEnumIndex": "7b7e7b3eee6a4ffcb8f3052c4e5403bc",
+              "defineId": "118431",
+              "enumIndex": "2bf522b1b2d84ae8a9e64f4d19df4ae4",
+              "enumKey": "SFT-01.09.08",
+              "enumValue": "套内储藏空间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.09.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-01.00.00"
+        },
+        {
+          "parentEnumIndex": "38446dd8b2a548938e7cfe83aa8d7cc6",
+          "defineId": "118431",
+          "enumIndex": "a23e3cde63104b4cbfe4010382e7b62a",
+          "enumKey": "SFT-01.10.00",
+          "enumValue": "保安岗",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-01.00.00"
+        },
+        {
+          "parentEnumIndex": "38446dd8b2a548938e7cfe83aa8d7cc6",
+          "defineId": "118431",
+          "enumIndex": "3212980ba72545c7910de7a8566bfd12",
+          "enumKey": "SFT-01.11.00",
+          "enumValue": "吸烟室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-01.00.00"
+        },
+        {
+          "parentEnumIndex": "38446dd8b2a548938e7cfe83aa8d7cc6",
+          "defineId": "118431",
+          "enumIndex": "d4a20dbea061440da998ad9b31bb2dba",
+          "enumKey": "SFT-01.12.00",
+          "enumValue": "淋浴室",
+          "children": [
+            {
+              "parentEnumIndex": "d4a20dbea061440da998ad9b31bb2dba",
+              "defineId": "118431",
+              "enumIndex": "850e83b7f35e4a99b5be5b11fd06e43b",
+              "enumKey": "SFT-01.12.01",
+              "enumValue": "男淋浴室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.12.00"
+            },
+            {
+              "parentEnumIndex": "d4a20dbea061440da998ad9b31bb2dba",
+              "defineId": "118431",
+              "enumIndex": "bc14da24e0524f5e9cbf0509e0f61c3a",
+              "enumKey": "SFT-01.12.02",
+              "enumValue": "女淋浴室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.12.00"
+            },
+            {
+              "parentEnumIndex": "d4a20dbea061440da998ad9b31bb2dba",
+              "defineId": "118431",
+              "enumIndex": "7cff00fda2d342b491422e881e2e27e3",
+              "enumKey": "SFT-01.12.03",
+              "enumValue": "中性淋浴室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.12.00"
+            },
+            {
+              "parentEnumIndex": "d4a20dbea061440da998ad9b31bb2dba",
+              "defineId": "118431",
+              "enumIndex": "42e33cf68c6e450e8a4bdea96847b046",
+              "enumKey": "SFT-01.12.04",
+              "enumValue": "家用浴室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-01.12.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-01.00.00"
+        }
+      ],
+      "dataType": "ENUM",
+      "upperLimitIncludeState": false,
+      "lowerLimitIncludeState": false
+    },
+    {
+      "defineId": "118431",
+      "enumIndex": "db64c0b3d05b446ea5eb0185ff9c1e35",
+      "enumKey": "SFT-02.00.00",
+      "enumValue": "后勤服务空间",
+      "children": [
+        {
+          "parentEnumIndex": "db64c0b3d05b446ea5eb0185ff9c1e35",
+          "defineId": "118431",
+          "enumIndex": "5652c2b09c744d058addf13508f5e00b",
+          "enumKey": "SFT-02.01.00",
+          "enumValue": "物业管理用房",
+          "children": [
+            {
+              "parentEnumIndex": "5652c2b09c744d058addf13508f5e00b",
+              "defineId": "118431",
+              "enumIndex": "6d8fec8642594210978be5a07100f899",
+              "enumKey": "SFT-02.01.01",
+              "enumValue": "物业管理办公室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.01.00"
+            },
+            {
+              "parentEnumIndex": "5652c2b09c744d058addf13508f5e00b",
+              "defineId": "118431",
+              "enumIndex": "b68f9dce3121407ea2beee1c8be59fc6",
+              "enumKey": "SFT-02.01.02",
+              "enumValue": "传达室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.01.00"
+            },
+            {
+              "parentEnumIndex": "5652c2b09c744d058addf13508f5e00b",
+              "defineId": "118431",
+              "enumIndex": "09d869decbf745248fcbd33ff6b0a38c",
+              "enumKey": "SFT-02.01.03",
+              "enumValue": "工程室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.01.00"
+            },
+            {
+              "parentEnumIndex": "5652c2b09c744d058addf13508f5e00b",
+              "defineId": "118431",
+              "enumIndex": "127c8f5b85c24a4092863a8b50902464",
+              "enumKey": "SFT-02.01.04",
+              "enumValue": "保安室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.01.00"
+            },
+            {
+              "parentEnumIndex": "5652c2b09c744d058addf13508f5e00b",
+              "defineId": "118431",
+              "enumIndex": "96982b94e6e54228bca520ffa0ce4b22",
+              "enumKey": "SFT-02.01.05",
+              "enumValue": "保洁用房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.01.00"
+            },
+            {
+              "parentEnumIndex": "5652c2b09c744d058addf13508f5e00b",
+              "defineId": "118431",
+              "enumIndex": "18b5c60d894a44438284ce7d460da1b0",
+              "enumKey": "SFT-02.01.06",
+              "enumValue": "物业值班室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.01.00"
+            },
+            {
+              "parentEnumIndex": "5652c2b09c744d058addf13508f5e00b",
+              "defineId": "118431",
+              "enumIndex": "cda66fa7aa464b27bd50fc4525a9f9eb",
+              "enumKey": "SFT-02.01.08",
+              "enumValue": "工具间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.01.00"
+            },
+            {
+              "parentEnumIndex": "5652c2b09c744d058addf13508f5e00b",
+              "defineId": "118431",
+              "enumIndex": "1515d8f2f844499fbb1a66519f1b2104",
+              "enumKey": "SFT-02.01.09",
+              "enumValue": "修理间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.01.00"
+            },
+            {
+              "parentEnumIndex": "5652c2b09c744d058addf13508f5e00b",
+              "defineId": "118431",
+              "enumIndex": "0ce3fd837fcb47a9a637c57135fc7de3",
+              "enumKey": "SFT-02.01.10",
+              "enumValue": "车间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.01.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-02.00.00"
+        },
+        {
+          "parentEnumIndex": "db64c0b3d05b446ea5eb0185ff9c1e35",
+          "defineId": "118431",
+          "enumIndex": "c0f848c8323049c6986006fb45846942",
+          "enumKey": "SFT-02.02.00",
+          "enumValue": "设备竖井",
+          "children": [
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "889440487a084e0ab28929eae03d88b2",
+              "enumKey": "SFT-02.02.01",
+              "enumValue": "暖通水井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "45b2ae089f884c78b921fb1bb61083f0",
+              "enumKey": "SFT-02.02.02",
+              "enumValue": "给排水井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "1cf33fbb28a54b23b6e4cb804aeef7aa",
+              "enumKey": "SFT-02.02.03",
+              "enumValue": "消防水井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "b27f4d5839ac4ad6ab9945f6fc52db55",
+              "enumKey": "SFT-02.02.04",
+              "enumValue": "水井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "f466278aef6d49dc97ea5a8c77c2e993",
+              "enumKey": "SFT-02.02.05",
+              "enumValue": "空调新风井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "a074ce0d51e74627838f1d81245e2a25",
+              "enumKey": "SFT-02.02.06",
+              "enumValue": "空调送风井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "1fbece39deab4031886c0d2229d0b4d6",
+              "enumKey": "SFT-02.02.07",
+              "enumValue": "空调回风井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "0ee25260a362408eb7adddaa649c87b4",
+              "enumKey": "SFT-02.02.08",
+              "enumValue": "通风送风井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "d3b0722244e040dd9b31f643f8819cb1",
+              "enumKey": "SFT-02.02.09",
+              "enumValue": "排风井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "77092f7297244a2692857948d30f2d0a",
+              "enumKey": "SFT-02.02.10",
+              "enumValue": "厨房排油烟井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "34a861add1e445858f074e8f8a952293",
+              "enumKey": "SFT-02.02.11",
+              "enumValue": "消防排烟井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "79ec2790ea504a7dbc9baab51d73d11c",
+              "enumKey": "SFT-02.02.12",
+              "enumValue": "消防加压送风井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "ab027b7b791a40a4806bc36d8310e791",
+              "enumKey": "SFT-02.02.13",
+              "enumValue": "消防补风井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "396f4130742b4a948788bb37c0c1e290",
+              "enumKey": "SFT-02.02.14",
+              "enumValue": "强电井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "9432d0c4ed5b4ac7ae2037b5920c85ef",
+              "enumKey": "SFT-02.02.15",
+              "enumValue": "消防电井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "e7a593be7684499ba4a766eaa62fcd40",
+              "enumKey": "SFT-02.02.16",
+              "enumValue": "弱电井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "b2bc9565eee74d5484a6468642b32bcd",
+              "enumKey": "SFT-02.02.17",
+              "enumValue": "燃气井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "8641e926a3244472a0852acb2b700140",
+              "enumKey": "SFT-02.02.18",
+              "enumValue": "烟囱",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "383f670818b9492883d6eb33c766d786",
+              "enumKey": "SFT-02.02.19",
+              "enumValue": "垃圾道",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "97aef8cf83ad4926837cefc6797a7431",
+              "enumKey": "SFT-02.02.20",
+              "enumValue": "雨水管井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "6b6aa7e48b804a43b2b482a6aff6b059",
+              "enumKey": "SFT-02.02.21",
+              "enumValue": "污水管井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "38e14580d328435eb68dcf5972571053",
+              "enumKey": "SFT-02.02.22",
+              "enumValue": "中水管井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "45859bb101f7409d8a8b728e9c4633c2",
+              "enumKey": "SFT-02.02.23",
+              "enumValue": "冷媒管井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "b09b44de5ade4842a4ceb9f53bf3bad0",
+              "enumKey": "SFT-02.02.24",
+              "enumValue": "风井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            },
+            {
+              "parentEnumIndex": "c0f848c8323049c6986006fb45846942",
+              "defineId": "118431",
+              "enumIndex": "d0751a210dcb467ca95fcb50fc33b2e6",
+              "enumKey": "SFT-02.02.25",
+              "enumValue": "风道",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.02.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-02.00.00"
+        },
+        {
+          "parentEnumIndex": "db64c0b3d05b446ea5eb0185ff9c1e35",
+          "defineId": "118431",
+          "enumIndex": "4607ee2f96804933aebc633fc9930dfc",
+          "enumKey": "SFT-02.03.00",
+          "enumValue": "冷热源机房",
+          "children": [
+            {
+              "parentEnumIndex": "4607ee2f96804933aebc633fc9930dfc",
+              "defineId": "118431",
+              "enumIndex": "67778ed72a4a4eb1ae923b4055ea3162",
+              "enumKey": "SFT-02.03.01",
+              "enumValue": "制冷机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.03.00"
+            },
+            {
+              "parentEnumIndex": "4607ee2f96804933aebc633fc9930dfc",
+              "defineId": "118431",
+              "enumIndex": "cabc8e305ccc4d8d8121ff22e49d9656",
+              "enumKey": "SFT-02.03.02",
+              "enumValue": "锅炉房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.03.00"
+            },
+            {
+              "parentEnumIndex": "4607ee2f96804933aebc633fc9930dfc",
+              "defineId": "118431",
+              "enumIndex": "a3687ff0fc0b461cb466b38df7f1d777",
+              "enumKey": "SFT-02.03.03",
+              "enumValue": "储油间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.03.00"
+            },
+            {
+              "parentEnumIndex": "4607ee2f96804933aebc633fc9930dfc",
+              "defineId": "118431",
+              "enumIndex": "94d770123f8e4b0a864fd2c3b5909938",
+              "enumKey": "SFT-02.03.04",
+              "enumValue": "调压间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.03.00"
+            },
+            {
+              "parentEnumIndex": "4607ee2f96804933aebc633fc9930dfc",
+              "defineId": "118431",
+              "enumIndex": "514f7938086c4ff1b0e0bded10eb5d67",
+              "enumKey": "SFT-02.03.05",
+              "enumValue": "换热站",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.03.00"
+            },
+            {
+              "parentEnumIndex": "4607ee2f96804933aebc633fc9930dfc",
+              "defineId": "118431",
+              "enumIndex": "9f1a2169f38445c7a7aab4291ae81411",
+              "enumKey": "SFT-02.03.06",
+              "enumValue": "市热站",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.03.00"
+            },
+            {
+              "parentEnumIndex": "4607ee2f96804933aebc633fc9930dfc",
+              "defineId": "118431",
+              "enumIndex": "19da4af021d24537860c5bac840b0a22",
+              "enumKey": "SFT-02.03.07",
+              "enumValue": "空调水泵房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.03.00"
+            },
+            {
+              "parentEnumIndex": "4607ee2f96804933aebc633fc9930dfc",
+              "defineId": "118431",
+              "enumIndex": "df99f3bcc575434d9c73bacf8ea00824",
+              "enumKey": "SFT-02.03.08",
+              "enumValue": "膨胀水箱间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.03.00"
+            },
+            {
+              "parentEnumIndex": "4607ee2f96804933aebc633fc9930dfc",
+              "defineId": "118431",
+              "enumIndex": "cfa915683f5c476cab37b447704724b6",
+              "enumKey": "SFT-02.03.09",
+              "enumValue": "空气压缩机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.03.00"
+            },
+            {
+              "parentEnumIndex": "4607ee2f96804933aebc633fc9930dfc",
+              "defineId": "118431",
+              "enumIndex": "d5ea27e8dc6b4da79ea49bb6e276e5b3",
+              "enumKey": "SFT-02.03.10",
+              "enumValue": "室外机放置间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.03.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-02.00.00"
+        },
+        {
+          "parentEnumIndex": "db64c0b3d05b446ea5eb0185ff9c1e35",
+          "defineId": "118431",
+          "enumIndex": "459d2f9d9fc248e2bd596f1bb094328e",
+          "enumKey": "SFT-02.04.00",
+          "enumValue": "空调机房",
+          "children": [
+            {
+              "parentEnumIndex": "459d2f9d9fc248e2bd596f1bb094328e",
+              "defineId": "118431",
+              "enumIndex": "8481349b7db94fb6b55386c618fedc30",
+              "enumKey": "SFT-02.04.01",
+              "enumValue": "空调机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.04.00"
+            },
+            {
+              "parentEnumIndex": "459d2f9d9fc248e2bd596f1bb094328e",
+              "defineId": "118431",
+              "enumIndex": "da4ef5ff01d449a583515749d92cd809",
+              "enumKey": "SFT-02.04.02",
+              "enumValue": "新风机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.04.00"
+            },
+            {
+              "parentEnumIndex": "459d2f9d9fc248e2bd596f1bb094328e",
+              "defineId": "118431",
+              "enumIndex": "4e46ca8ac9cc454f9582463e9c997f22",
+              "enumKey": "SFT-02.04.03",
+              "enumValue": "送风机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.04.00"
+            },
+            {
+              "parentEnumIndex": "459d2f9d9fc248e2bd596f1bb094328e",
+              "defineId": "118431",
+              "enumIndex": "b7184089619e4cc3ad0835329c15ca50",
+              "enumKey": "SFT-02.04.04",
+              "enumValue": "排风机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.04.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-02.00.00"
+        },
+        {
+          "parentEnumIndex": "db64c0b3d05b446ea5eb0185ff9c1e35",
+          "defineId": "118431",
+          "enumIndex": "1da7e319e9f74ac3ae0729204614dd44",
+          "enumKey": "SFT-02.05.00",
+          "enumValue": "给排水机房",
+          "children": [
+            {
+              "parentEnumIndex": "1da7e319e9f74ac3ae0729204614dd44",
+              "defineId": "118431",
+              "enumIndex": "1a875e8296e14c4c96d1feee199c0410",
+              "enumKey": "SFT-02.05.01",
+              "enumValue": "生活水泵房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.05.00"
+            },
+            {
+              "parentEnumIndex": "1da7e319e9f74ac3ae0729204614dd44",
+              "defineId": "118431",
+              "enumIndex": "93c6642dda394cc1b738dfa17416fcd8",
+              "enumKey": "SFT-02.05.02",
+              "enumValue": "生活水箱间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.05.00"
+            },
+            {
+              "parentEnumIndex": "1da7e319e9f74ac3ae0729204614dd44",
+              "defineId": "118431",
+              "enumIndex": "d14854d94d8d4cb396795cd34c3ca498",
+              "enumKey": "SFT-02.05.03",
+              "enumValue": "隔油池间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.05.00"
+            },
+            {
+              "parentEnumIndex": "1da7e319e9f74ac3ae0729204614dd44",
+              "defineId": "118431",
+              "enumIndex": "405545e401324d2ca31ce38af1383bb7",
+              "enumKey": "SFT-02.05.04",
+              "enumValue": "集水池",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.05.00"
+            },
+            {
+              "parentEnumIndex": "1da7e319e9f74ac3ae0729204614dd44",
+              "defineId": "118431",
+              "enumIndex": "471bcb751ea8404cad34335d97467d0a",
+              "enumKey": "SFT-02.05.05",
+              "enumValue": "中水处理机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.05.00"
+            },
+            {
+              "parentEnumIndex": "1da7e319e9f74ac3ae0729204614dd44",
+              "defineId": "118431",
+              "enumIndex": "ed304e4e178c47ddb7836e381508ccf0",
+              "enumKey": "SFT-02.05.06",
+              "enumValue": "太阳能热水机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.05.00"
+            },
+            {
+              "parentEnumIndex": "1da7e319e9f74ac3ae0729204614dd44",
+              "defineId": "118431",
+              "enumIndex": "c99dd59d414547f2a73ac57a473df061",
+              "enumKey": "SFT-02.05.07",
+              "enumValue": "污水处理间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.05.00"
+            },
+            {
+              "parentEnumIndex": "1da7e319e9f74ac3ae0729204614dd44",
+              "defineId": "118431",
+              "enumIndex": "a35d831ca7d647af8b5fabcfaa6db535",
+              "enumKey": "SFT-02.05.08",
+              "enumValue": "雨水收集机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.05.00"
+            },
+            {
+              "parentEnumIndex": "1da7e319e9f74ac3ae0729204614dd44",
+              "defineId": "118431",
+              "enumIndex": "4957d320aa2b4f2e94c3bc1aa6eed4bb",
+              "enumKey": "SFT-02.05.09",
+              "enumValue": "热水机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.05.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-02.00.00"
+        },
+        {
+          "parentEnumIndex": "db64c0b3d05b446ea5eb0185ff9c1e35",
+          "defineId": "118431",
+          "enumIndex": "ad7b2e3ecf7c4969904312f077701bb4",
+          "enumKey": "SFT-02.06.00",
+          "enumValue": "消防机房",
+          "children": [
+            {
+              "parentEnumIndex": "ad7b2e3ecf7c4969904312f077701bb4",
+              "defineId": "118431",
+              "enumIndex": "97b63bad6ccf4cd59ead838fa81b90c3",
+              "enumKey": "SFT-02.06.01",
+              "enumValue": "消防水泵房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.06.00"
+            },
+            {
+              "parentEnumIndex": "ad7b2e3ecf7c4969904312f077701bb4",
+              "defineId": "118431",
+              "enumIndex": "a3faf478781d40b6a0b38c0959226fba",
+              "enumKey": "SFT-02.06.02",
+              "enumValue": "消防水箱间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.06.00"
+            },
+            {
+              "parentEnumIndex": "ad7b2e3ecf7c4969904312f077701bb4",
+              "defineId": "118431",
+              "enumIndex": "f3f2212bc4d54f69a2c809cc5317a341",
+              "enumKey": "SFT-02.06.03",
+              "enumValue": "消防水池",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.06.00"
+            },
+            {
+              "parentEnumIndex": "ad7b2e3ecf7c4969904312f077701bb4",
+              "defineId": "118431",
+              "enumIndex": "bc636fe12c2d41d2a3390b57ca71c847",
+              "enumKey": "SFT-02.06.04",
+              "enumValue": "报警阀室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.06.00"
+            },
+            {
+              "parentEnumIndex": "ad7b2e3ecf7c4969904312f077701bb4",
+              "defineId": "118431",
+              "enumIndex": "c0edfc07c8d7497181525a68f2eb5fb9",
+              "enumKey": "SFT-02.06.05",
+              "enumValue": "消防控制中心",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.06.00"
+            },
+            {
+              "parentEnumIndex": "ad7b2e3ecf7c4969904312f077701bb4",
+              "defineId": "118431",
+              "enumIndex": "851207e653b1400489fdffb68fbbd39c",
+              "enumKey": "SFT-02.06.06",
+              "enumValue": "微型消防站",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.06.00"
+            },
+            {
+              "parentEnumIndex": "ad7b2e3ecf7c4969904312f077701bb4",
+              "defineId": "118431",
+              "enumIndex": "400a9d4d9ca243299f7245fd5666c976",
+              "enumKey": "SFT-02.06.07",
+              "enumValue": "钢瓶间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.06.00"
+            },
+            {
+              "parentEnumIndex": "ad7b2e3ecf7c4969904312f077701bb4",
+              "defineId": "118431",
+              "enumIndex": "e8b60795af2b4047841fae3bde73e999",
+              "enumKey": "SFT-02.06.08",
+              "enumValue": "排烟机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.06.00"
+            },
+            {
+              "parentEnumIndex": "ad7b2e3ecf7c4969904312f077701bb4",
+              "defineId": "118431",
+              "enumIndex": "52ba2529fef84a6d94c9df4246acd26b",
+              "enumKey": "SFT-02.06.09",
+              "enumValue": "补风机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.06.00"
+            },
+            {
+              "parentEnumIndex": "ad7b2e3ecf7c4969904312f077701bb4",
+              "defineId": "118431",
+              "enumIndex": "b00003e83e094eb98a8b5e09bba79589",
+              "enumKey": "SFT-02.06.10",
+              "enumValue": "加压送风机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.06.00"
+            },
+            {
+              "parentEnumIndex": "ad7b2e3ecf7c4969904312f077701bb4",
+              "defineId": "118431",
+              "enumIndex": "e6f7b0629f8b4863b670e816244ce871",
+              "enumKey": "SFT-02.06.11",
+              "enumValue": "消防合用风机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.06.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-02.00.00"
+        },
+        {
+          "parentEnumIndex": "db64c0b3d05b446ea5eb0185ff9c1e35",
+          "defineId": "118431",
+          "enumIndex": "d5a39cef911143cd9bdd4261dcec80b5",
+          "enumKey": "SFT-02.07.00",
+          "enumValue": "强电机房",
+          "children": [
+            {
+              "parentEnumIndex": "d5a39cef911143cd9bdd4261dcec80b5",
+              "defineId": "118431",
+              "enumIndex": "0d476b30a3434890a6927a0c9647c540",
+              "enumKey": "SFT-02.07.01",
+              "enumValue": "开闭站",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.07.00"
+            },
+            {
+              "parentEnumIndex": "d5a39cef911143cd9bdd4261dcec80b5",
+              "defineId": "118431",
+              "enumIndex": "814bcbde399048e6a563bb07577158e8",
+              "enumKey": "SFT-02.07.02",
+              "enumValue": "变配电室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.07.00"
+            },
+            {
+              "parentEnumIndex": "d5a39cef911143cd9bdd4261dcec80b5",
+              "defineId": "118431",
+              "enumIndex": "29be6d2ff1a74b31900239f3eb118cdf",
+              "enumKey": "SFT-02.07.03",
+              "enumValue": "配电室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.07.00"
+            },
+            {
+              "parentEnumIndex": "d5a39cef911143cd9bdd4261dcec80b5",
+              "defineId": "118431",
+              "enumIndex": "bb84293391954ae1ba9109e9357d1757",
+              "enumKey": "SFT-02.07.04",
+              "enumValue": "发电机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.07.00"
+            },
+            {
+              "parentEnumIndex": "d5a39cef911143cd9bdd4261dcec80b5",
+              "defineId": "118431",
+              "enumIndex": "1e6474a283764b70a8caf0f542c62c2f",
+              "enumKey": "SFT-02.07.05",
+              "enumValue": "UPS机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.07.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-02.00.00"
+        },
+        {
+          "parentEnumIndex": "db64c0b3d05b446ea5eb0185ff9c1e35",
+          "defineId": "118431",
+          "enumIndex": "573847ce202b4c34a18c41036992c8be",
+          "enumKey": "SFT-02.08.00",
+          "enumValue": "弱电机房",
+          "children": [
+            {
+              "parentEnumIndex": "573847ce202b4c34a18c41036992c8be",
+              "defineId": "118431",
+              "enumIndex": "48cd51a37e194d9f8890f2b33aa26d86",
+              "enumKey": "SFT-02.08.01",
+              "enumValue": "建筑设备监控机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.08.00"
+            },
+            {
+              "parentEnumIndex": "573847ce202b4c34a18c41036992c8be",
+              "defineId": "118431",
+              "enumIndex": "cab68bbf6023455bacc405d2960b299e",
+              "enumKey": "SFT-02.08.02",
+              "enumValue": "网络机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.08.00"
+            },
+            {
+              "parentEnumIndex": "573847ce202b4c34a18c41036992c8be",
+              "defineId": "118431",
+              "enumIndex": "98d05c13222d4090b54f2f8564e9348c",
+              "enumKey": "SFT-02.08.03",
+              "enumValue": "电话机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.08.00"
+            },
+            {
+              "parentEnumIndex": "573847ce202b4c34a18c41036992c8be",
+              "defineId": "118431",
+              "enumIndex": "ddff1546d9134e15939d073669fbfae5",
+              "enumKey": "SFT-02.08.04",
+              "enumValue": "电视机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.08.00"
+            },
+            {
+              "parentEnumIndex": "573847ce202b4c34a18c41036992c8be",
+              "defineId": "118431",
+              "enumIndex": "8b1fe76088944533a87d800054b10e92",
+              "enumKey": "SFT-02.08.05",
+              "enumValue": "广播机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.08.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-02.00.00"
+        },
+        {
+          "parentEnumIndex": "db64c0b3d05b446ea5eb0185ff9c1e35",
+          "defineId": "118431",
+          "enumIndex": "664414e8ec694674b3c1dae9b01b5863",
+          "enumKey": "SFT-02.09.00",
+          "enumValue": "废物处理和回收空间",
+          "children": [
+            {
+              "parentEnumIndex": "664414e8ec694674b3c1dae9b01b5863",
+              "defineId": "118431",
+              "enumIndex": "8437f194c427499d8b7959519e5bfe80",
+              "enumKey": "SFT-02.09.01",
+              "enumValue": "综合垃圾间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.09.00"
+            },
+            {
+              "parentEnumIndex": "664414e8ec694674b3c1dae9b01b5863",
+              "defineId": "118431",
+              "enumIndex": "88633b1c58d64ea894d31fca96fba27b",
+              "enumKey": "SFT-02.09.02",
+              "enumValue": "危险废物贮存室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.09.00"
+            },
+            {
+              "parentEnumIndex": "664414e8ec694674b3c1dae9b01b5863",
+              "defineId": "118431",
+              "enumIndex": "92f70325a2cf4d12aa66bfe8dad34a72",
+              "enumKey": "SFT-02.09.03",
+              "enumValue": "干垃圾间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.09.00"
+            },
+            {
+              "parentEnumIndex": "664414e8ec694674b3c1dae9b01b5863",
+              "defineId": "118431",
+              "enumIndex": "33ebe40586af46799db84d1fb97b9dd4",
+              "enumKey": "SFT-02.09.04",
+              "enumValue": "湿垃圾间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-02.09.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-02.00.00"
+        },
+        {
+          "parentEnumIndex": "db64c0b3d05b446ea5eb0185ff9c1e35",
+          "defineId": "118431",
+          "enumIndex": "c6163d5dac374349a14a81ef94fc72d9",
+          "enumKey": "SFT-02.10.00",
+          "enumValue": "设备夹层",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-02.00.00"
+        },
+        {
+          "parentEnumIndex": "db64c0b3d05b446ea5eb0185ff9c1e35",
+          "defineId": "118431",
+          "enumIndex": "623286dd4ab44487b51505b873c7e2e1",
+          "enumKey": "SFT-02.11.00",
+          "enumValue": "管廊",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-02.00.00"
+        }
+      ],
+      "dataType": "ENUM",
+      "upperLimitIncludeState": false,
+      "lowerLimitIncludeState": false
+    },
+    {
+      "defineId": "118431",
+      "enumIndex": "135713635a8a42588218e66cdf4bdbdd",
+      "enumKey": "SFT-03.00.00",
+      "enumValue": "建筑交通空间",
+      "children": [
+        {
+          "parentEnumIndex": "135713635a8a42588218e66cdf4bdbdd",
+          "defineId": "118431",
+          "enumIndex": "d4a02e1d8f1b4c8ba5b99b384a8a6230",
+          "enumKey": "SFT-03.01.00",
+          "enumValue": "公区连接",
+          "children": [
+            {
+              "parentEnumIndex": "d4a02e1d8f1b4c8ba5b99b384a8a6230",
+              "defineId": "118431",
+              "enumIndex": "4e3aa2cbd3514993927f0cfd0609c94a",
+              "enumKey": "SFT-03.01.01",
+              "enumValue": "走廊",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.01.00"
+            },
+            {
+              "parentEnumIndex": "d4a02e1d8f1b4c8ba5b99b384a8a6230",
+              "defineId": "118431",
+              "enumIndex": "5aea1e31992f457a8de68ac1bf75640c",
+              "enumKey": "SFT-03.01.02",
+              "enumValue": "出入口",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.01.00"
+            },
+            {
+              "parentEnumIndex": "d4a02e1d8f1b4c8ba5b99b384a8a6230",
+              "defineId": "118431",
+              "enumIndex": "e2f847fe19844705b9bc590e1fd7be26",
+              "enumKey": "SFT-03.01.03",
+              "enumValue": "室内连廊",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.01.00"
+            },
+            {
+              "parentEnumIndex": "d4a02e1d8f1b4c8ba5b99b384a8a6230",
+              "defineId": "118431",
+              "enumIndex": "095524b1985945b2923bb134e7fabc34",
+              "enumKey": "SFT-03.01.04",
+              "enumValue": "室外连廊",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.01.00"
+            },
+            {
+              "parentEnumIndex": "d4a02e1d8f1b4c8ba5b99b384a8a6230",
+              "defineId": "118431",
+              "enumIndex": "e12b098613b045b2bacc59cff3919610",
+              "enumKey": "SFT-03.01.05",
+              "enumValue": "外廊",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.01.00"
+            },
+            {
+              "parentEnumIndex": "d4a02e1d8f1b4c8ba5b99b384a8a6230",
+              "defineId": "118431",
+              "enumIndex": "200b465f0d3342619325b982b4dd869f",
+              "enumKey": "SFT-03.01.06",
+              "enumValue": "后勤通道",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.01.00"
+            },
+            {
+              "parentEnumIndex": "d4a02e1d8f1b4c8ba5b99b384a8a6230",
+              "defineId": "118431",
+              "enumIndex": "2f19dabf262748aaa50be95fb02e0762",
+              "enumKey": "SFT-03.01.07",
+              "enumValue": "步行街",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.01.00"
+            },
+            {
+              "parentEnumIndex": "d4a02e1d8f1b4c8ba5b99b384a8a6230",
+              "defineId": "118431",
+              "enumIndex": "6825c72d7c404f51b50316803406119d",
+              "enumKey": "SFT-03.01.08",
+              "enumValue": "过道",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.01.00"
+            },
+            {
+              "parentEnumIndex": "d4a02e1d8f1b4c8ba5b99b384a8a6230",
+              "defineId": "118431",
+              "enumIndex": "8051a737d1964100befdd3a9b2bbfa5c",
+              "enumKey": "SFT-03.01.09",
+              "enumValue": "门厅",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.01.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-03.00.00"
+        },
+        {
+          "parentEnumIndex": "135713635a8a42588218e66cdf4bdbdd",
+          "defineId": "118431",
+          "enumIndex": "4c703c0574d946798cd3c1771361936d",
+          "enumKey": "SFT-03.02.00",
+          "enumValue": "步行道",
+          "children": [
+            {
+              "parentEnumIndex": "4c703c0574d946798cd3c1771361936d",
+              "defineId": "118431",
+              "enumIndex": "640818549a16480e8fa1abb2d8fa9105",
+              "enumKey": "SFT-03.02.01",
+              "enumValue": "人行道",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.02.00"
+            },
+            {
+              "parentEnumIndex": "4c703c0574d946798cd3c1771361936d",
+              "defineId": "118431",
+              "enumIndex": "d23d4de5188048fba475766ae5f2889a",
+              "enumKey": "SFT-03.02.02",
+              "enumValue": "人行坡道",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.02.00"
+            },
+            {
+              "parentEnumIndex": "4c703c0574d946798cd3c1771361936d",
+              "defineId": "118431",
+              "enumIndex": "9f902578f5a54477887a45da2657582c",
+              "enumKey": "SFT-03.02.03",
+              "enumValue": "人行天桥",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.02.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-03.00.00"
+        },
+        {
+          "parentEnumIndex": "135713635a8a42588218e66cdf4bdbdd",
+          "defineId": "118431",
+          "enumIndex": "4fe4ee2c132b46d6a714115874cabf65",
+          "enumKey": "SFT-03.03.00",
+          "enumValue": "电梯",
+          "children": [
+            {
+              "parentEnumIndex": "4fe4ee2c132b46d6a714115874cabf65",
+              "defineId": "118431",
+              "enumIndex": "21c9af4918c9472188afc953150a90e6",
+              "enumKey": "SFT-03.03.01",
+              "enumValue": "电梯厅",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.03.00"
+            },
+            {
+              "parentEnumIndex": "4fe4ee2c132b46d6a714115874cabf65",
+              "defineId": "118431",
+              "enumIndex": "84b5aa4cac2e40bcbf292106ddf5c509",
+              "enumKey": "SFT-03.03.02",
+              "enumValue": "客梯井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.03.00"
+            },
+            {
+              "parentEnumIndex": "4fe4ee2c132b46d6a714115874cabf65",
+              "defineId": "118431",
+              "enumIndex": "1a785a2bff4f41539304edd8135252ab",
+              "enumKey": "SFT-03.03.03",
+              "enumValue": "货梯井",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.03.00"
+            },
+            {
+              "parentEnumIndex": "4fe4ee2c132b46d6a714115874cabf65",
+              "defineId": "118431",
+              "enumIndex": "813ea6d449f3439fb2f02977c41b869b",
+              "enumKey": "SFT-03.03.04",
+              "enumValue": "电梯机房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.03.00"
+            },
+            {
+              "parentEnumIndex": "4fe4ee2c132b46d6a714115874cabf65",
+              "defineId": "118431",
+              "enumIndex": "7e820d46aae84c9099c2bb3857e6a564",
+              "enumKey": "SFT-03.03.05",
+              "enumValue": "电梯底坑",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.03.00"
+            },
+            {
+              "parentEnumIndex": "4fe4ee2c132b46d6a714115874cabf65",
+              "defineId": "118431",
+              "enumIndex": "1271437d68184c6d8449761cdb8d916a",
+              "enumKey": "SFT-03.03.06",
+              "enumValue": "扶梯厅",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.03.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-03.00.00"
+        },
+        {
+          "parentEnumIndex": "135713635a8a42588218e66cdf4bdbdd",
+          "defineId": "118431",
+          "enumIndex": "4b70b8761f004483a4d4b576148a39b4",
+          "enumKey": "SFT-03.04.00",
+          "enumValue": "楼梯",
+          "children": [
+            {
+              "parentEnumIndex": "4b70b8761f004483a4d4b576148a39b4",
+              "defineId": "118431",
+              "enumIndex": "5d584e81b84548d6aeafe82f27bca408",
+              "enumKey": "SFT-03.04.01",
+              "enumValue": "疏散楼梯间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.04.00"
+            },
+            {
+              "parentEnumIndex": "4b70b8761f004483a4d4b576148a39b4",
+              "defineId": "118431",
+              "enumIndex": "8ed7ca6e25a044869a17f040f4832962",
+              "enumKey": "SFT-03.04.02",
+              "enumValue": "开敞楼梯",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.04.00"
+            },
+            {
+              "parentEnumIndex": "4b70b8761f004483a4d4b576148a39b4",
+              "defineId": "118431",
+              "enumIndex": "00ab0bcbbfc6482995bd711c5c8a4f43",
+              "enumKey": "SFT-03.04.03",
+              "enumValue": "非疏散楼梯",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-03.04.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-03.00.00"
+        },
+        {
+          "parentEnumIndex": "135713635a8a42588218e66cdf4bdbdd",
+          "defineId": "118431",
+          "enumIndex": "7437578b31354940b35f34f3c1a30d71",
+          "enumKey": "SFT-03.05.00",
+          "enumValue": "直升机坪",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-03.00.00"
+        },
+        {
+          "parentEnumIndex": "135713635a8a42588218e66cdf4bdbdd",
+          "defineId": "118431",
+          "enumIndex": "0d16dae7935840b994a216370e7cf109",
+          "enumKey": "SFT-03.06.00",
+          "enumValue": "码头",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-03.00.00"
+        },
+        {
+          "parentEnumIndex": "135713635a8a42588218e66cdf4bdbdd",
+          "defineId": "118431",
+          "enumIndex": "d63db6c595634267999701e7e0a13251",
+          "enumKey": "SFT-03.07.00",
+          "enumValue": "车道",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-03.00.00"
+        }
+      ],
+      "dataType": "ENUM",
+      "upperLimitIncludeState": false,
+      "lowerLimitIncludeState": false
+    },
+    {
+      "defineId": "118431",
+      "enumIndex": "bcf57ea822d14960ac44e10bc64a1669",
+      "enumKey": "SFT-04.00.00",
+      "enumValue": "停车场空间",
+      "children": [
+        {
+          "parentEnumIndex": "bcf57ea822d14960ac44e10bc64a1669",
+          "defineId": "118431",
+          "enumIndex": "8aeeba900b6848949e9356635ffe1241",
+          "enumKey": "SFT-04.01.00",
+          "enumValue": "停车场车道",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-04.00.00"
+        },
+        {
+          "parentEnumIndex": "bcf57ea822d14960ac44e10bc64a1669",
+          "defineId": "118431",
+          "enumIndex": "87357f8ea879497c987ca7fc16b7fedb",
+          "enumKey": "SFT-04.02.00",
+          "enumValue": "车位区",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-04.00.00"
+        },
+        {
+          "parentEnumIndex": "bcf57ea822d14960ac44e10bc64a1669",
+          "defineId": "118431",
+          "enumIndex": "f899c247234248e4b8ccf9cebb1d6209",
+          "enumKey": "SFT-04.03.00",
+          "enumValue": "停车场坡道",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-04.00.00"
+        },
+        {
+          "parentEnumIndex": "bcf57ea822d14960ac44e10bc64a1669",
+          "defineId": "118431",
+          "enumIndex": "0cba46420e654c0789a4013d9748d684",
+          "enumKey": "SFT-04.04.00",
+          "enumValue": "停车场出入口",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-04.00.00"
+        },
+        {
+          "parentEnumIndex": "bcf57ea822d14960ac44e10bc64a1669",
+          "defineId": "118431",
+          "enumIndex": "5704a4e25dec4f97aec3edab5063252c",
+          "enumKey": "SFT-04.05.00",
+          "enumValue": "停车场出口",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-04.00.00"
+        },
+        {
+          "parentEnumIndex": "bcf57ea822d14960ac44e10bc64a1669",
+          "defineId": "118431",
+          "enumIndex": "2dde772cc266400693748d511aaddb48",
+          "enumKey": "SFT-04.06.00",
+          "enumValue": "停车场入口",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-04.00.00"
+        },
+        {
+          "parentEnumIndex": "bcf57ea822d14960ac44e10bc64a1669",
+          "defineId": "118431",
+          "enumIndex": "486844b621164d13881c1e91a5f69bce",
+          "enumKey": "SFT-04.07.00",
+          "enumValue": "机械立体停车位",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-04.00.00"
+        }
+      ],
+      "dataType": "ENUM",
+      "upperLimitIncludeState": false,
+      "lowerLimitIncludeState": false
+    },
+    {
+      "defineId": "118431",
+      "enumIndex": "04de2473da41431ba905ac259578ada5",
+      "enumKey": "SFT-05.00.00",
+      "enumValue": "人防避难",
+      "children": [
+        {
+          "parentEnumIndex": "04de2473da41431ba905ac259578ada5",
+          "defineId": "118431",
+          "enumIndex": "1792fa30ec004871a0f60aa958c01ea2",
+          "enumKey": "SFT-05.01.00",
+          "enumValue": "避难空间",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-05.00.00"
+        },
+        {
+          "parentEnumIndex": "04de2473da41431ba905ac259578ada5",
+          "defineId": "118431",
+          "enumIndex": "710786295b864db19a4f961e6888c779",
+          "enumKey": "SFT-05.02.00",
+          "enumValue": "避难层",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-05.00.00"
+        },
+        {
+          "parentEnumIndex": "04de2473da41431ba905ac259578ada5",
+          "defineId": "118431",
+          "enumIndex": "d2222e8049c042e382181bd5a1435313",
+          "enumKey": "SFT-05.03.00",
+          "enumValue": "避难通道",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-05.00.00"
+        },
+        {
+          "parentEnumIndex": "04de2473da41431ba905ac259578ada5",
+          "defineId": "118431",
+          "enumIndex": "5e444f6ff46d463eafee83de6ef95d88",
+          "enumKey": "SFT-05.04.00",
+          "enumValue": "物资库",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-05.00.00"
+        },
+        {
+          "parentEnumIndex": "04de2473da41431ba905ac259578ada5",
+          "defineId": "118431",
+          "enumIndex": "b98f2ce018684e418a445d048abae0d1",
+          "enumKey": "SFT-05.05.00",
+          "enumValue": "前室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-05.00.00"
+        },
+        {
+          "parentEnumIndex": "04de2473da41431ba905ac259578ada5",
+          "defineId": "118431",
+          "enumIndex": "61236fc0f3a44882ab0cc5db697bb486",
+          "enumKey": "SFT-05.06.00",
+          "enumValue": "医疗救护站",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-05.00.00"
+        },
+        {
+          "parentEnumIndex": "04de2473da41431ba905ac259578ada5",
+          "defineId": "118431",
+          "enumIndex": "b9f0a2921a44457faa7ea72acc65ae62",
+          "enumKey": "SFT-05.07.00",
+          "enumValue": "集气室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-05.00.00"
+        },
+        {
+          "parentEnumIndex": "04de2473da41431ba905ac259578ada5",
+          "defineId": "118431",
+          "enumIndex": "11969e6a1f954119b9ac18100c4c248f",
+          "enumKey": "SFT-05.08.00",
+          "enumValue": "滤毒室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-05.00.00"
+        },
+        {
+          "parentEnumIndex": "04de2473da41431ba905ac259578ada5",
+          "defineId": "118431",
+          "enumIndex": "274d4337733a48c4b18952711cfbb9bb",
+          "enumKey": "SFT-05.09.00",
+          "enumValue": "除尘室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-05.00.00"
+        },
+        {
+          "parentEnumIndex": "04de2473da41431ba905ac259578ada5",
+          "defineId": "118431",
+          "enumIndex": "f10f2ed4804b4f2580781f7de43ab187",
+          "enumKey": "SFT-05.10.00",
+          "enumValue": "扩散室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-05.00.00"
+        },
+        {
+          "parentEnumIndex": "04de2473da41431ba905ac259578ada5",
+          "defineId": "118431",
+          "enumIndex": "1458f7c0d2ac47059b85a6c3c802da3e",
+          "enumKey": "SFT-05.11.00",
+          "enumValue": "防化值班室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-05.00.00"
+        }
+      ],
+      "dataType": "ENUM",
+      "upperLimitIncludeState": false,
+      "lowerLimitIncludeState": false
+    },
+    {
+      "defineId": "118431",
+      "enumIndex": "10cbbd5386da4ae88add7249fed25bed",
+      "enumKey": "SFT-06.00.00",
+      "enumValue": "商业类空间",
+      "children": [
+        {
+          "parentEnumIndex": "10cbbd5386da4ae88add7249fed25bed",
+          "defineId": "118431",
+          "enumIndex": "c5e5bc0e85224d3a8b94f6faf39b765c",
+          "enumKey": "SFT-06.01.00",
+          "enumValue": "商铺",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-06.00.00"
+        },
+        {
+          "parentEnumIndex": "10cbbd5386da4ae88add7249fed25bed",
+          "defineId": "118431",
+          "enumIndex": "792e297ff35e464cbbd806105263254a",
+          "enumKey": "SFT-06.02.00",
+          "enumValue": "展示空间",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-06.00.00"
+        },
+        {
+          "parentEnumIndex": "10cbbd5386da4ae88add7249fed25bed",
+          "defineId": "118431",
+          "enumIndex": "7468123f626e494b8f9c8882c7913895",
+          "enumKey": "SFT-06.03.00",
+          "enumValue": "自动贩卖机区",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-06.00.00"
+        },
+        {
+          "parentEnumIndex": "10cbbd5386da4ae88add7249fed25bed",
+          "defineId": "118431",
+          "enumIndex": "7c58bd991c5c411aa32324ecb5e0639f",
+          "enumKey": "SFT-06.05.00",
+          "enumValue": "收银台",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-06.00.00"
+        },
+        {
+          "parentEnumIndex": "10cbbd5386da4ae88add7249fed25bed",
+          "defineId": "118431",
+          "enumIndex": "59f33277185e4eedb7144ddb7cac483d",
+          "enumKey": "SFT-06.06.00",
+          "enumValue": "多种经营点",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-06.00.00"
+        }
+      ],
+      "dataType": "ENUM",
+      "upperLimitIncludeState": false,
+      "lowerLimitIncludeState": false
+    },
+    {
+      "defineId": "118431",
+      "enumIndex": "f7f66d0f655f4472bc5811d0b984bd17",
+      "enumKey": "SFT-07.00.00",
+      "enumValue": "办公类空间",
+      "children": [
+        {
+          "parentEnumIndex": "f7f66d0f655f4472bc5811d0b984bd17",
+          "defineId": "118431",
+          "enumIndex": "e9750399d88241e7bda3a24e2ab3d613",
+          "enumKey": "SFT-07.01.00",
+          "enumValue": "办公空间",
+          "children": [
+            {
+              "parentEnumIndex": "e9750399d88241e7bda3a24e2ab3d613",
+              "defineId": "118431",
+              "enumIndex": "d550c44b91304b83be4e0cb4c5149206",
+              "enumKey": "SFT-07.01.01",
+              "enumValue": "办公室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-07.01.00"
+            },
+            {
+              "parentEnumIndex": "e9750399d88241e7bda3a24e2ab3d613",
+              "defineId": "118431",
+              "enumIndex": "481fbf63c4324a10a6e7329e8dc814cd",
+              "enumKey": "SFT-07.01.02",
+              "enumValue": "开放办公区",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-07.01.00"
+            },
+            {
+              "parentEnumIndex": "e9750399d88241e7bda3a24e2ab3d613",
+              "defineId": "118431",
+              "enumIndex": "c82134b425a8432d8a7a9ba3f490b4da",
+              "enumKey": "SFT-07.01.03",
+              "enumValue": "工位",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-07.01.00"
+            },
+            {
+              "parentEnumIndex": "e9750399d88241e7bda3a24e2ab3d613",
+              "defineId": "118431",
+              "enumIndex": "050e9c6e2e25482aa39c0ee90d55d4e5",
+              "enumKey": "SFT-07.01.04",
+              "enumValue": "租赁办公空间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-07.01.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-07.00.00"
+        },
+        {
+          "parentEnumIndex": "f7f66d0f655f4472bc5811d0b984bd17",
+          "defineId": "118431",
+          "enumIndex": "90a68bb826c14f01b6950897f876fb83",
+          "enumKey": "SFT-07.02.00",
+          "enumValue": "会议空间",
+          "children": [
+            {
+              "parentEnumIndex": "90a68bb826c14f01b6950897f876fb83",
+              "defineId": "118431",
+              "enumIndex": "313f26e8b8594847aa74a8ce351fe860",
+              "enumKey": "SFT-07.02.01",
+              "enumValue": "会议室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-07.02.00"
+            },
+            {
+              "parentEnumIndex": "90a68bb826c14f01b6950897f876fb83",
+              "defineId": "118431",
+              "enumIndex": "7b5099fd02ff4f1d80ddf0792f20db98",
+              "enumKey": "SFT-07.02.02",
+              "enumValue": "多功能厅",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-07.02.00"
+            },
+            {
+              "parentEnumIndex": "90a68bb826c14f01b6950897f876fb83",
+              "defineId": "118431",
+              "enumIndex": "576d144f6a9844ca92c85f175e33be6c",
+              "enumKey": "SFT-07.02.03",
+              "enumValue": "洽谈室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-07.02.00"
+            },
+            {
+              "parentEnumIndex": "90a68bb826c14f01b6950897f876fb83",
+              "defineId": "118431",
+              "enumIndex": "821a573d60c44e068b1040c492717f52",
+              "enumKey": "SFT-07.02.04",
+              "enumValue": "开放讨论区",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-07.02.00"
+            },
+            {
+              "parentEnumIndex": "90a68bb826c14f01b6950897f876fb83",
+              "defineId": "118431",
+              "enumIndex": "7c1471ca511c458b8322d1dfde3fe355",
+              "enumKey": "SFT-07.02.05",
+              "enumValue": "培训室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-07.02.00"
+            },
+            {
+              "parentEnumIndex": "90a68bb826c14f01b6950897f876fb83",
+              "defineId": "118431",
+              "enumIndex": "41b22050329b4e1abb38bb78a41e04da",
+              "enumKey": "SFT-07.02.06",
+              "enumValue": "会议厅",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-07.02.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-07.00.00"
+        },
+        {
+          "parentEnumIndex": "f7f66d0f655f4472bc5811d0b984bd17",
+          "defineId": "118431",
+          "enumIndex": "3fb2cc83c6c94d3aa6fd35ba72649ea2",
+          "enumKey": "SFT-07.03.00",
+          "enumValue": "复印室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-07.00.00"
+        },
+        {
+          "parentEnumIndex": "f7f66d0f655f4472bc5811d0b984bd17",
+          "defineId": "118431",
+          "enumIndex": "15cf54e1182d4c678c4ea057484acada",
+          "enumKey": "SFT-07.04.00",
+          "enumValue": "资料室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-07.00.00"
+        },
+        {
+          "parentEnumIndex": "f7f66d0f655f4472bc5811d0b984bd17",
+          "defineId": "118431",
+          "enumIndex": "262f0bac7e1c4ba4a25359f5edb392f8",
+          "enumKey": "SFT-07.05.00",
+          "enumValue": "企业展示区",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-07.00.00"
+        },
+        {
+          "parentEnumIndex": "f7f66d0f655f4472bc5811d0b984bd17",
+          "defineId": "118431",
+          "enumIndex": "f9fa5e84347d4dcfb19dd5c20c898633",
+          "enumKey": "SFT-07.06.00",
+          "enumValue": "财务室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-07.00.00"
+        }
+      ],
+      "dataType": "ENUM",
+      "upperLimitIncludeState": false,
+      "lowerLimitIncludeState": false
+    },
+    {
+      "defineId": "118431",
+      "enumIndex": "b6fb53bee09a49dc833dd398edf3ea12",
+      "enumKey": "SFT-08.00.00",
+      "enumValue": "酒店类空间",
+      "children": [
+        {
+          "parentEnumIndex": "b6fb53bee09a49dc833dd398edf3ea12",
+          "defineId": "118431",
+          "enumIndex": "4d5a9c3bfec4429da300515f780ef2b4",
+          "enumKey": "SFT-08.01.00",
+          "enumValue": "客房",
+          "children": [
+            {
+              "parentEnumIndex": "4d5a9c3bfec4429da300515f780ef2b4",
+              "defineId": "118431",
+              "enumIndex": "dd8690295c8c41b6b891331174f0c2c4",
+              "enumKey": "SFT-08.01.01",
+              "enumValue": "标准间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-08.01.00"
+            },
+            {
+              "parentEnumIndex": "4d5a9c3bfec4429da300515f780ef2b4",
+              "defineId": "118431",
+              "enumIndex": "84e08f18b7944a6a81c9d0c38466b34b",
+              "enumKey": "SFT-08.01.02",
+              "enumValue": "大床房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-08.01.00"
+            },
+            {
+              "parentEnumIndex": "4d5a9c3bfec4429da300515f780ef2b4",
+              "defineId": "118431",
+              "enumIndex": "265ca678d6754f57ac8b0d8617509d8c",
+              "enumKey": "SFT-08.01.03",
+              "enumValue": "套房",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-08.01.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-08.00.00"
+        },
+        {
+          "parentEnumIndex": "b6fb53bee09a49dc833dd398edf3ea12",
+          "defineId": "118431",
+          "enumIndex": "f81d74793c694d2591f2db949420871d",
+          "enumKey": "SFT-08.02.00",
+          "enumValue": "布草间",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-08.00.00"
+        },
+        {
+          "parentEnumIndex": "b6fb53bee09a49dc833dd398edf3ea12",
+          "defineId": "118431",
+          "enumIndex": "f97ac72a1e90473d89ad5a71de00c84e",
+          "enumKey": "SFT-08.03.00",
+          "enumValue": "酒店旅馆后勤区",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-08.00.00"
+        },
+        {
+          "parentEnumIndex": "b6fb53bee09a49dc833dd398edf3ea12",
+          "defineId": "118431",
+          "enumIndex": "6f611128e09e4668879d868296a8a5a5",
+          "enumKey": "SFT-08.06.00",
+          "enumValue": "洗衣/干洗房",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-08.00.00"
+        }
+      ],
+      "dataType": "ENUM",
+      "upperLimitIncludeState": false,
+      "lowerLimitIncludeState": false
+    },
+    {
+      "defineId": "118431",
+      "enumIndex": "9ada8a670f7749959a9fe1b1e93d9a5f",
+      "enumKey": "SFT-16.00.00",
+      "enumValue": "餐饮类空间",
+      "children": [
+        {
+          "parentEnumIndex": "9ada8a670f7749959a9fe1b1e93d9a5f",
+          "defineId": "118431",
+          "enumIndex": "e989846eb39b4f9fad81996299930901",
+          "enumKey": "SFT-16.01.00",
+          "enumValue": "中餐厅",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-16.00.00"
+        },
+        {
+          "parentEnumIndex": "9ada8a670f7749959a9fe1b1e93d9a5f",
+          "defineId": "118431",
+          "enumIndex": "f64d1ba62fd44d5c8f1b149f7b7b46f6",
+          "enumKey": "SFT-16.02.00",
+          "enumValue": "西餐厅",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-16.00.00"
+        },
+        {
+          "parentEnumIndex": "9ada8a670f7749959a9fe1b1e93d9a5f",
+          "defineId": "118431",
+          "enumIndex": "900916adb7b343d0980d22595e633bf0",
+          "enumKey": "SFT-16.03.00",
+          "enumValue": "宴会厅",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-16.00.00"
+        },
+        {
+          "parentEnumIndex": "9ada8a670f7749959a9fe1b1e93d9a5f",
+          "defineId": "118431",
+          "enumIndex": "3ef8db4c9d804eea8a76d0e59332ddfe",
+          "enumKey": "SFT-16.04.00",
+          "enumValue": "就餐区",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-16.00.00"
+        },
+        {
+          "parentEnumIndex": "9ada8a670f7749959a9fe1b1e93d9a5f",
+          "defineId": "118431",
+          "enumIndex": "c371767e0ea54196bd6b1f85132eb6d3",
+          "enumKey": "SFT-16.05.00",
+          "enumValue": "美食广场",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-16.00.00"
+        },
+        {
+          "parentEnumIndex": "9ada8a670f7749959a9fe1b1e93d9a5f",
+          "defineId": "118431",
+          "enumIndex": "1e1e9d05d9a94d25b1a6fd7458b0091c",
+          "enumKey": "SFT-16.06.00",
+          "enumValue": "酒吧",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-16.00.00"
+        },
+        {
+          "parentEnumIndex": "9ada8a670f7749959a9fe1b1e93d9a5f",
+          "defineId": "118431",
+          "enumIndex": "0d605c4d97a54431ac80a40ec3af0a00",
+          "enumKey": "SFT-16.07.00",
+          "enumValue": "咖啡厅",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-16.00.00"
+        },
+        {
+          "parentEnumIndex": "9ada8a670f7749959a9fe1b1e93d9a5f",
+          "defineId": "118431",
+          "enumIndex": "2dec6695036d44289a1188f23ded456f",
+          "enumKey": "SFT-16.08.00",
+          "enumValue": "茶水间",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-16.00.00"
+        },
+        {
+          "parentEnumIndex": "9ada8a670f7749959a9fe1b1e93d9a5f",
+          "defineId": "118431",
+          "enumIndex": "357dfac0ecc94cf987a7a5da8dcd01e3",
+          "enumKey": "SFT-16.09.00",
+          "enumValue": "厨房空间",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-16.00.00"
+        },
+        {
+          "parentEnumIndex": "9ada8a670f7749959a9fe1b1e93d9a5f",
+          "defineId": "118431",
+          "enumIndex": "a0e82296d5114ac89ed808882abbc8e8",
+          "enumKey": "SFT-16.10.00",
+          "enumValue": "冷藏室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-16.00.00"
+        },
+        {
+          "parentEnumIndex": "9ada8a670f7749959a9fe1b1e93d9a5f",
+          "defineId": "118431",
+          "enumIndex": "c6736f15b69d499c9ced99d5e298e909",
+          "enumKey": "SFT-16.11.00",
+          "enumValue": "冷冻室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-16.00.00"
+        },
+        {
+          "parentEnumIndex": "9ada8a670f7749959a9fe1b1e93d9a5f",
+          "defineId": "118431",
+          "enumIndex": "d836e39a3c3348e7a7eded207dde10ca",
+          "enumKey": "SFT-16.12.00",
+          "enumValue": "员工餐厅",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-16.00.00"
+        },
+        {
+          "parentEnumIndex": "9ada8a670f7749959a9fe1b1e93d9a5f",
+          "defineId": "118431",
+          "enumIndex": "1578ecced9584f5e94cb246747ecfc20",
+          "enumKey": "SFT-16.13.00",
+          "enumValue": "家用厨房",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-16.00.00"
+        },
+        {
+          "parentEnumIndex": "9ada8a670f7749959a9fe1b1e93d9a5f",
+          "defineId": "118431",
+          "enumIndex": "952456c85f014e3e8e7f8308a8e65e0a",
+          "enumKey": "SFT-16.14.00",
+          "enumValue": "家用餐厅",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-16.00.00"
+        }
+      ],
+      "dataType": "ENUM",
+      "upperLimitIncludeState": false,
+      "lowerLimitIncludeState": false
+    },
+    {
+      "defineId": "118431",
+      "enumIndex": "4bea9733a05c4b158a7fd873add1189c",
+      "enumKey": "SFT-09.00.00",
+      "enumValue": "住宅空间",
+      "children": [
+        {
+          "parentEnumIndex": "4bea9733a05c4b158a7fd873add1189c",
+          "defineId": "118431",
+          "enumIndex": "ebc13676767147609188b9f4001e1945",
+          "enumKey": "SFT-09.01.00",
+          "enumValue": "住宅与公寓",
+          "children": [
+            {
+              "parentEnumIndex": "ebc13676767147609188b9f4001e1945",
+              "defineId": "118431",
+              "enumIndex": "e000d61c87dd4f96ae0c8bb2ebcf76db",
+              "enumKey": "SFT-09.01.03",
+              "enumValue": "起居室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-09.01.00"
+            },
+            {
+              "parentEnumIndex": "ebc13676767147609188b9f4001e1945",
+              "defineId": "118431",
+              "enumIndex": "3d09b3e5c91d4b4c830a97104ec9ed81",
+              "enumKey": "SFT-09.01.06",
+              "enumValue": "卧室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-09.01.00"
+            },
+            {
+              "parentEnumIndex": "ebc13676767147609188b9f4001e1945",
+              "defineId": "118431",
+              "enumIndex": "801734c4c3334e61bf51c57c8701a6a6",
+              "enumKey": "SFT-09.01.09",
+              "enumValue": "庭院",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-09.01.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-09.00.00"
+        },
+        {
+          "parentEnumIndex": "4bea9733a05c4b158a7fd873add1189c",
+          "defineId": "118431",
+          "enumIndex": "70db5b0c29214137aec8b61837b51d5d",
+          "enumKey": "SFT-09.02.00",
+          "enumValue": "宿舍空间",
+          "children": [
+            {
+              "parentEnumIndex": "70db5b0c29214137aec8b61837b51d5d",
+              "defineId": "118431",
+              "enumIndex": "769220597920403e8201fca4f0c8d2af",
+              "enumKey": "SFT-09.02.01",
+              "enumValue": "宿舍",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-09.02.00"
+            },
+            {
+              "parentEnumIndex": "70db5b0c29214137aec8b61837b51d5d",
+              "defineId": "118431",
+              "enumIndex": "9709b1aeb8284574b69267d102218c61",
+              "enumKey": "SFT-09.02.02",
+              "enumValue": "单人宿舍",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-09.02.00"
+            },
+            {
+              "parentEnumIndex": "70db5b0c29214137aec8b61837b51d5d",
+              "defineId": "118431",
+              "enumIndex": "00609d81674844fd874b26f01a4be1f4",
+              "enumKey": "SFT-09.02.03",
+              "enumValue": "双人宿舍",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-09.02.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-09.00.00"
+        }
+      ],
+      "dataType": "ENUM",
+      "upperLimitIncludeState": false,
+      "lowerLimitIncludeState": false
+    },
+    {
+      "defineId": "118431",
+      "enumIndex": "3f950bd1697d4315b52e99cbdc8bbab0",
+      "enumKey": "SFT-10.00.00",
+      "enumValue": "教育培训空间",
+      "children": [
+        {
+          "parentEnumIndex": "3f950bd1697d4315b52e99cbdc8bbab0",
+          "defineId": "118431",
+          "enumIndex": "e1f80246b03942da8556d981ee77d281",
+          "enumKey": "SFT-10.01.00",
+          "enumValue": "教室",
+          "children": [
+            {
+              "parentEnumIndex": "e1f80246b03942da8556d981ee77d281",
+              "defineId": "118431",
+              "enumIndex": "e2dceaf6a5894641a548de98b433c900",
+              "enumKey": "SFT-10.01.01",
+              "enumValue": "普通教室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-10.01.00"
+            },
+            {
+              "parentEnumIndex": "e1f80246b03942da8556d981ee77d281",
+              "defineId": "118431",
+              "enumIndex": "713c9a830da44b818159b1f3172092b1",
+              "enumKey": "SFT-10.01.02",
+              "enumValue": "合班教室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-10.01.00"
+            },
+            {
+              "parentEnumIndex": "e1f80246b03942da8556d981ee77d281",
+              "defineId": "118431",
+              "enumIndex": "f32aafe33a08442a8ee031808960b277",
+              "enumKey": "SFT-10.01.03",
+              "enumValue": "专用教室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-10.01.00"
+            },
+            {
+              "parentEnumIndex": "e1f80246b03942da8556d981ee77d281",
+              "defineId": "118431",
+              "enumIndex": "c986b37c054341b8b6834d1ba8d941e8",
+              "enumKey": "SFT-10.01.04",
+              "enumValue": "实验室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-10.01.00"
+            },
+            {
+              "parentEnumIndex": "e1f80246b03942da8556d981ee77d281",
+              "defineId": "118431",
+              "enumIndex": "2bf0d5936d7249b9b0ef5785b0d2b34a",
+              "enumKey": "SFT-10.01.05",
+              "enumValue": "计算机教室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-10.01.00"
+            },
+            {
+              "parentEnumIndex": "e1f80246b03942da8556d981ee77d281",
+              "defineId": "118431",
+              "enumIndex": "4a1c4352a4654318bf8acd5685402301",
+              "enumKey": "SFT-10.01.06",
+              "enumValue": "礼堂/讲堂",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-10.01.00"
+            },
+            {
+              "parentEnumIndex": "e1f80246b03942da8556d981ee77d281",
+              "defineId": "118431",
+              "enumIndex": "c86faa303b894373b3f3e3e9bbabbe36",
+              "enumKey": "SFT-10.01.07",
+              "enumValue": "研讨室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-10.01.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-10.00.00"
+        },
+        {
+          "parentEnumIndex": "3f950bd1697d4315b52e99cbdc8bbab0",
+          "defineId": "118431",
+          "enumIndex": "bcd79322c3054baa8444a6fa5c5bf9bd",
+          "enumKey": "SFT-10.02.00",
+          "enumValue": "教学管理用房",
+          "children": [
+            {
+              "parentEnumIndex": "bcd79322c3054baa8444a6fa5c5bf9bd",
+              "defineId": "118431",
+              "enumIndex": "17404a752d2d45808b05771824c2ab34",
+              "enumKey": "SFT-10.02.01",
+              "enumValue": "教务处",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-10.02.00"
+            },
+            {
+              "parentEnumIndex": "bcd79322c3054baa8444a6fa5c5bf9bd",
+              "defineId": "118431",
+              "enumIndex": "dc05282f6cd6402ba7b9f9c1bf7dba72",
+              "enumKey": "SFT-10.02.02",
+              "enumValue": "教研室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-10.02.00"
+            },
+            {
+              "parentEnumIndex": "bcd79322c3054baa8444a6fa5c5bf9bd",
+              "defineId": "118431",
+              "enumIndex": "a7ef6cb802904c9dbcf9f7c9998f9362",
+              "enumKey": "SFT-10.02.03",
+              "enumValue": "校长办公室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-10.02.00"
+            },
+            {
+              "parentEnumIndex": "bcd79322c3054baa8444a6fa5c5bf9bd",
+              "defineId": "118431",
+              "enumIndex": "0c57c8d3641440c7ac7d0d02dfbcb3fc",
+              "enumKey": "SFT-10.02.04",
+              "enumValue": "教工活动室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-10.02.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-10.00.00"
+        },
+        {
+          "parentEnumIndex": "3f950bd1697d4315b52e99cbdc8bbab0",
+          "defineId": "118431",
+          "enumIndex": "741b8a10e4164e6a9036fb7bb2562110",
+          "enumKey": "SFT-10.03.00",
+          "enumValue": "教师办公用房",
+          "children": [
+            {
+              "parentEnumIndex": "741b8a10e4164e6a9036fb7bb2562110",
+              "defineId": "118431",
+              "enumIndex": "6d5101c6f2824802883ba3b27abc4bb2",
+              "enumKey": "SFT-10.03.01",
+              "enumValue": "教具室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-10.03.00"
+            },
+            {
+              "parentEnumIndex": "741b8a10e4164e6a9036fb7bb2562110",
+              "defineId": "118431",
+              "enumIndex": "32775c61ad734697beef3e193688d3d8",
+              "enumKey": "SFT-10.03.02",
+              "enumValue": "教师办公室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-10.03.00"
+            },
+            {
+              "parentEnumIndex": "741b8a10e4164e6a9036fb7bb2562110",
+              "defineId": "118431",
+              "enumIndex": "d39aa37ba453449b9e1a6cd6a32799d4",
+              "enumKey": "SFT-10.03.03",
+              "enumValue": "准备室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-10.03.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-10.00.00"
+        },
+        {
+          "parentEnumIndex": "3f950bd1697d4315b52e99cbdc8bbab0",
+          "defineId": "118431",
+          "enumIndex": "910a0bf110fb41e1868c89326da08c61",
+          "enumKey": "SFT-10.04.00",
+          "enumValue": "体育活动空间",
+          "children": [
+            {
+              "parentEnumIndex": "910a0bf110fb41e1868c89326da08c61",
+              "defineId": "118431",
+              "enumIndex": "cf111a4190654007a5a958f64f2067c0",
+              "enumKey": "SFT-10.04.01",
+              "enumValue": "操场",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-10.04.00"
+            },
+            {
+              "parentEnumIndex": "910a0bf110fb41e1868c89326da08c61",
+              "defineId": "118431",
+              "enumIndex": "834802fc5ba2498a8b1f5d5399300b4b",
+              "enumKey": "SFT-10.04.02",
+              "enumValue": "风雨操场",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-10.04.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-10.00.00"
+        }
+      ],
+      "dataType": "ENUM",
+      "upperLimitIncludeState": false,
+      "lowerLimitIncludeState": false
+    },
+    {
+      "defineId": "118431",
+      "enumIndex": "b4dcf0f322bd4325b00d24db9d6941d9",
+      "enumKey": "SFT-11.00.00",
+      "enumValue": "实验室空间",
+      "children": [
+        {
+          "parentEnumIndex": "b4dcf0f322bd4325b00d24db9d6941d9",
+          "defineId": "118431",
+          "enumIndex": "0bd9514472884b1d934018b6c002c819",
+          "enumKey": "SFT-11.01.00",
+          "enumValue": "化学实验室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-11.00.00"
+        },
+        {
+          "parentEnumIndex": "b4dcf0f322bd4325b00d24db9d6941d9",
+          "defineId": "118431",
+          "enumIndex": "03c2bfe603094e45b56e180d5147f71f",
+          "enumKey": "SFT-11.02.00",
+          "enumValue": "生物科学实验室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-11.00.00"
+        },
+        {
+          "parentEnumIndex": "b4dcf0f322bd4325b00d24db9d6941d9",
+          "defineId": "118431",
+          "enumIndex": "5c00f243d1514f6093a0a24137f2e76a",
+          "enumKey": "SFT-11.03.00",
+          "enumValue": "物理科学实验室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-11.00.00"
+        },
+        {
+          "parentEnumIndex": "b4dcf0f322bd4325b00d24db9d6941d9",
+          "defineId": "118431",
+          "enumIndex": "8dc2acaaef0f4eae990aa2b04efcfbf4",
+          "enumKey": "SFT-11.04.00",
+          "enumValue": "天文实验室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-11.00.00"
+        },
+        {
+          "parentEnumIndex": "b4dcf0f322bd4325b00d24db9d6941d9",
+          "defineId": "118431",
+          "enumIndex": "7cd638a3c0fb4c078762840a13ba8a7b",
+          "enumKey": "SFT-11.05.00",
+          "enumValue": "地球与环境科学实验室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-11.00.00"
+        },
+        {
+          "parentEnumIndex": "b4dcf0f322bd4325b00d24db9d6941d9",
+          "defineId": "118431",
+          "enumIndex": "cf66634390094c7787fb475c9341d4f8",
+          "enumKey": "SFT-11.06.00",
+          "enumValue": "鉴识实验室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-11.00.00"
+        },
+        {
+          "parentEnumIndex": "b4dcf0f322bd4325b00d24db9d6941d9",
+          "defineId": "118431",
+          "enumIndex": "fa81a7c6a3164c40b00918deebed0225",
+          "enumKey": "SFT-11.07.00",
+          "enumValue": "心理学实验室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-11.00.00"
+        },
+        {
+          "parentEnumIndex": "b4dcf0f322bd4325b00d24db9d6941d9",
+          "defineId": "118431",
+          "enumIndex": "482a603426b94b33acabc62aeff98045",
+          "enumKey": "SFT-11.08.00",
+          "enumValue": "集成实验室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-11.00.00"
+        },
+        {
+          "parentEnumIndex": "b4dcf0f322bd4325b00d24db9d6941d9",
+          "defineId": "118431",
+          "enumIndex": "94654bc6b11c4f48bb32aceda699e487",
+          "enumKey": "SFT-11.09.00",
+          "enumValue": "实验室的存储空间",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-11.00.00"
+        },
+        {
+          "parentEnumIndex": "b4dcf0f322bd4325b00d24db9d6941d9",
+          "defineId": "118431",
+          "enumIndex": "b018daf9a67849cf819ef56628ac4000",
+          "enumKey": "SFT-11.10.00",
+          "enumValue": "实验室支持空间",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-11.00.00"
+        }
+      ],
+      "dataType": "ENUM",
+      "upperLimitIncludeState": false,
+      "lowerLimitIncludeState": false
+    },
+    {
+      "defineId": "118431",
+      "enumIndex": "74febb36be374e0393fcf353bd875364",
+      "enumKey": "SFT-12.00.00",
+      "enumValue": "体育场馆空间",
+      "children": [
+        {
+          "parentEnumIndex": "74febb36be374e0393fcf353bd875364",
+          "defineId": "118431",
+          "enumIndex": "d7d4165028b74eecb9d1cdd215f1f5fe",
+          "enumKey": "SFT-12.01.00",
+          "enumValue": "看台",
+          "children": [
+            {
+              "parentEnumIndex": "d7d4165028b74eecb9d1cdd215f1f5fe",
+              "defineId": "118431",
+              "enumIndex": "7aa281c46da14ea282808845c5c311e1",
+              "enumKey": "SFT-12.01.01",
+              "enumValue": "主席台",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.01.00"
+            },
+            {
+              "parentEnumIndex": "d7d4165028b74eecb9d1cdd215f1f5fe",
+              "defineId": "118431",
+              "enumIndex": "147a48890a43462aba5cfe548625b3b8",
+              "enumKey": "SFT-12.01.02",
+              "enumValue": "普通看台",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.01.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-12.00.00"
+        },
+        {
+          "parentEnumIndex": "74febb36be374e0393fcf353bd875364",
+          "defineId": "118431",
+          "enumIndex": "c7eb068c17564e3bae63869dded170c1",
+          "enumKey": "SFT-12.02.00",
+          "enumValue": "项目场地",
+          "children": [
+            {
+              "parentEnumIndex": "c7eb068c17564e3bae63869dded170c1",
+              "defineId": "118431",
+              "enumIndex": "efce99cc2b06479bbedf10f6c47e9684",
+              "enumKey": "SFT-12.02.01",
+              "enumValue": "足球场",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.02.00"
+            },
+            {
+              "parentEnumIndex": "c7eb068c17564e3bae63869dded170c1",
+              "defineId": "118431",
+              "enumIndex": "94c664b35a0048df8fb03f0a6017f08a",
+              "enumKey": "SFT-12.02.02",
+              "enumValue": "篮球场",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.02.00"
+            },
+            {
+              "parentEnumIndex": "c7eb068c17564e3bae63869dded170c1",
+              "defineId": "118431",
+              "enumIndex": "95d32f321c6547d8b96d1866b2c12704",
+              "enumKey": "SFT-12.02.03",
+              "enumValue": "排球场",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.02.00"
+            },
+            {
+              "parentEnumIndex": "c7eb068c17564e3bae63869dded170c1",
+              "defineId": "118431",
+              "enumIndex": "b3f1eed5f6d246c9a3bb11eaefd52a56",
+              "enumKey": "SFT-12.02.04",
+              "enumValue": "棒球场",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.02.00"
+            },
+            {
+              "parentEnumIndex": "c7eb068c17564e3bae63869dded170c1",
+              "defineId": "118431",
+              "enumIndex": "d251894cbe4242c6ab25e8af58f216a8",
+              "enumKey": "SFT-12.02.05",
+              "enumValue": "垒球场",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.02.00"
+            },
+            {
+              "parentEnumIndex": "c7eb068c17564e3bae63869dded170c1",
+              "defineId": "118431",
+              "enumIndex": "52e89a39d5244039bc9c67a478d33739",
+              "enumKey": "SFT-12.02.06",
+              "enumValue": "网球场",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.02.00"
+            },
+            {
+              "parentEnumIndex": "c7eb068c17564e3bae63869dded170c1",
+              "defineId": "118431",
+              "enumIndex": "4ff2278895604b09b36119b79e6bc75d",
+              "enumKey": "SFT-12.02.07",
+              "enumValue": "高尔夫练习场",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.02.00"
+            },
+            {
+              "parentEnumIndex": "c7eb068c17564e3bae63869dded170c1",
+              "defineId": "118431",
+              "enumIndex": "0e4f765a5b094ad79baa4d314a7fbeb8",
+              "enumKey": "SFT-12.02.08",
+              "enumValue": "溜冰场",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.02.00"
+            },
+            {
+              "parentEnumIndex": "c7eb068c17564e3bae63869dded170c1",
+              "defineId": "118431",
+              "enumIndex": "392b35842b314dea8c17d2d7f143e196",
+              "enumKey": "SFT-12.02.09",
+              "enumValue": "保龄球场",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.02.00"
+            },
+            {
+              "parentEnumIndex": "c7eb068c17564e3bae63869dded170c1",
+              "defineId": "118431",
+              "enumIndex": "08fdbf6135fc4d01b7ac7836a9fd0533",
+              "enumKey": "SFT-12.02.10",
+              "enumValue": "室内练靶场",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.02.00"
+            },
+            {
+              "parentEnumIndex": "c7eb068c17564e3bae63869dded170c1",
+              "defineId": "118431",
+              "enumIndex": "935d5dfa1194424080805452f13b76f9",
+              "enumKey": "SFT-12.02.11",
+              "enumValue": "跑道",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.02.00"
+            },
+            {
+              "parentEnumIndex": "c7eb068c17564e3bae63869dded170c1",
+              "defineId": "118431",
+              "enumIndex": "b2921af935494dc997a2c921927f65aa",
+              "enumKey": "SFT-12.02.12",
+              "enumValue": "训练场",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.02.00"
+            },
+            {
+              "parentEnumIndex": "c7eb068c17564e3bae63869dded170c1",
+              "defineId": "118431",
+              "enumIndex": "cdb8c0f01fb64886b931a84f6ee4bee6",
+              "enumKey": "SFT-12.02.13",
+              "enumValue": "攀岩墙",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.02.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-12.00.00"
+        },
+        {
+          "parentEnumIndex": "74febb36be374e0393fcf353bd875364",
+          "defineId": "118431",
+          "enumIndex": "a23930db21484e87afba00a8b321ebde",
+          "enumKey": "SFT-12.03.00",
+          "enumValue": "泳池",
+          "children": [
+            {
+              "parentEnumIndex": "a23930db21484e87afba00a8b321ebde",
+              "defineId": "118431",
+              "enumIndex": "1b65cfa44e8e4c46b844574b63935667",
+              "enumKey": "SFT-12.03.01",
+              "enumValue": "室外泳池",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.03.00"
+            },
+            {
+              "parentEnumIndex": "a23930db21484e87afba00a8b321ebde",
+              "defineId": "118431",
+              "enumIndex": "fad0a95ed87b471db652698f85ac617c",
+              "enumKey": "SFT-12.03.02",
+              "enumValue": "室内泳池",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.03.00"
+            },
+            {
+              "parentEnumIndex": "a23930db21484e87afba00a8b321ebde",
+              "defineId": "118431",
+              "enumIndex": "75b3a55a3dbe46679b0f75680071d475",
+              "enumKey": "SFT-13.00.01",
+              "enumValue": "公园",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.03.00"
+            },
+            {
+              "parentEnumIndex": "a23930db21484e87afba00a8b321ebde",
+              "defineId": "118431",
+              "enumIndex": "595c925d5a0f437fb59ab53b1f68cdb3",
+              "enumKey": "SFT-13.00.02",
+              "enumValue": "游乐园",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.03.00"
+            },
+            {
+              "parentEnumIndex": "a23930db21484e87afba00a8b321ebde",
+              "defineId": "118431",
+              "enumIndex": "35659cedd4254cacb98e508bb9d02362",
+              "enumKey": "SFT-13.00.03",
+              "enumValue": "游戏室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.03.00"
+            },
+            {
+              "parentEnumIndex": "a23930db21484e87afba00a8b321ebde",
+              "defineId": "118431",
+              "enumIndex": "e3839a84520c412ea701fd8165b987ad",
+              "enumKey": "SFT-13.00.04",
+              "enumValue": "棋牌室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.03.00"
+            },
+            {
+              "parentEnumIndex": "a23930db21484e87afba00a8b321ebde",
+              "defineId": "118431",
+              "enumIndex": "624e8e1d554e4a25a5547511156198fd",
+              "enumKey": "SFT-13.00.05",
+              "enumValue": "电竞室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.03.00"
+            },
+            {
+              "parentEnumIndex": "a23930db21484e87afba00a8b321ebde",
+              "defineId": "118431",
+              "enumIndex": "600eff2f43d0429298b275e1f7e72dd7",
+              "enumKey": "SFT-13.00.06",
+              "enumValue": "健身中心",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.03.00"
+            },
+            {
+              "parentEnumIndex": "a23930db21484e87afba00a8b321ebde",
+              "defineId": "118431",
+              "enumIndex": "6d2430fb3f674cf28f55fa42644e3a32",
+              "enumKey": "SFT-13.00.07",
+              "enumValue": "电影院",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-12.03.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-12.00.00"
+        }
+      ],
+      "dataType": "ENUM",
+      "upperLimitIncludeState": false,
+      "lowerLimitIncludeState": false
+    },
+    {
+      "defineId": "118431",
+      "enumIndex": "d4bdd0393af343d3b8f9b903cdc9727d",
+      "enumKey": "SFT-13.00.00",
+      "enumValue": "休闲娱乐空间",
+      "dataType": "ENUM",
+      "upperLimitIncludeState": false,
+      "lowerLimitIncludeState": false
+    },
+    {
+      "defineId": "118431",
+      "enumIndex": "b18bdd5c6a9a47778dd442eb3371b8aa",
+      "enumKey": "SFT-14.00.00",
+      "enumValue": "文化博览空间",
+      "children": [
+        {
+          "parentEnumIndex": "b18bdd5c6a9a47778dd442eb3371b8aa",
+          "defineId": "118431",
+          "enumIndex": "71df8318400d424d9d7826e1827cbb7d",
+          "enumKey": "SFT-14.01.00",
+          "enumValue": "露天剧场",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-14.00.00"
+        },
+        {
+          "parentEnumIndex": "b18bdd5c6a9a47778dd442eb3371b8aa",
+          "defineId": "118431",
+          "enumIndex": "18f56b6e0d11411983525a66b83078d8",
+          "enumKey": "SFT-14.02.00",
+          "enumValue": "一般表演空间",
+          "children": [
+            {
+              "parentEnumIndex": "18f56b6e0d11411983525a66b83078d8",
+              "defineId": "118431",
+              "enumIndex": "1b8f48ec1eff427485f1febc5423f5c3",
+              "enumKey": "SFT-14.02.01",
+              "enumValue": "舞台",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.02.00"
+            },
+            {
+              "parentEnumIndex": "18f56b6e0d11411983525a66b83078d8",
+              "defineId": "118431",
+              "enumIndex": "dad574ea1321471a8b41eb81cf088783",
+              "enumKey": "SFT-14.02.02",
+              "enumValue": "乐池",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.02.00"
+            },
+            {
+              "parentEnumIndex": "18f56b6e0d11411983525a66b83078d8",
+              "defineId": "118431",
+              "enumIndex": "d33e86c350a843f394d19796cfa51229",
+              "enumKey": "SFT-14.02.03",
+              "enumValue": "排练空间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.02.00"
+            },
+            {
+              "parentEnumIndex": "18f56b6e0d11411983525a66b83078d8",
+              "defineId": "118431",
+              "enumIndex": "7ce451b3b4854f90a6bbb4f1f4dcf510",
+              "enumKey": "SFT-14.02.04",
+              "enumValue": "演艺厅",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.02.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-14.00.00"
+        },
+        {
+          "parentEnumIndex": "b18bdd5c6a9a47778dd442eb3371b8aa",
+          "defineId": "118431",
+          "enumIndex": "31a2f4fc3595418397d2929133b6bb4c",
+          "enumKey": "SFT-14.03.00",
+          "enumValue": "观众空间",
+          "children": [
+            {
+              "parentEnumIndex": "31a2f4fc3595418397d2929133b6bb4c",
+              "defineId": "118431",
+              "enumIndex": "2a837409c11048cfac87c0100d8eec4d",
+              "enumKey": "SFT-14.03.01",
+              "enumValue": "观众席空间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.03.00"
+            },
+            {
+              "parentEnumIndex": "31a2f4fc3595418397d2929133b6bb4c",
+              "defineId": "118431",
+              "enumIndex": "7a98d4eb3534445b9318971897e31341",
+              "enumKey": "SFT-14.03.02",
+              "enumValue": "观众包厢",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.03.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-14.00.00"
+        },
+        {
+          "parentEnumIndex": "b18bdd5c6a9a47778dd442eb3371b8aa",
+          "defineId": "118431",
+          "enumIndex": "21730e04ee01489e96863b67ff96e329",
+          "enumKey": "SFT-14.04.00",
+          "enumValue": "后台区",
+          "children": [
+            {
+              "parentEnumIndex": "21730e04ee01489e96863b67ff96e329",
+              "defineId": "118431",
+              "enumIndex": "4559e4fe8e60445eba9284b06a7a2140",
+              "enumKey": "SFT-14.04.01",
+              "enumValue": "放映室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.04.00"
+            },
+            {
+              "parentEnumIndex": "21730e04ee01489e96863b67ff96e329",
+              "defineId": "118431",
+              "enumIndex": "0666bdedde0d453ca30bb0fcf4c77bd1",
+              "enumKey": "SFT-14.04.02",
+              "enumValue": "检修通道",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.04.00"
+            },
+            {
+              "parentEnumIndex": "21730e04ee01489e96863b67ff96e329",
+              "defineId": "118431",
+              "enumIndex": "3100306474bf431880201f1787a189d6",
+              "enumKey": "SFT-14.04.03",
+              "enumValue": "舞台侧翼",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.04.00"
+            },
+            {
+              "parentEnumIndex": "21730e04ee01489e96863b67ff96e329",
+              "defineId": "118431",
+              "enumIndex": "de6c289f980a4880b5d5f4dbe0594493",
+              "enumKey": "SFT-14.04.04",
+              "enumValue": "电影屏幕空间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.04.00"
+            },
+            {
+              "parentEnumIndex": "21730e04ee01489e96863b67ff96e329",
+              "defineId": "118431",
+              "enumIndex": "3baeca00e08e472f897be69eee7ccf77",
+              "enumKey": "SFT-14.04.05",
+              "enumValue": "化妆间",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.04.00"
+            },
+            {
+              "parentEnumIndex": "21730e04ee01489e96863b67ff96e329",
+              "defineId": "118431",
+              "enumIndex": "1b9cc342ca9c4f9ca937a98a4c7598b2",
+              "enumKey": "SFT-14.04.06",
+              "enumValue": "候场区",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.04.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-14.00.00"
+        },
+        {
+          "parentEnumIndex": "b18bdd5c6a9a47778dd442eb3371b8aa",
+          "defineId": "118431",
+          "enumIndex": "86502124a91540fa9313709d6edaeae2",
+          "enumKey": "SFT-14.05.00",
+          "enumValue": "展览空间",
+          "children": [
+            {
+              "parentEnumIndex": "86502124a91540fa9313709d6edaeae2",
+              "defineId": "118431",
+              "enumIndex": "049f4c6e93c64848abff0ac4dfaf9339",
+              "enumKey": "SFT-14.05.01",
+              "enumValue": "展览画廊",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.05.00"
+            },
+            {
+              "parentEnumIndex": "86502124a91540fa9313709d6edaeae2",
+              "defineId": "118431",
+              "enumIndex": "7ad257bcd9b5413383aa56ab5b717f06",
+              "enumKey": "SFT-14.05.02",
+              "enumValue": "雕塑园",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.05.00"
+            },
+            {
+              "parentEnumIndex": "86502124a91540fa9313709d6edaeae2",
+              "defineId": "118431",
+              "enumIndex": "99242ef97d9647e2a8ac75e84160eef7",
+              "enumKey": "SFT-14.05.03",
+              "enumValue": "观赏园",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.05.00"
+            },
+            {
+              "parentEnumIndex": "86502124a91540fa9313709d6edaeae2",
+              "defineId": "118431",
+              "enumIndex": "42a3f9485963450687d947cadc3e6766",
+              "enumKey": "SFT-14.05.04",
+              "enumValue": "观景台",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.05.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-14.00.00"
+        },
+        {
+          "parentEnumIndex": "b18bdd5c6a9a47778dd442eb3371b8aa",
+          "defineId": "118431",
+          "enumIndex": "82a9520ac3de430aa278924b410a45f1",
+          "enumKey": "SFT-14.06.00",
+          "enumValue": "博物馆空间",
+          "children": [
+            {
+              "parentEnumIndex": "82a9520ac3de430aa278924b410a45f1",
+              "defineId": "118431",
+              "enumIndex": "25888daa4e0745db8eb7075ad7d52305",
+              "enumKey": "SFT-14.06.01",
+              "enumValue": "博物馆画廊",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.06.00"
+            },
+            {
+              "parentEnumIndex": "82a9520ac3de430aa278924b410a45f1",
+              "defineId": "118431",
+              "enumIndex": "7dbc860c73934ebc8ad62bfdd9b1d798",
+              "enumKey": "SFT-14.06.02",
+              "enumValue": "陈列室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.06.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-14.00.00"
+        },
+        {
+          "parentEnumIndex": "b18bdd5c6a9a47778dd442eb3371b8aa",
+          "defineId": "118431",
+          "enumIndex": "4cd90e766490462f9cc83c6c6404dbbf",
+          "enumKey": "SFT-14.07.00",
+          "enumValue": "创意空间",
+          "children": [
+            {
+              "parentEnumIndex": "4cd90e766490462f9cc83c6c6404dbbf",
+              "defineId": "118431",
+              "enumIndex": "7a7e9c2c158f4a3cbaca5c62ec99a0e0",
+              "enumKey": "SFT-14.07.01",
+              "enumValue": "录音室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.07.00"
+            },
+            {
+              "parentEnumIndex": "4cd90e766490462f9cc83c6c6404dbbf",
+              "defineId": "118431",
+              "enumIndex": "8b547aa3df114b23a06e6b5c0bbe51ae",
+              "enumKey": "SFT-14.07.02",
+              "enumValue": "艺术家工作室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.07.00"
+            },
+            {
+              "parentEnumIndex": "4cd90e766490462f9cc83c6c6404dbbf",
+              "defineId": "118431",
+              "enumIndex": "46be35d6c17a44d2aa55db94be0cafbf",
+              "enumKey": "SFT-14.07.03",
+              "enumValue": "摄影工作室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.07.00"
+            },
+            {
+              "parentEnumIndex": "4cd90e766490462f9cc83c6c6404dbbf",
+              "defineId": "118431",
+              "enumIndex": "b174195bde754275a3717a5a3500ec50",
+              "enumKey": "SFT-14.07.04",
+              "enumValue": "媒体制作",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-14.07.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-14.00.00"
+        }
+      ],
+      "dataType": "ENUM",
+      "upperLimitIncludeState": false,
+      "lowerLimitIncludeState": false
+    },
+    {
+      "defineId": "118431",
+      "enumIndex": "ec8c7a5a8d4042f7a4011df7050f9dc7",
+      "enumKey": "SFT-15.00.00",
+      "enumValue": "图书馆空间",
+      "children": [
+        {
+          "parentEnumIndex": "ec8c7a5a8d4042f7a4011df7050f9dc7",
+          "defineId": "118431",
+          "enumIndex": "d238afc729e04c6d9b73326687662c2c",
+          "enumKey": "SFT-15.01.00",
+          "enumValue": "图书馆架藏",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-15.00.00"
+        },
+        {
+          "parentEnumIndex": "ec8c7a5a8d4042f7a4011df7050f9dc7",
+          "defineId": "118431",
+          "enumIndex": "0d59530497254269b326396c218fbd7e",
+          "enumKey": "SFT-15.02.00",
+          "enumValue": "阅览室",
+          "children": [
+            {
+              "parentEnumIndex": "0d59530497254269b326396c218fbd7e",
+              "defineId": "118431",
+              "enumIndex": "8f4fbb66cff142d198fc2c3f908da95b",
+              "enumKey": "SFT-15.02.01",
+              "enumValue": "一般阅览室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-15.02.00"
+            },
+            {
+              "parentEnumIndex": "0d59530497254269b326396c218fbd7e",
+              "defineId": "118431",
+              "enumIndex": "5552100276854878a58f56eb6490e1bb",
+              "enumKey": "SFT-15.02.02",
+              "enumValue": "老年阅览室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-15.02.00"
+            },
+            {
+              "parentEnumIndex": "0d59530497254269b326396c218fbd7e",
+              "defineId": "118431",
+              "enumIndex": "50f680ab6d154e81b9a2fd1eb772a6ff",
+              "enumKey": "SFT-15.02.03",
+              "enumValue": "珍善本、舆图阅览室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-15.02.00"
+            },
+            {
+              "parentEnumIndex": "0d59530497254269b326396c218fbd7e",
+              "defineId": "118431",
+              "enumIndex": "b8dd5c7fe5db4397a9e742a9f9b6f214",
+              "enumKey": "SFT-15.02.04",
+              "enumValue": "青少年阅览室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-15.02.00"
+            },
+            {
+              "parentEnumIndex": "0d59530497254269b326396c218fbd7e",
+              "defineId": "118431",
+              "enumIndex": "b508aa8a8a9a4160812c2a486f7774cb",
+              "enumKey": "SFT-15.02.05",
+              "enumValue": "多媒体阅览室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-15.02.00"
+            },
+            {
+              "parentEnumIndex": "0d59530497254269b326396c218fbd7e",
+              "defineId": "118431",
+              "enumIndex": "993c9ae3e9b6495ca67889f4fd257dc3",
+              "enumKey": "SFT-15.02.06",
+              "enumValue": "期刊阅览室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-15.02.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-15.00.00"
+        },
+        {
+          "parentEnumIndex": "ec8c7a5a8d4042f7a4011df7050f9dc7",
+          "defineId": "118431",
+          "enumIndex": "d26db8815b51425d8a69be2bbc258b93",
+          "enumKey": "SFT-15.03.00",
+          "enumValue": "陈列室",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-15.00.00"
+        },
+        {
+          "parentEnumIndex": "ec8c7a5a8d4042f7a4011df7050f9dc7",
+          "defineId": "118431",
+          "enumIndex": "0f25a6bd12b144c89070bec9d0367b04",
+          "enumKey": "SFT-15.04.00",
+          "enumValue": "出纳厅",
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-15.00.00"
+        },
+        {
+          "parentEnumIndex": "ec8c7a5a8d4042f7a4011df7050f9dc7",
+          "defineId": "118431",
+          "enumIndex": "aa04e88d000e4237853138e42e375203",
+          "enumKey": "SFT-15.05.00",
+          "enumValue": "工作间",
+          "children": [
+            {
+              "parentEnumIndex": "aa04e88d000e4237853138e42e375203",
+              "defineId": "118431",
+              "enumIndex": "076240fe0a2748afafa77ca503c2e411",
+              "enumKey": "SFT-15.05.01",
+              "enumValue": "装裱室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-15.05.00"
+            },
+            {
+              "parentEnumIndex": "aa04e88d000e4237853138e42e375203",
+              "defineId": "118431",
+              "enumIndex": "152475265b154b02b5458dca97548301",
+              "enumKey": "SFT-15.05.02",
+              "enumValue": "编目室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-15.05.00"
+            },
+            {
+              "parentEnumIndex": "aa04e88d000e4237853138e42e375203",
+              "defineId": "118431",
+              "enumIndex": "7da05b2c27f14aadb29b970321ab6905",
+              "enumKey": "SFT-15.05.03",
+              "enumValue": "修缮室",
+              "dataType": "ENUM",
+              "upperLimitIncludeState": false,
+              "lowerLimitIncludeState": false,
+              "parentEnumKey": "SFT-15.05.00"
+            }
+          ],
+          "dataType": "ENUM",
+          "upperLimitIncludeState": false,
+          "lowerLimitIncludeState": false,
+          "parentEnumKey": "SFT-15.00.00"
+        }
+      ],
+      "dataType": "ENUM",
+      "upperLimitIncludeState": false,
+      "lowerLimitIncludeState": false
+    }
+  ],
+  "secondTag": "",
+  "objectTypeId": "11502",
+  "secondPos": 1,
+  "origDataType": "Enum",
+  "dataType": "ENUM",
+  "isMultiple": 0,
+  "isRegion": 0,
+  "valid": 1,
+  "defineCode": "roomFuncType",
+  "firstTag": "功能信息",
+  "inputMode": "D1",
+  "defineName": "空间功能类型",
+  "isCommon": 0,
+  "location": 8002005,
+  "id": "1193481",
+  "category": "STATIC",
+  "firstPos": 2,
+  "thirdPos": 5
+}

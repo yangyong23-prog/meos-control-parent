@@ -1,0 +1,22 @@
+# ------------------------- Spring Setting -------------------------
+spring:
+  datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        reset-enable: true
+      web-stat-filter:
+        enabled: true
+        profile-enable: true
+      aop-patterns:
+        - com.persagy.apccontrol.*
+    dynamic:
+      p6spy: false
+logging:
+  level:
+    'com.persagy.apccontrol': trace
+project:
+  saas:
+    demand:
+      task-on-started:
+        init-template-on-start-up: false

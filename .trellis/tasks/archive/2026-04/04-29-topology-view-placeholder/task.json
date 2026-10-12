@@ -1,0 +1,53 @@
+{
+  "id": "topology-view-placeholder",
+  "name": "topology-view-placeholder",
+  "title": "新增TOPOLOGY_VIEW模板类型及占位符替换",
+  "description": "",
+  "status": "completed",
+  "dev_type": "backend",
+  "scope": null,
+  "package": null,
+  "priority": "P2",
+  "creator": "jiyinchuan",
+  "assignee": "jiyinchuan",
+  "createdAt": "2026-04-29",
+  "completedAt": "2026-04-29",
+  "branch": null,
+  "base_branch": "feat_v7.260501.0_信息点配置",
+  "worktree_path": null,
+  "current_phase": 0,
+  "next_action": [
+    {
+      "phase": 1,
+      "action": "brainstorm"
+    },
+    {
+      "phase": 2,
+      "action": "research"
+    },
+    {
+      "phase": 3,
+      "action": "implement"
+    },
+    {
+      "phase": 4,
+      "action": "check"
+    },
+    {
+      "phase": 5,
+      "action": "update-spec"
+    },
+    {
+      "phase": 6,
+      "action": "record-session"
+    }
+  ],
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {}
+}

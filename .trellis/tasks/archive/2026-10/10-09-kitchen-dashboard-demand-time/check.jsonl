@@ -1,0 +1,4 @@
+{"file": ".trellis/spec/backend/quality-guidelines.md", "reason": "核验三件套：this./super.、jspecify 注解、@since/Javadoc 全覆盖，禁 spring/lang 注解"}
+{"file": ".trellis/spec/backend/demand-config-result-precompute.md", "reason": "核验预计算边界未误改：不在 SUPPORTED_DEMAND_TYPES 增加类型、未误用 listConfigResultsByInstances 查结果表"}
+{"file": ".trellis/spec/backend/error-handling.md", "reason": "核验空值语义：空入参短路、所有请求ID均返回、无配置为 []，未引入不必要异常"}
+{"file": ".trellis/spec/backend/directory-structure.md", "reason": "核验新文件落位（param/vo/service/utils/controller）与命名符合分层约定"}

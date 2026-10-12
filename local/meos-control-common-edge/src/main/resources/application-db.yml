@@ -1,0 +1,110 @@
+# ------------------------- DB Setting -------------------------
+#默认数据库名称
+persagy.db_name.meos_control: meos_control
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://${mysql.ip}:${mysql.port}/${persagy.db_name.meos_control}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&autoReconnect=true&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+    username: ${mysql.username}
+    password: ${mysql.password}
+    # Druid 监控入口由 druid-spring-boot-starter 读取，固定前缀是 spring.datasource.druid。
+    # 这些配置不是连接池参数，放到 spring.datasource.dynamic.druid 下不会生效。
+    druid:
+      stat-view-servlet:
+        # 默认 false；发版默认关闭，需要排查时通过外部配置开启。
+        enabled: ${druid.stat-view-servlet.enabled:false}
+        # 默认 /druid/*。
+        url-pattern: '/druid/*'
+        # 默认 127.0.0.1；开启控制台时应通过网关/白名单限制来源。
+        allow: ${druid.stat-view-servlet.allow:127.0.0.1}
+        # 默认不配置黑名单。
+        deny:
+        # 默认不配置登录账号密码；本地调试可用，生产环境请改为环境变量或关闭控制台。
+        login-username: ${druid.stat-view-servlet.login-username:}
+        login-password: ${druid.stat-view-servlet.login-password:}
+        # 默认 true；false 表示控制台不允许重置统计数据。
+        reset-enable: ${druid.stat-view-servlet.reset-enable:false}
+      web-stat-filter:
+        # 默认 false；发版默认关闭，避免长期采集 URI/Profile 带来额外开销。
+        enabled: ${druid.web-stat-filter.enabled:false}
+        # 默认 /*。
+        url-pattern: '/*'
+        # 默认 *.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*。
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+        # 默认 false；开启后可查看 URI 调用链路。
+        profile-enable: ${druid.web-stat-filter.profile-enable:false}
+        # 默认不指定登录用户来源；如果需要按用户统计，再配置真实的 session/cookie 名称。
+        # principal-session-name:
+        # principal-cookie-name:
+        # 默认 session-stat-max-count=1000；默认开启 Session 统计。
+        # session-stat-max-count: 1000
+        # session-stat-enable: true
+      # 默认不启用 Spring 方法监控；需要排查时通过外部配置 spring.datasource.druid.aop-patterns 打开。
+      # aop-patterns: 'com.persagy.apccontrol.*'
+    dynamic:
+      primary: master
+      datasource:
+        master:
+          type: ${spring.datasource.type}
+          # 默认自动推断；显式声明避免运行环境驱动推断差异。
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: ${spring.datasource.url}
+          username: ${spring.datasource.username}
+          password: ${spring.datasource.password}
+      # Druid 连接池参数由 dynamic-datasource 3.5.2 读取，前缀是 spring.datasource.dynamic.druid。
+      # 如需单独覆盖某个数据源，可放到 spring.datasource.dynamic.datasource.<name>.druid。
+      druid:
+        # 默认 0；初始化时建立的物理连接数。
+        initial-size: ${mysql.connect-pool.initial-size:5}
+        # 默认 8；连接池最大活跃连接数。
+        max-active: ${mysql.connect-pool.max-active:20}
+        # 默认 0；最小空闲连接数。
+        min-idle: ${mysql.connect-pool.min-idle:5}
+        # 默认 -1；获取连接最大等待时间，单位毫秒。
+        max-wait: ${mysql.connect-pool.max-wait:60000}
+        # 默认 null；max-wait > 0 时 Druid 会倾向公平锁，显式设 true 保持非公平锁以减少并发开销。
+        use-unfair-lock: true
+        # 默认 60000；Destroy 线程检测连接的间隔，单位毫秒。
+        time-between-eviction-runs-millis: 10000
+        # 默认 1800000；连接最小空闲多久后可被回收，单位毫秒。
+        min-evictable-idle-time-millis: 300000
+        # 默认 25200000；连接最大空闲多久后强制回收，单位毫秒。
+        max-evictable-idle-time-millis: 900000
+        # 默认 false；保持 min-idle 内空闲连接可用。
+        keep-alive: true
+        # 默认 null；连接有效性检查 SQL。
+        validation-query: SELECT 1
+        # 默认 -1；validation-query 超时时间，单位秒。
+        validation-query-timeout: 3
+        # 默认 true；申请连接时仅在空闲超过检测周期后执行 validation-query，开销较小。
+        test-while-idle: true
+        # 默认 false；每次借连接都检测，会降低性能。
+        test-on-borrow: false
+        # 默认 false；每次还连接都检测，会降低性能。
+        test-on-return: false
+        # 默认 false；MySQL 通常不建议开启 Druid PSCache。
+        pool-prepared-statements: false
+        # 默认 10；只有开启 pool-prepared-statements 时才建议调大，>0 会反向开启 PSCache。
+        max-pool-prepared-statement-per-connection-size: 10
+        # 默认 stat；监控统计必须保留 stat。wall 开启 SQL 防火墙。
+        filters: stat,wall
+        # StatFilter 默认：merge-sql=false，slow-sql-millis=3000，log-slow-sql=false。
+        stat:
+          merge-sql: true
+          slow-sql-millis: 5000
+          log-slow-sql: true
+        # WallFilter 默认 multi-statement-allow=false；当前 JDBC URL 开了 allowMultiQueries=true，因此这里保持一致。
+        wall:
+          multi-statement-allow: true
+        # 默认 false；合并多个 DruidDataSource 的监控数据。
+        use-global-data-source-stat: true
+
+# ------------------------- MybatisPlus Setting -------------------------
+mybatis-plus:
+  mapper-locations: classpath*:mapper**/**/*Mapper.xml
+  type-aliases-package: com.persagy.apccontrol.*.entity
+  type-aliases-super-type: com.persagy.apccontrol.basic.model.base.BaseDO
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-unknown-column-behavior: warning
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler

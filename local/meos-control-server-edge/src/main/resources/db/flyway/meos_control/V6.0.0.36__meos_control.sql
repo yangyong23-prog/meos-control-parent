@@ -1,0 +1,1 @@
+update rc_info_code_cfg set group_info = 'GPYX005' where id in ('IF000247', 'IF000248');

@@ -1,0 +1,7 @@
+{"file":".trellis/spec/backend/index.md","reason":"后端通用开发、异常、日志和批量查询规范入口。"}
+{"file":".trellis/spec/backend/cache-object-model.md","reason":"确认 SECURITY 静态 Key、EQUIPMENT_IN_SPACE 关系方向及动态数据不得进入缓存的契约。"}
+{"file":".trellis/spec/backend/error-handling.md","reason":"异步动态查询异常必须记录根因并向上呈现。"}
+{"file":".trellis/spec/backend/logging-guidelines.md","reason":"替换逐对象日志并统一结构化耗时、异常日志。"}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"遵循批量查询、线程安全和测试质量约束。"}
+{"file":".trellis/spec/backend/rwd-relation-direction.md","reason":"实现缓存关系正向查询时确认 objectId/relObjectId 方向。"}
+{"file":".trellis/tasks/08-12-security-dynamic-statistics/research/current-code-evidence.md","reason":"当前安防动态查询调用链、热点、兼容边界和验证风险。"}

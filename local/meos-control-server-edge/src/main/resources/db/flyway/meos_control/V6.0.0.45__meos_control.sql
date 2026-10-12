@@ -1,0 +1,1 @@
+call add_table_index('rc_running_log', 'nk_rc_running_log_syn_time', 'create index `nk_rc_running_log_syn_time` on `rc_running_log` (`syn_time`);');

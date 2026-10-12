@@ -1,0 +1,1 @@
+update rc_info_code_cfg set unit = 'A' where info_code = 'ratedI';

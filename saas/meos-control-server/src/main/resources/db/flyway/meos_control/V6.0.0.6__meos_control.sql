@@ -1,0 +1,1 @@
+alter table strategy_date_cfg modify update_user varchar(64) null comment '修改人';

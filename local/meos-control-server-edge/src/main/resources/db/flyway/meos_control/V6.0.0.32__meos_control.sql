@@ -1,0 +1,1 @@
+update rc_info_code_cfg set scale = null where id = 'IF000019';

@@ -1,0 +1,31 @@
+{
+  "id": "prd-260801-illum-feedback-circuit",
+  "name": "prd-260801-illum-feedback-circuit",
+  "title": "PRD-26.0801 照度反馈条件按回路维度配置",
+  "description": "",
+  "status": "completed",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P2",
+  "creator": "jiyinchuan",
+  "assignee": "jiyinchuan",
+  "createdAt": "2026-07-29",
+  "completedAt": "2026-07-29",
+  "branch": null,
+  "base_branch": "master",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [
+    "07-29-config-model",
+    "07-29-save-and-compute",
+    "07-29-consistency-check",
+    "07-29-feedback-task"
+  ],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {}
+}

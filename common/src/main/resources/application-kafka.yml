@@ -1,0 +1,85 @@
+spring:
+  kafka:
+    bootstrap-servers: ${kafka.bootstrap-servers:}
+    # kafka集群地址列表
+    # bootstrap-servers:
+    consumer:
+      # 自动提交时间间隔, 默认未 [5s]
+      # auto-commit-interval: 5s
+      # 当没有初始偏移量或服务器上不存在(例如数据被删除)时如何处理, 默认为 [latest]
+      # earliest: 从最早的偏移量开始处理
+      # latest: 从最新的偏移量开始处理
+      # none|任意未定义值: 如果不存在偏移量, 则抛出异常
+      auto-offset-reset: latest
+      # 客户端ID, 用于在服务器请求日志中追踪请求源
+      # client-id: ${spring.application.name}-${spring.profiles.active}
+      # 是否自动提交偏移量, 默认为 [true]
+      # enable-auto-commit: true
+      # 批量拉取消息的最大等待时间, 默认为 [500ms]
+      # 当没有足够的数据来满足fetch.min.bytes(即fetch-min-size, 默认值为1byte)时, 服务器等待的最大时间
+      # fetch-max-wait: 500ms
+      # 批量拉取消息的最小数量, 即fetch.min.bytes, 默认为 [1byte]
+      # fetch-min-size: 1B
+      # 消费组ID, 标识所属的消费者组, 如通过使用订阅(主题)使用组管理功能或基于kafka偏移策略, 则该字段不能为空
+      group-id: ${spring.application.name}-${spring.profiles.active}
+      # 心跳间隔, 当使用组管理策略时, 从心跳到消费者协调器之间的预期时间, 默认为 [3s]
+      # 心跳用于确保消费者的会话保持活跃, 并在新消费者加入或离开该群组时进行自动平衡
+      # 该值必须小于session.timeout.ms(默认值为10s), 但通常应该设置为不高于该值的1/3, 允许缩短间隔时间, 以控制自动平衡预期时间
+      heartbeat-interval: 1s
+      # 控制如何读取消息, 默认为 [read_uncommitted]
+      # read_uncommitted: 允许读取未提交的消息(包括已终止的事务消息)
+      # read_committed: 允许读取已提交的消息
+      # isolation-level: read_uncommitted
+      # 消息键的反序列化类, 默认为 [org.apache.kafka.common.serialization.StringDeserializer]
+      # key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # 消息值的反序列化类, 默认为 [org.apache.kafka.common.serialization.StringDeserializer]
+      # value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # 批量拉取的消息最大数量, 默认为 [500]
+      # max-poll-records: 500
+    listener:
+      # 监听者模式, 默认为 [single]
+      # single: 单个处理
+      # batch: 批量处理
+      # type: single
+      # 手动ACK模式, 默认为 [batch]
+      # record(推荐配置): 每条记录处理完毕后提交
+      # batch: 在下一次轮询前批量提交
+      # time: 距离上次提交时间超过spring.kafka.listener.ask-time后提交
+      # count: 超过spring.kafka.listener.ask-count条记录时提交
+      # count_time: 同时满足count和time条件时提交
+      # manual: 自定义提交, 在下一次轮询前自动提交, org.springframework.kafka.listener.AcknowledgingMessageListener
+      # manualImmediate: 自定义立即提交, org.springframework.kafka.listener.AcknowledgingMessageListener
+      ack-mode: record
+      # 客户端ID, 用于在服务器请求日志中追踪请求源
+      # client-id: ${spring.application.name}
+      # 监听器线程数, 默认为 [1]
+      concurrency: 4
+      # 拉取超时时间, 默认为 [5s]
+      # poll-timeout: 5s
+      # 上次轮询 / 轮询超时时间(spring.kafka.listener.poll-timeout) 超过此值, 将会发布NonResponsiveConsumerEvent事件, 默认为 [3.0]
+      # no-poll-threshold: 3.0F
+      # 当spring.kafka.listener.ack-mode为count或count_time时, 偏移量提交之间的记录数, 默认为 [1]
+      # ack-count: 1
+      # 当spring.kafka.listener.ack-mode为time或count_time时, 偏移量提交之间的时间, 默认为 [5s]
+      # ack-time: 5s
+      # Consumer.poll()轮询周期之间的睡眠间隔, 默认为 [0]
+      # idle-between-polls: 0
+      # 设置空闲事件间隔
+      # 设置后,如果轮询未返回任何记录, 并且自返回记录以来已过此时间间隔, 则会发出事件
+      # idle-event-interval:
+      # 非响应消费者的检查时间间隔, 默认单位为 [秒], 默认值为 [30s]
+      # monitor-interval: 30
+      # 是否在初始化期间记录容器配置（INFO级别）
+      # log-container-config:
+      # 如果代理上至少有一个配置的主题不存在, 则容器是否应无法启动
+      # missing-topics-fatal: false
+    properties:
+      security:
+        protocol: ${kafka.properties.security.protocol:SASL_PLAINTEXT}
+      sasl:
+        mechanism: ${kafka.properties.sasl.mechanism:PLAIN}
+        jaas:
+          config: ${kafka.properties.sasl.jaas.config:}
+      max:
+        poll:
+          ms: 3000000

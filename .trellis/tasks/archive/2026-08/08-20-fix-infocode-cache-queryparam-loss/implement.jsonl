@@ -1,0 +1,4 @@
+{"file": ".trellis/spec/backend/index.md", "reason": "后端编码 MUST FOLLOW 规则（日志、SQL、DTO、日期等），修改前必须对照"}
+{"file": ".trellis/spec/backend/infocode-rwd-take-value.md", "reason": "InfoCode RWD 取值与 source 解析契约，parseFilterValueObject 修复涉及的领域规范"}
+{"file": ".trellis/spec/backend/cache-object-model.md", "reason": "缓存对象模型持久化/重建/读取行为规范，CacheInfoCodeTemplate.from 写入修复涉及"}
+{"file": ".trellis/spec/backend/quality-guidelines.md", "reason": "代码模式与 null 注解规范，两个修复点均涉及 null 判断"}

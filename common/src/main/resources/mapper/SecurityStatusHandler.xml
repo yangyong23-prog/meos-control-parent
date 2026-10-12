@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.infocodeconfig.InfoCodeTemplateTypeMapper">
+    <resultMap id="BaseResultMap"
+               type="com.persagy.apccontrol.basic.model.entity.infocodeconfig.InfoCodeTemplateType">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="running_monitor_type" jdbcType="VARCHAR" property="runningMonitorType"/>
+        <result column="running_monitor_second_type" jdbcType="VARCHAR" property="runningMonitorSecondType"/>
+        <result column="template_type" jdbcType="VARCHAR" property="templateType"/>
+        <result column="class_code" jdbcType="VARCHAR" property="classCode"/>
+        <result column="info_code_filter" jdbcType="VARCHAR" property="infoCodeFilter"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+    </resultMap>
+</mapper>

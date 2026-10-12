@@ -1,0 +1,10 @@
+REPLACE INTO rc_info_code_cfg (id, group_code, project_id, data_type, system_id, system_type, class_code,
+                               class_name, info_code, name, alias, feedback_code, unit, scale, iot_decimal,
+                               max, min, ordered, group_info, parameter_type, display_position, force_info,
+                               data_source, extend_info, remark_config)
+VALUES ('ACCCACCPC05', '0', '0', 'info', null, 'ACCC', 'ACCPC', '冷热共用水泵控制组', 'branchSupplyTemp', '供水温度',
+        null, null, '℃', null, 1, null, null, '1', null, '运行参数', null, null, null, null, null);
+
+UPDATE rc_basics_config SET result = '{"default":[{"templateId":"769f8409-49df-4ae5-bd5b-fb498364ee1e","templateName":"冷冻水供水视图","order":1,"legendScaleRatio":2},{"templateId":"ec3263a1-32ef-4777-82cf-35a5ec8e9dc4","templateName":"冷冻水回水视图","order":2,"legendScaleRatio":2}],"water":[{"templateId":"ec3263a1-32ef-4777-82cf-35a5ec8e9dc5","templateName":"","order":1,"legendScaleRatio":2}]}' where id = 'ACATSYSTEMTEMPLATED';
+UPDATE rc_basics_config SET result = '{"default":[{"templateId":"e48afe68-a428-43ff-9daf-57ce7386297b","templateName":"主系统图","order":1,"legendScaleRatio":2},{"templateId":"fe178ae7-760c-4c9f-b713-2ba5398d5e0f","templateName":"主系统图","order":1,"legendScaleRatio":2},{"templateId":"f70ed5ed-b23c-4411-9273-29b42bd61ac2","templateName":"辅助设备图","order":2,"legendScaleRatio":2}],"water":[{"templateId":"ec3263a1-32ef-4777-82cf-35a5ec8e9dc5","templateName":"","order":1,"legendScaleRatio":2}]}' where id = 'ACCCSYSTEMTEMPLATED';
+UPDATE rc_basics_config SET result = '{"default":[{"templateId":"9725780e-831e-47ab-8b7c-6980d2fcd72c","templateName":"","order":1,"legendScaleRatio":2}],"water":[{"templateId":"ec3263a1-32ef-4777-82cf-35a5ec8e9dc5","templateName":"","order":1,"legendScaleRatio":2}]}' where id = 'ACCISYSTEMTEMPLATED';

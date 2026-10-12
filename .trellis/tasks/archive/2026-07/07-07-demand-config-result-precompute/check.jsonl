@@ -1,0 +1,10 @@
+{"file": ".trellis/spec/backend/index.md", "reason": "Backend mandatory rules and spec routing"}
+{"file": ".trellis/spec/backend/database-guidelines.md", "reason": "Batch SQL, query count, insert fill, and mapper validation"}
+{"file": ".trellis/spec/backend/quality-guidelines.md", "reason": "Nullness, Javadoc, context, object mapping, and code-order validation"}
+{"file": ".trellis/spec/backend/logging-guidelines.md", "reason": "Production log volume and diagnostic boundary validation"}
+{"file": ".trellis/spec/backend/error-handling.md", "reason": "Exception propagation and retry visibility validation"}
+{"file": ".trellis/spec/backend/demand-config-result-precompute.md", "reason": "Feature-specific correctness, performance, locking, snapshot, and initialization checklist"}
+{"file": ".trellis/tasks/07-07-demand-config-result-precompute/research/result-refresh-repository-review.md", "reason": "Refresh and repository correctness review with final disposition"}
+{"file": ".trellis/tasks/07-07-demand-config-result-precompute/research/result-trigger-init-review.md", "reason": "Listener, XXL-JOB, and Debug trigger review with final disposition"}
+{"file": ".trellis/tasks/07-07-demand-config-result-precompute/research/result-gateway-context-review.md", "reason": "Realtime gateway, RWD, context, and N+1 review with final disposition"}
+{"file": ".trellis/tasks/07-07-demand-config-result-precompute/research/result-db-query-review.md", "reason": "SQL, index, history query, and batch performance review with final disposition"}

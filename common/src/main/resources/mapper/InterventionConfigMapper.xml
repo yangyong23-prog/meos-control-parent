@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.intervention.InterventionConfigMapper">
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.intervention.InterventionConfig">
+        <!--@mbg.generated-->
+        <!--@Table intervention_config-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="project_id" jdbcType="VARCHAR" property="projectId"/>
+        <result column="running_monitor_second_type" jdbcType="VARCHAR" property="runningMonitorSecondType"/>
+        <result column="instance_type" jdbcType="VARCHAR" property="instanceType"/>
+        <result column="instance_id" jdbcType="VARCHAR" property="instanceId"/>
+        <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="config_data" jdbcType="VARCHAR" property="configData"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result column="reason" jdbcType="VARCHAR" property="reason"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        select *
+        from intervention_config
+        <where>
+            <include refid="InterventionConfigQueryParam"/>
+        </where>
+    </select>
+
+    <select id="queryList" resultMap="BaseResultMap">
+        select *
+        from intervention_config
+        where running_monitor_second_type = #{param.runningMonitorSecondType}
+        and instance_type = #{param.instanceType}
+        <if test="param.instanceIds != null and param.instanceIds.size() != 0">
+            and instance_id in
+            <foreach collection="param.instanceIds" item="instanceId" open="(" separator="," close=")">
+                #{instanceId,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        and NOT (
+        end_time &lt; #{param.beginDateTime,jdbcType=TIMESTAMP}
+        or begin_time &gt; #{param.endDateTime,jdbcType=TIMESTAMP}
+        )
+        <if test="param.projectId != null">
+            and project_id = #{param.projectId}
+        </if>
+    </select>
+
+    <sql id="InterventionConfigQueryParam">
+        <!--@sql select * from intervention_config where -->
+        <if test="param.id != null">
+            id = #{param.id}
+        </if>
+        <if test="param.ids != null and param.ids.size() != 0">
+            and id in
+            <foreach collection="param.ids" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        <if test="param.projectId != null">
+            and project_id = #{param.projectId}
+        </if>
+        <if test="param.runningMonitorSecondType != null">
+            and running_monitor_second_type = #{param.runningMonitorSecondType}
+        </if>
+        <if test="param.instanceType != null">
+            and instance_type = #{param.instanceType}
+        </if>
+        <if test="param.instanceTypes != null and param.instanceTypes.size() != 0">
+            and instance_type in
+            <foreach collection="param.instanceTypes" item="instanceType" open="(" separator="," close=")">
+                #{instanceType}
+            </foreach>
+        </if>
+        <if test="param.instanceId != null">
+            and instance_id = #{param.instanceId}
+        </if>
+        <if test="param.instanceIds != null and param.instanceIds.size() != 0">
+            and instance_id in
+            <foreach collection="param.instanceIds" item="instanceId" open="(" separator="," close=")">
+                #{instanceId}
+            </foreach>
+        </if>
+        <if test="param.beginTime != null">
+            and begin_time = #{param.beginTime}
+        </if>
+        <if test="param.endTime != null">
+            and end_time = #{param.endTime}
+        </if>
+        <if test="param.timeRange != null">
+            <if test="param.timeRange.left != null">
+                and begin_time &gt;= #{param.timeRange.left}
+            </if>
+            <if test="param.timeRange.right != null">
+                and end_time &lt; #{param.timeRange.right}
+            </if>
+        </if>
+        <if test="param.timeContainRange != null">
+            and begin_time &lt; #{param.timeContainRange.right}
+            and end_time &gt; #{param.timeContainRange.left}
+        </if>
+        <if test="param.interventionStatus != null">
+            <choose>
+                <when test="param.interventionStatus == @com.persagy.apccontrol.basic.structure.intervention.enumeration.InterventionStatusEnum@COMPLETED">
+                    and end_time &lt; date_format(now(), '%Y-%m-%d %H:%i:00')
+                </when>
+                <when test="param.interventionStatus == @com.persagy.apccontrol.basic.structure.intervention.enumeration.InterventionStatusEnum@EFFECTING">
+                    and end_time &gt;= date_format(now(), '%Y-%m-%d %H:%i:00')
+                </when>
+                <otherwise>
+                    and null;
+                </otherwise>
+            </choose>
+        </if>
+    </sql>
+
+    <select id="listActive" resultMap="BaseResultMap">
+        SELECT * FROM intervention_config
+        WHERE
+        project_id = #{projectId}
+        AND running_monitor_second_type = #{runningMonitorSecondType}
+        AND begin_time &lt;= NOW()
+        AND end_time &gt; NOW()
+    </select>
+
+    <select id="listActiveByTime" resultMap="BaseResultMap">
+        SELECT * FROM intervention_config
+        WHERE
+        project_id = #{projectId}
+        AND running_monitor_second_type = #{runningMonitorSecondType}
+        AND begin_time &lt;= #{localDateTime}
+        AND end_time &gt; #{localDateTime}
+    </select>
+</mapper>

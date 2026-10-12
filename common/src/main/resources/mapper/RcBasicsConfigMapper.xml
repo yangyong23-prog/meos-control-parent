@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.RcBasicsConfigMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.RcBasicsConfig">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="childType" column="child_type" jdbcType="VARCHAR"/>
+        <result property="st" column="st" jdbcType="VARCHAR"/>
+        <result property="architectureCode" column="architecture_code" jdbcType="VARCHAR"/>
+        <result property="floorCode" column="floor_code" jdbcType="VARCHAR"/>
+        <result property="roomCode" column="room_code" jdbcType="VARCHAR"/>
+        <result property="facilityCode" column="facility_code" jdbcType="VARCHAR"/>
+        <result property="systemId" column="system_id" jdbcType="VARCHAR"/>
+        <result property="spEl" column="sp_el" jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time" jdbcType="VARCHAR"/>
+        <result property="endTime" column="end_time" jdbcType="VARCHAR"/>
+        <result property="md" column="md" jdbcType="VARCHAR"/>
+        <result property="result" column="result" jdbcType="VARCHAR"/>
+        <result property="extendInfo" column="extend_info" jdbcType="VARCHAR"/>
+        <result property="memo" column="memo" jdbcType="VARCHAR"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="synTime" column="syn_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,project_id,type,
+        child_type,st,architecture_code,
+        floor_code,room_code,facility_code,
+        sp_el,md,result,
+        extend_info,memo,create_user,
+        create_time,update_user,update_time,
+        syn_time,start_time,end_time,system_id
+    </sql>
+    <select id="queryListConfig" resultType="com.persagy.apccontrol.basic.model.entity.RcBasicsConfig">
+        select
+        <include refid="Base_Column_List"/>
+        from rc_basics_config
+        where project_id = #{projectId}
+        <if test="_parameter.containsKey('systemId') and systemId != null and systemId != '' ">
+            and system_id = #{systemId}
+        </if>
+        and type = #{type}
+        <![CDATA[
+          and (
+            start_time <= #{endTime} AND end_time >= #{startTime}
+            )
+        ]]>
+    </select>
+    <select id="queryListByMonth" resultType="com.persagy.apccontrol.basic.model.entity.RcBasicsConfig">
+        select
+        <include refid="Base_Column_List"/>
+        FROM
+        rc_basics_config
+        WHERE
+        project_id = #{projectId} AND type = #{type}
+        <![CDATA[
+        AND date_format(start_time,'%Y-%m') >= #{date}
+        AND date_format(end_time,'%Y-%m') <= #{date}
+        ]]>
+        ORDER BY
+        update_time ASC
+    </select>
+
+    <select id="querySyn" resultType="com.persagy.apccontrol.basic.model.entity.RcBasicsConfig">
+        SELECT * FROM rc_basics_config t1 WHERE
+        t1.project_id = #{projectId}
+        and type IN
+        <foreach collection="type" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        limit 100;
+    </select>
+
+    <insert id="upsertCacheObjectModelStatus">
+        INSERT INTO rc_basics_config (
+            id, project_id, type, child_type, st, md, result,
+            create_user, create_time, update_user, update_time
+        ) VALUES (
+            #{config.id}, #{config.projectId}, #{config.type}, #{config.childType}, #{config.st},
+            #{config.md}, #{config.result}, #{config.createUser}, #{config.createTime},
+            #{config.updateUser}, #{config.updateTime}
+        )
+        ON DUPLICATE KEY UPDATE
+            project_id = #{config.projectId},
+            type = #{config.type},
+            child_type = #{config.childType},
+            st = #{config.st},
+            md = #{config.md},
+            result = #{config.result},
+            update_user = #{config.updateUser},
+            update_time = #{config.updateTime}
+    </insert>
+
+    <update id="editHumitureIgnoreSpaceIds">
+        update rc_basics_config rbc
+        set rbc.extend_info = #{ignoreSpaceIdsString}
+        where rbc.id in (select rbci.id from (select id from rc_basics_config ${ew.customSqlSegment}) as rbci)
+    </update>
+</mapper>

@@ -1,0 +1,99 @@
+# ------------------------- DB Setting -------------------------
+spring:
+  flyway:
+    enabled: false
+    # ---------- 基础配置-Begin ----------
+    # 进行迁移时的字符编码, 默认值为 [UTF-8]
+    encoding: 'UTF-8'
+    # 获取数据库连接时立即执行的SQl, 无默认值
+    init-sqls:
+    # 连接数据库重试次数, 默认值为 [0]
+    # 第一次尝试连接失败后将等待 [1s] 进行再次重试, 后续每次等待时间翻倍, 最多为 [120s]
+    connect-retries: 0
+    # 连接数据库重试的最长时间
+    # 默认连接数据库重试的最长时间为 [120s], 但任可设置该属性从而替代默认最长等待时间
+    connect-retries-interval:
+    # ---------- 基础配置-End ----------
+
+    # ---------- 迁移文件路径配置-Begin ----------
+    # 指定迁移文件的所在的路径, 默认值为 [classpath:db/migration]
+    # 该属性配置的路径将会被递归扫描路径下的所有文件
+    # 支持使用通配符进行配置, [**] 用于匹配所有子目录, [*] 用于匹配任何字符, [?] 用于匹配单个字符
+    locations: 'classpath:db/flyway/meos_control'
+    # ---------- 迁移文件路径配置-End ----------
+
+    # ---------- 迁移文件配置-Begin ----------
+    # 版本化SQL迁移的文件名前缀, 默认值为 [V]
+    sql-migration-prefix: 'V'
+    # 可重复SQL迁移的文件名前缀, 默认值为 [R]
+    repeatable-sql-migration-prefix: 'R'
+    # SQL迁移的文件名分隔符, 默认值为 [__]
+    sql-migration-separator: '__'
+    # SQL迁移的文件名后缀, 默认值为 [.sql]
+    # 可以指定多个后缀, 方便与具有特定文件关联的编译器兼容
+    sql-migration-suffixes: '.sql'
+    # ---------- 迁移文件配置-End ----------
+
+    # ---------- Schema配置-Begin ----------
+    # 默认Schema, 区分大小写, 无默认值
+    # 如果未指定, 则判断是否有历史迁移, 如果存在历史迁移将会使用历史迁移中的Schema, 否则使用数据库连接的Schema
+    defaultSchema: ${paas.groupCode}_${persagy.db_name.meos_control}
+    # 迁移时使用的Schema, 区分大小写, 无默认值
+    # 如果未指定, 会使用使用数据库连接的Schema
+    # 如果配置了多个Schema, 则会将第一个Schema作为默认的Schema, 并会判断后续的Schema是否存在, 如果全部不存在, 则会判断 [spring.flyway.create-schemas] 是否为 [true], 从而判断是否创建Schema, 如果指定了Clean操作, 所有的Schema都将执行
+    schemas: ${paas.groupCode}_${persagy.db_name.meos_control}
+
+    # ---------- Schema配置-End ----------
+
+    # ---------- 行为相关-Begin ----------
+    # 是否检查迁移脚本是否存在(检测失败将中断启动), 默认值为 [true]
+    fail-on-missing-locations: true
+    # ---------- 行为相关-End ----------
+
+    # ---------- 执行相关-Begin ----------
+    # 是否替换占位符, 默认值为 [true]
+    placeholder-replacement: true
+    # 每个占位符的前缀, 默认值为 [${]
+    placeholder-prefix: '${'
+    # 每个占位符的后缀, 默认值为 [}]
+    placeholder-suffix: '}'
+    # 每个占位符的分隔符, 默认值为 [:]
+    placeholder-separator: ':'
+    # 每个脚本占位符的前缀, 默认值为 [FP__]
+    script-placeholder-prefix: 'FP__'
+    # 每个脚本占位符的后缀, 默认值为 [__]
+    script-placeholder-suffix: '__'
+    # ---------- 执行相关-End ----------
+
+    # ---------- 迁移相关-Begin ----------
+    # 迁移到的目标版本, 默认值为 [latest]
+    # 支持的值有 [current] 当前版本, [latest] 最新的版本, [next] 下一个版本
+    target: 'latest'
+    # 当检验失败时是否调用 [clean] 指令, 默认值为 [false]
+    # Warning: [clean] 指令将会清空数据库重头执行迁移
+    clean-on-validation-error: false
+    # 是否禁用Clean指令, 默认值为 [true]
+    clean-disabled: true
+    # 运行基线迁移时的版本号, 默认值为 [1]
+    baselineVersion: 1
+    # 运行基线迁移时的描述信息, 默认值为 [<< Flyway Baseline >>]
+    baseline-description: '<< Flyway Baseline >>'
+    # 是否进行基线迁移, 默认值为 [false]
+    baseline-on-migrate: true
+    # 是否不按顺序进行迁移, 默认值为 [false]
+    # 比如现在已经执行了版本1和3, 然后加入了版本2, 此时版本2也将会被应用
+    out-of-order: false
+    # 是否跳过默认的回调, 默认值为 [false]
+    # 该属性只会屏蔽默认的回调, 自定义回调依然会执行
+    skip-default-callbacks: false
+    # 是否验证迁移文件的名称, 验证失败时则将快速失败, 默认值为 [false]
+    validate-migration-naming: true
+    # 是否将未完成的迁移集中在一个事务中执行, 默认值为 [false]
+    # 该属性仅被推荐用到支持DDL事务的数据库中
+    group: true
+    # 迁移历史记录表中应用迁移的用户名, 默认值为 当前数据库用户
+    installed-by:
+    # 当迁移时尝试获取锁时, 最多进行多少次尝试, 默认值为 [50]
+    # 每次尝试获取锁的间隔时间为 [1s], 设置 [-1] 则将一直尝试
+    lock-retry-count: 50
+    # ---------- 迁移相关-End ----------

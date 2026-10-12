@@ -1,0 +1,7 @@
+{"file":".trellis/spec/backend/index.md","reason":"质量检查需覆盖后端通用规范及批量查询禁忌。"}
+{"file":".trellis/spec/backend/cache-object-model.md","reason":"检查动态字段未写入静态缓存且关系读取符合 SECURITY 契约。"}
+{"file":".trellis/spec/backend/error-handling.md","reason":"检查异步异常、超时和取消没有静默降级。"}
+{"file":".trellis/spec/backend/logging-guidelines.md","reason":"检查无逐对象 INFO 日志且异常上下文可诊断。"}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"检查线程安全、N+1、测试和兼容性。"}
+{"file":".trellis/spec/backend/rwd-relation-direction.md","reason":"检查关系方向、空关系和项目范围。"}
+{"file":".trellis/tasks/08-12-security-dynamic-statistics/research/current-code-evidence.md","reason":"按现状证据复核实现范围和验收风险。"}

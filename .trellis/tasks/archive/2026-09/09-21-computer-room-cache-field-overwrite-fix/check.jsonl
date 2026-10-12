@@ -1,0 +1,1 @@
+{"file": ".trellis/spec/backend/cache-object-model.md", "reason": "核对全量并集实现与既有字段契约（listRwdQueryFields/listObjectQueryFields 边界）一致，并检查 spec 更新段落补充完整"}

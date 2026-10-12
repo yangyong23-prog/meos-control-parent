@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.cache.CacheObjectKeyRelMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.cache.CacheObjectKeyRel">
+        <id column="id" property="id"/>
+        <result column="project_id" property="projectId"/>
+        <result column="cache_key" property="cacheKey"/>
+        <result column="object_id" property="objectId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" property="updateUser"/>
+    </resultMap>
+
+    <select id="listByCacheKeys" resultMap="BaseResultMap">
+        select
+        cache_key,
+        object_id
+        from cache_object_key_rel
+        where project_id = #{projectId}
+        and cache_key in
+        <foreach collection="cacheKeys" item="cacheKey" open="(" separator="," close=")">
+            #{cacheKey}
+        </foreach>
+        order by cache_key, id
+    </select>
+
+    <insert id="insertBatch">
+        insert into cache_object_key_rel
+        (
+        id,
+        project_id,
+        cache_key,
+        object_id,
+        create_time,
+        create_user,
+        update_time,
+        update_user
+        )
+        values
+        <foreach collection="relations" item="relation" separator=",">
+            (
+            #{relation.id},
+            #{relation.projectId},
+            #{relation.cacheKey},
+            #{relation.objectId},
+            #{relation.createTime},
+            #{relation.createUser},
+            #{relation.updateTime},
+            #{relation.updateUser}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteByCacheKey">
+        delete from cache_object_key_rel
+        where project_id = #{projectId}
+        and cache_key = #{cacheKey}
+    </delete>
+
+    <delete id="deleteByCacheKeys">
+        delete from cache_object_key_rel
+        where project_id = #{projectId}
+        and cache_key in
+        <foreach collection="cacheKeys" item="cacheKey" open="(" separator="," close=")">
+            #{cacheKey}
+        </foreach>
+    </delete>
+</mapper>

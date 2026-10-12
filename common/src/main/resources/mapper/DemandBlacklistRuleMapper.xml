@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.demand.DemandBlacklistRuleMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.demand.DemandBlacklistRule">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="demandType" column="demand_type" jdbcType="VARCHAR"/>
+        <result property="demandTemplateType" column="demand_template_type" jdbcType="VARCHAR"/>
+        <result column="config_data" jdbcType="VARCHAR" property="configData"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="createTime" column="create_time" jdbcType="DATE"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="DATE"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,project_id,demand_type,
+        demand_template_type,config_data,create_time,
+        create_user,update_time,update_user
+    </sql>
+</mapper>

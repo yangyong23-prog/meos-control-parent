@@ -1,0 +1,52 @@
+package com.persagy.apccontrol.basic.sse.strategy.airterminal;
+
+import com.persagy.apccontrol.basic.model.enumtype.airterminal.AirTerminalInstanceTypeEnum;
+import com.persagy.apccontrol.basic.model.param.airterminal.AirTerminalSpaceWithStatusQueryParam;
+import com.persagy.apccontrol.basic.model.vo.airterminal.AirTerminalSpaceWithStatusVO;
+import com.persagy.apccontrol.basic.service.airterminal.AirTerminalService;
+import com.persagy.apccontrol.basic.sse.SseEmitterEventEnum;
+import com.persagy.apccontrol.basic.sse.SseEmitterObject;
+import com.persagy.apccontrol.basic.sse.SseSubscribeParam;
+import com.persagy.apccontrol.basic.sse.strategy.AbstractSseEventStrategyTemplate;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+
+/**
+ * 3D模型数据
+ *
+ * @author yuecaipu
+ * @date 2024/5/4 15:38
+ * @since v5.240402.00
+ */
+@Component(value = "SPACE_WITH_STATUS")
+public class SpaceWithStatus extends AbstractSseEventStrategyTemplate {
+
+    @Resource
+    AirTerminalService airportService;
+
+    @Override
+    protected SseEmitterEventEnum getEventType() {
+        return SseEmitterEventEnum.SPACE_WITH_STATUS;
+    }
+
+    @Override
+    protected String getRedisLockKey(String eventKey) {
+        return eventKey + ":SPACE_WITH_STATUS";
+    }
+
+    @Override
+    protected SseEmitterObject getSseEmitterObject(SseSubscribeParam param) {
+        AirTerminalSpaceWithStatusQueryParam queryParam = new AirTerminalSpaceWithStatusQueryParam();
+        queryParam.setInstanceId(param.getInstanceId());
+        queryParam.setInstanceType(AirTerminalInstanceTypeEnum.analyze(param.getInstanceType().getValue()));
+        queryParam.setProjectId(param.getProjectId());
+        AirTerminalSpaceWithStatusVO spaceWithStatus = airportService.listSpaceWithStatus(queryParam);
+
+        return SseEmitterObject.builder()
+                .projectId(param.getProjectId())
+                .eventType(SseEmitterEventEnum.SPACE_WITH_STATUS)
+                .data(spaceWithStatus)
+                .build();
+    }
+}

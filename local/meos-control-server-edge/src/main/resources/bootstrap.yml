@@ -1,0 +1,77 @@
+# ------------------------- Tomcat Setting -------------------------
+server:
+  port: 8080
+  # 服务线程池大小配置
+  thread:
+    prefix: async-mqtt-
+    corePoolSize: 10
+    maximumPoolSize: 20
+    keepAliveTime: 60
+
+# SSE 数据 推送的 线程池配置
+executor:
+  pool:
+    sse:
+      corePoolSize: 20
+      maxPoolSize: 30
+      queueCapacity: 1000000
+      keepAliveSeconds: 300
+# ------------------------- 健康监测 -------------------------
+management:
+  health:
+    elasticsearch:
+      enabled: false
+    redis:
+      enabled: false
+
+# ------------------------- Spring Setting -------------------------
+spring:
+  messages:
+    basename: i18n/messages  # 指向资源文件前缀
+    encoding: UTF-8
+  application:
+    name: meos-control-server-edge
+  profiles:
+    include:
+      - paas
+      - db
+      - redis
+      - knife4j
+      - rabbitmq
+      - flyway
+      - xxljob
+      - kafka
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 10
+        queue-capacity: 50
+        keep-alive: 120s
+      shutdown:
+        await-termination: true
+        await-termination-period: 30s
+      thread-name-prefix: apc-task
+  cloud:
+    nacos:
+      config:
+        enabled: true
+        username: ${persagy.nacos.username}
+        password: ${persagy.nacos.password}
+        server-addr: ${persagy.nacos.ip}:${persagy.nacos.port}
+        file-extension: yml
+        namespace: ${persagy.nacos.namespace}
+        group: ${persagy.nacos.group}
+        shared-configs:
+          - dataId: x-common.yml
+            group: ${persagy.nacos.group}
+            refresh: true
+        configLongPollTimeout: 6000
+      discovery:
+        username: ${persagy.nacos.username}
+        password: ${persagy.nacos.password}
+        server-addr: ${persagy.nacos.ip}:${persagy.nacos.port}
+        namespace: ${persagy.nacos.namespace}
+        group: ${persagy.nacos.group}
+        metadata: # 元数据，用于权限服务实时获取各个服务的所有接口
+          management.context-path: ${server.servlet.context-path:}${spring.mvc.servlet.path:}${management.endpoints.web.base-path:}

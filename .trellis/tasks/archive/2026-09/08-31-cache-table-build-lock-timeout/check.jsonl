@@ -1,0 +1,7 @@
+{"file":".trellis/spec/backend/index.md","reason":"检查后端通用强制规则"}
+{"file":".trellis/spec/backend/cache-object-model.md","reason":"检查共享对象行保存锁、事务提交时序、READY 和调用方锁职责"}
+{"file":".trellis/spec/backend/database-guidelines.md","reason":"检查批次上限、顺序、Mapper 调用次数和回滚覆盖"}
+{"file":".trellis/spec/backend/error-handling.md","reason":"检查锁超时重试、线程中断、Redis 异常和数据库异常语义"}
+{"file":".trellis/spec/backend/logging-guidelines.md","reason":"检查锁诊断日志级别、项目上下文和敏感数据边界"}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"检查代码结构、Javadoc、空值注解和测试质量"}
+{"file":".trellis/tasks/08-31-cache-table-build-lock-timeout/research/cache-write-lock-root-cause.md","reason":"复核根因覆盖、锁粒度、只重试锁获取的边界、事务时序和回归验证"}

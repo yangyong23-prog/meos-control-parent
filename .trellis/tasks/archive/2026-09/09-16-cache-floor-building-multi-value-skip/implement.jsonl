@@ -1,0 +1,2 @@
+{"file": ".trellis/spec/backend/cache-object-model.md", "reason": "缓存对象模型独立列与 JSON 字段契约：本任务修改 cache_object/cache_object_model_view 独立列写入语义，需遵循该契约"}
+{"file": ".trellis/spec/backend/quality-guidelines.md", "reason": "后端质量规范：日期、DTO、注释等基础模式要求"}

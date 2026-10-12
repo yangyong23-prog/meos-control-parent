@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.cache.CacheRuleKeyRelMapper">
+
+    <select id="listRuleIdsByCacheKey" resultType="java.lang.Long">
+        select distinct rule_id
+        from cache_rule_key_rel
+        where project_id = #{projectId}
+        and cache_key = #{cacheKey}
+        order by rule_id
+    </select>
+
+    <select id="listRuleIdsByCacheKeys" resultType="java.lang.Long">
+        select distinct rule_id
+        from cache_rule_key_rel
+        where project_id = #{projectId}
+        and cache_key in
+        <foreach collection="cacheKeys" item="cacheKey" open="(" separator="," close=")">
+            #{cacheKey}
+        </foreach>
+        order by rule_id
+    </select>
+
+    <insert id="insertBatch">
+        insert into cache_rule_key_rel
+        (
+        id,
+        project_id,
+        cache_key,
+        rule_id,
+        create_time,
+        create_user,
+        update_time,
+        update_user
+        )
+        values
+        <foreach collection="relations" item="relation" separator=",">
+            (
+            #{relation.id},
+            #{relation.projectId},
+            #{relation.cacheKey},
+            #{relation.ruleId},
+            #{relation.createTime},
+            #{relation.createUser},
+            #{relation.updateTime},
+            #{relation.updateUser}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteByCacheKey">
+        delete from cache_rule_key_rel
+        where project_id = #{projectId}
+        and cache_key = #{cacheKey}
+    </delete>
+
+    <delete id="deleteByCacheKeys">
+        delete from cache_rule_key_rel
+        where project_id = #{projectId}
+        and cache_key in
+        <foreach collection="cacheKeys" item="cacheKey" open="(" separator="," close=")">
+            #{cacheKey}
+        </foreach>
+    </delete>
+</mapper>

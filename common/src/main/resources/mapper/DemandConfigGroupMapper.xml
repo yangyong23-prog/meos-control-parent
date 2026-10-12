@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.demand.DemandConfigGroupMapper">
+
+    <select id="list" resultType="com.persagy.apccontrol.basic.model.entity.demand.DemandConfigGroup">
+        select
+        <choose>
+            <when test="withColumns != null and withColumns.length != 0">
+                <foreach collection="withColumns" item="withColumn" separator=",">
+                    ${withColumn}
+                </foreach>
+            </when>
+            <otherwise>
+                *
+            </otherwise>
+        </choose>
+        from demand_config_group
+        <where>
+            <include refid="DemandConfigGroupRepositoryBatchQueryParam"/>
+        </where>
+    </select>
+    
+    <sql id="DemandConfigGroupRepositoryBatchQueryParam">
+        <!--@sql select * from demand_config_group where -->
+        project_id = #{projectId}
+        <if test="param.configGroupIds != null and param.configGroupIds.size() != 0">
+            and id in
+            <foreach collection="param.configGroupIds" item="groupId" open="(" separator="," close=")">
+                #{groupId}
+            </foreach>
+        </if>
+        <if test="param.excludeConfigGroupId != null">
+            and id != #{param.excludeConfigGroupId}
+        </if>
+        <if test="param.templateId != null">
+            and rel_template_Id = #{param.templateId}
+        </if>
+        <if test="param.sceneId != null">
+            and rel_scene_id = #{param.sceneId}
+        </if>
+        <if test="param.configGroupName != null">
+            and group_name = #{param.configGroupName}
+        </if>
+    </sql>
+
+</mapper>

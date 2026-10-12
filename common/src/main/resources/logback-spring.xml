@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="defaults.xml"/>
+    <jmxConfigurator/>
+
+    <!-- 异步记录，建议生成环境使用 -->
+    <root level="${log.level.root}">
+        <appender-ref ref="ASYNC_ROOT_APPENDER"/>
+        <appender-ref ref="ASYNC_CONSOLE_APPENDER"/>
+    </root>
+    <logger name="com.persagy.framework.web.handler" level="${log.level.root}" additivity="true">
+        <appender-ref ref="ASYNC_EXCEPTION_APPENDER"/>
+    </logger>
+
+    <logger name="com.alibaba.nacos.client" level="${log.level.nacos}" additivity="false">
+        <appender-ref ref="ASYNC_THIRD_PARTY_APPENDER"/>
+    </logger>
+
+    <logger name="com.alibaba.nacos.client.config" level="${log.level.nacos}" additivity="false">
+        <appender-ref ref="ASYNC_THIRD_PARTY_APPENDER"/>
+    </logger>
+
+    <logger name="com.alibaba.nacos.client.naming" level="${log.level.nacos}" additivity="false">
+        <appender-ref ref="ASYNC_THIRD_PARTY_APPENDER"/>
+    </logger>
+
+
+    <!-- ============================== 控制日志 ================================= -->
+    <appender name="CONTROL_LOG_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/control-log/log.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 每天一归档 -->
+            <fileNamePattern>${LOG_HOME}/control-log/log-%d{yyyy-MM-dd}-%i.log.gz
+            </fileNamePattern>
+            <!--单文件最大限制-->
+            <maxFileSize>${LOG_MAXFILESIZE}</maxFileSize>
+            <!--保留时间,单位:天-->
+            <maxHistory>${LOG_FILEMAXDAY}</maxHistory>
+            <!-- 日志总大小 -->
+            <totalSizeCap>${LOG_TOTALSIZE}</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <!-- 日志的格式化 -->
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <Pattern>${common-pattern}</Pattern>
+            </layout>
+        </encoder>
+    </appender>
+    <appender name="ASYNC_CONTROL_LOG_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>256</queueSize>
+        <appender-ref ref="CONTROL_LOG_APPENDER"/>
+    </appender>
+    <logger name="com.persagy.apccontrol.basic.utils.ControlLogUtil" level="${log.level.root}" addtivity="false">
+        <appender-ref ref="ASYNC_CONTROL_LOG_APPENDER" />
+    </logger>
+
+</configuration>

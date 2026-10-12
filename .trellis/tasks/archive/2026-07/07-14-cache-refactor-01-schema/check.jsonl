@@ -1,0 +1,2 @@
+{"file":".trellis/spec/backend/database-guidelines.md","reason":"检查七张表字段、主键、索引以及云端和边缘端迁移一致性。"}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"检查 BaseInputIdDO、测试代码和公共模块编译质量。"}

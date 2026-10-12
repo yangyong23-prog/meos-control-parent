@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.RcInfoCodeCfgMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.RcInfoCodeCfg">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="groupCode" column="group_code" jdbcType="VARCHAR"/>
+        <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="infoCode" column="info_code" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="aliasName" column="alias_name" jdbcType="VARCHAR"/>
+        <result property="abbreviationName" column="abbreviation_name" jdbcType="VARCHAR"/>
+        <result property="classCode" column="class_code" jdbcType="VARCHAR"/>
+        <result property="className" column="class_name" jdbcType="VARCHAR"/>
+        <result property="mergeCode" column="merge_code" jdbcType="VARCHAR"/>
+        <result property="mergeName" column="merge_name" jdbcType="VARCHAR"/>
+        <result property="groupInfo" column="group_info" jdbcType="VARCHAR"/>
+        <result property="unit" column="unit" jdbcType="VARCHAR"/>
+        <result property="scale" column="scale" jdbcType="INTEGER"/>
+        <result property="objType" column="obj_type" jdbcType="VARCHAR"/>
+        <result property="dataType" column="data_type" jdbcType="VARCHAR"/>
+        <result property="firstTag" column="first_tag" jdbcType="VARCHAR"/>
+        <result property="secondTag" column="second_tag" jdbcType="VARCHAR"/>
+        <result property="ordered" column="ordered" jdbcType="INTEGER"/>
+        <result property="dataSource" column="data_source" typeHandler="com.persagy.apccontrol.basic.convert.InfoCodeConfigDataSourceConvert"/>
+        <result property="extendInfo" column="extend_info" typeHandler="com.persagy.apccontrol.basic.convert.InfoCodeConfigExtendInfoConvert"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+</mapper>

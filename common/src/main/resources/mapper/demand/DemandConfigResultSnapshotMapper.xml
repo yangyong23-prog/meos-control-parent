@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.demand.DemandConfigResultSnapshotMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.demand.DemandConfigResultSnapshot">
+        <id column="id" property="id"/>
+        <id column="valid_end_time" property="validEndTime"/>
+        <result column="project_id" property="projectId"/>
+        <result column="demand_template_type" property="demandTemplateType"/>
+        <result column="demand_instance_type" property="demandInstanceType"/>
+        <result column="demand_instance_id" property="demandInstanceId"/>
+        <result column="final_config_json" property="finalConfigJson"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result column="is_customized_config" property="isCustomizedConfig"/>
+        <result column="is_shielded" property="isShielded"/>
+        <result column="inherit_instances_json" property="inheritInstancesJson"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result column="rel_template_id" property="relTemplateId"/>
+        <result column="rel_scene_id" property="relSceneId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" property="updateUser"/>
+    </resultMap>
+
+    <insert id="insertBatch">
+        insert into demand_config_result_snapshot
+        (
+        id,
+        valid_end_time,
+        project_id,
+        demand_template_type,
+        demand_instance_type,
+        demand_instance_id,
+        final_config_json,
+        is_customized_config,
+        is_shielded,
+        inherit_instances_json,
+        rel_template_id,
+        rel_scene_id,
+        create_time,
+        create_user,
+        update_time,
+        update_user
+        )
+        values
+        <foreach collection="snapshots" item="snapshot" separator=",">
+            (
+            #{snapshot.id},
+            #{snapshot.validEndTime},
+            #{snapshot.projectId},
+            #{snapshot.demandTemplateType},
+            #{snapshot.demandInstanceType},
+            #{snapshot.demandInstanceId},
+            #{snapshot.finalConfigJson,
+            typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},
+            #{snapshot.isCustomizedConfig},
+            #{snapshot.isShielded},
+            #{snapshot.inheritInstancesJson,
+            typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},
+            #{snapshot.relTemplateId},
+            #{snapshot.relSceneId},
+            #{snapshot.createTime},
+            #{snapshot.createUser},
+            #{snapshot.updateTime},
+            #{snapshot.updateUser}
+            )
+        </foreach>
+    </insert>
+</mapper>

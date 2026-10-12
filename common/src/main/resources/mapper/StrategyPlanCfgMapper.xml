@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.StrategyPlanCfgMapper">
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.strategy.StrategyPlanCfg">
+        <!--@mbg.generated-->
+        <!--@Table strategy_plan_cfg-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="strategy_id" jdbcType="INTEGER" property="strategyId"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="result" jdbcType="VARCHAR" property="result"/>
+        <result column="st" jdbcType="VARCHAR" property="st"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+        <result column="sync_time" jdbcType="TIMESTAMP" property="syncTime"/>
+        <result column="sync_message" jdbcType="VARCHAR" property="syncMessage"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id,
+        strategy_id,
+        start_time,
+        end_time,
+        `result`,
+        st,
+        create_time,
+        update_time,
+        create_user,
+        update_user,
+        sync_time,
+        sync_message
+    </sql>
+
+    <select id="count" resultType="int">
+        select count(*)
+        from strategy_plan_cfg
+        <where>
+            <include refid="StrategyPlanCfgQueryDaoParam"/>
+        </where>
+    </select>
+
+    <select id="get" resultMap="BaseResultMap">
+        select *
+        from strategy_plan_cfg
+        <where>
+            <include refid="StrategyPlanCfgQueryDaoParam"/>
+        </where>
+        order by start_time
+    </select>
+
+    <select id="getTempPlan" resultMap="BaseResultMap">
+        select *
+        from strategy_plan_cfg
+        where strategy_id = #{strategyId}
+          and json_contains_path(result, 'one', concat('$.', #{controlFieldName}))
+          and st = '${@com.persagy.apccontrol.basic.model.base.StateTypeEnum@VALID}'
+    </select>
+
+    <select id="listIds" resultType="java.lang.Long">
+        select id
+        from strategy_plan_cfg
+        <where>
+            <include refid="StrategyPlanCfgQueryDaoParam"/>
+        </where>
+    </select>
+
+    <!--suppress checkSelectColumnExistInMybatisResultmap -->
+    <select id="list" resultMap="BaseResultMap">
+        select *
+        from strategy_plan_cfg
+        <where>
+            <include refid="StrategyPlanCfgQueryDaoParam"/>
+        </where>
+        order by start_time
+    </select>
+
+    <!--suppress checkSelectColumnExistInMybatisResultmap -->
+    <select id="listTempPlanAtNow" resultMap="BaseResultMap">
+        select *
+        from strategy_plan_cfg
+        <where>
+            <include refid="StrategyPlanCfgQueryDaoParam"/>
+        </where>
+        and now() &lt;= end_time
+    </select>
+
+    <select id="listNotSynced" resultMap="BaseResultMap">
+        select *
+        from strategy_plan_cfg
+        <where>
+            <include refid="StrategyPlanCfgQueryDaoParam"/>
+            and (sync_time is null or update_time &gt; sync_time)
+            limit 100
+        </where>
+    </select>
+
+    <sql id="StrategyPlanCfgQueryDaoParam">
+        <!--@sql select * from strategy_plan_cfg where -->
+        <if test="param.id != null">
+            id = #{param.id}
+        </if>
+        <if test="param.strategyId != null">
+            and strategy_id = #{param.strategyId}
+        </if>
+        <if test="param.strategyIds != null and param.strategyIds.size() != 0">
+            and strategy_id in
+            <foreach collection="param.strategyIds" item="strategyId" open="(" close=")" separator=",">
+                #{strategyId}
+            </foreach>
+        </if>
+        <if test="param.startTime != null">
+            and date_format(start_time, '%H:%i:00') &gt;= #{param.startTime}
+        </if>
+        <if test="param.startDateTime != null">
+            and start_time &gt;= #{param.startDateTime}
+        </if>
+        <if test="param.endTime != null">
+            and date_format(end_time, '%H:%i:00') &lt; #{param.endTime}
+        </if>
+        <if test="param.endDateTime != null">
+            and end_time &lt; #{param.endDateTime}
+        </if>
+        <if test="param.status != null">
+            and st = #{param.status}
+        </if>
+    </sql>
+</mapper>

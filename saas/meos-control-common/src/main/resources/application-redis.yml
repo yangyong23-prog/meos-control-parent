@@ -1,0 +1,13 @@
+# ------------------------- DB Setting -------------------------
+spring:
+  redis:
+    host: ${redis.host:127.0.0.1}
+    port: ${redis.port:6379}
+    password: ${redis.password:}
+    timeout: ${redis.pool.timeout:60s}
+    database: ${redis.meos_database.five:7}
+    lettuce:
+      pool:
+        min-idle: ${redis.pool.min-idle:5}
+        max-active: ${redis.pool.max-active:30}
+        max-wait: ${redis.pool.max-wait:1m}

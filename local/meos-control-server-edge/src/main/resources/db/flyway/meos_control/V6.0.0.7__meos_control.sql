@@ -1,0 +1,2 @@
+update rc_basics_config set result = replace('##{dateTime} ##{userName}将系统所有设备切换到##{dataValue}，有效期至##{endTime}#if(##{adjustReason})，原因为##{adjustReason}#end', '##', '$') where type = 'switch_to_manual';
+update rc_basics_config set result = replace('##{dateTime} ##{userName}将##{localName}切换到##{dataValue}，有效期至##{endTime}#if(##{adjustReason})，原因为##{adjustReason}#end', '##', '$') where type = 'switch_eq_to_manual';

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.RcRunningLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.RcRunningLog">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="systemId" column="system_id" jdbcType="VARCHAR"/>
+        <result property="objectId" column="object_id" jdbcType="VARCHAR"/>
+        <result property="objectName" column="object_name" jdbcType="VARCHAR"/>
+        <result property="classCode" column="class_code" jdbcType="VARCHAR"/>
+        <result property="objectCategory" column="object_category" jdbcType="VARCHAR"/>
+        <result property="firstLevelCategory" column="first_level_category" jdbcType="VARCHAR"/>
+        <result property="secondLevelCategory" column="second_level_category" jdbcType="VARCHAR"/>
+        <result property="thirdLevelCategory" column="third_level_category" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="keyWord" column="key_word" jdbcType="VARCHAR"/>
+        <result property="content" column="content" typeHandler="com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler"/>
+        <result property="detail" column="detail" typeHandler="com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler"/>
+        <result property="effectStartTime" column="effect_start_time" jdbcType="TIMESTAMP"/>
+        <result property="effectEndTime" column="effect_end_time" jdbcType="TIMESTAMP"/>
+        <result property="reason" column="reason" jdbcType="VARCHAR"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="synTime" column="syn_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, project_id, system_id, object_id, object_name, class_code, object_category, first_level_category, second_level_category, third_level_category, type,
+        key_word, content, detail, effect_start_time, effect_end_time, reason, create_user, create_time, syn_time
+    </sql>
+
+    <select id="equipmentList" parameterType="com.persagy.apccontrol.basic.resource.param.runningLog.RunningLogEquipmentListQueryParam"
+            resultType="com.persagy.apccontrol.basic.model.dto.runnningLog.RunningLogEquipmentDto">
+        select object_id as objectId, object_name as objectName, object_category as objectCategory from rc_running_log
+        where project_id = #{param.projectId}
+        <if test="param.dataStartTime != null">
+            <![CDATA[  and create_time >=  #{param.dataStartTime}  ]]>
+        </if>
+        <if test="param.dataEndTime != null">
+            <![CDATA[ and create_time <= #{param.dataEndTime}  ]]>
+        </if>
+        <if test="param.systemId != null and param.systemId != ''">
+            and system_id = #{param.systemId}
+        </if>
+        <if test="param.type != null">
+            and type = #{param.type}
+        </if>
+        <if test="param.word != null and param.word != ''">
+            and object_name like concat('%', #{param.word}, '%')
+        </if>
+        group by object_id, object_name, object_category
+    </select>
+</mapper>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.demand.DemandConfigMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.demand.DemandConfig">
+        <!--@mbg.generated-->
+        <!--@Table demand_config-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="project_id" jdbcType="VARCHAR" property="projectId"/>
+        <result column="demand_instance_type" jdbcType="VARCHAR" property="demandInstanceType"/>
+        <result column="demand_instance_id" jdbcType="VARCHAR" property="demandInstanceId"/>
+        <result column="config_data" jdbcType="VARCHAR" property="configData"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result column="rel_template_Id" jdbcType="BIGINT" property="relTemplateId"/>
+        <result column="rel_scene_id" jdbcType="BIGINT" property="relSceneId"/>
+        <result column="rel_group_id" jdbcType="BIGINT" property="relGroupId"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_time" jdbcType="DATE" property="updateTime"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+    </resultMap>
+
+    <select id="countExistsCustomizedInstance" resultType="int">
+        <choose>
+            <when test="date != null and date.isBefore(@java.time.LocalDate@now())">
+                select window_function.c
+                from (select count(*)                                                                                                                                          as c,
+                             row_number() over (partition by project_id, demand_instance_type, demand_instance_id, rel_template_Id, rel_scene_id order by valid_end_time desc) as rowNumber
+                      from demand_config_snapshot
+                      where project_id = #{projectId}
+                        and rel_template_Id = #{templateId}
+                        and date(update_time) &lt;= #{date}
+                        and date(valid_end_time) &gt;= #{date}) as window_function
+                where rowNumber = 1;
+            </when>
+            <otherwise>
+                select count(*)
+                from demand_config
+                where project_id = #{projectId}
+                  and rel_template_Id = #{templateId}
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="listByInstances" resultMap="BaseResultMap">
+        <choose>
+            <when test="param.date != null and param.date.isBefore(@java.time.LocalDate@now())">
+                select * from (
+                select
+                <choose>
+                    <when test="withColumns != null and withColumns.length != 0">
+                        <foreach collection="withColumns" item="withColumn" separator=",">
+                            ${withColumn}
+                        </foreach>
+                    </when>
+                    <otherwise>
+                        *
+                    </otherwise>
+                </choose>
+                , row_number() over (partition by project_id, demand_instance_type, demand_instance_id, rel_template_Id, rel_scene_id order by valid_end_time desc) as rowNumber
+                from demand_config_snapshot
+                <where>
+                    <include refid="DemandConfigByInstanceRepositoryBatchQueryParam"/>
+                    and date(update_time) &lt;= #{param.date}
+                    and date(valid_end_time) &gt; #{param.date}
+                </where>
+                ) as window_function
+                where rowNumber = 1;
+            </when>
+            <otherwise>
+                select
+                <choose>
+                    <when test="withColumns != null and withColumns.length != 0">
+                        <foreach collection="withColumns" item="withColumn" separator=",">
+                            ${withColumn}
+                        </foreach>
+                    </when>
+                    <otherwise>
+                        *
+                    </otherwise>
+                </choose>
+                from demand_config
+                <where>
+                    <include refid="DemandConfigByInstanceRepositoryBatchQueryParam"/>
+                </where>
+            </otherwise>
+        </choose>
+    </select>
+
+    <sql id="DemandConfigByInstanceRepositoryBatchQueryParam">
+        <!--@sql select * from demand_config_snapshot where -->
+        project_id = #{projectId}
+        <if test="param.configIds != null and param.configIds.size() != 0">
+            and id in
+            <foreach collection="param.configIds" item="configId" open="(" separator="," close=")">
+                #{configId}
+            </foreach>
+        </if>
+        <if test="param.templateId != null">
+            and rel_template_Id = #{param.templateId}
+        </if>
+        <if test="param.templateIds != null and param.templateIds.size() != 0">
+            and rel_template_Id in
+            <foreach collection="param.templateIds" item="templateId" open="(" separator="," close=")">
+                #{templateId}
+            </foreach>
+        </if>
+        <if test="param.sceneId != null">
+            and rel_scene_id = #{param.sceneId}
+        </if>
+        <if test="param.sceneIds != null and param.sceneIds.size() != 0">
+            and rel_scene_id in
+            <foreach collection="param.sceneIds" item="sceneId" open="(" separator="," close=")">
+                #{sceneId}
+            </foreach>
+        </if>
+        <if test="param.configGroupIds != null and param.configGroupIds.size() != 0">
+            and rel_group_id in
+            <foreach collection="param.configGroupIds" item="groupId" open="(" separator="," close=")">
+                #{groupId}
+            </foreach>
+        </if>
+        <if test="param.instanceTypeAndInstanceIds != null and param.instanceTypeAndInstanceIds.size() != 0">
+            and
+            <foreach collection="param.instanceTypeAndInstanceIds" index="key" item="instanceIds" open="("
+                     separator="or" close=")">
+                demand_instance_type = #{key}
+                <if test="instanceIds != null and instanceIds.size() != 0">
+                    and demand_instance_id in
+                    <foreach collection="instanceIds" item="instanceId" open="(" separator="," close=")">
+                        #{instanceId}
+                    </foreach>
+                </if>
+            </foreach>
+        </if>
+        <if test="param.instanceTypes != null and param.instanceTypes.size() != 0">
+            and demand_instance_type in
+            <foreach collection="param.instanceTypes" item="instanceType" open="(" separator="," close=")">
+                #{instanceType}
+            </foreach>
+        </if>
+        <if test="param.instanceIds != null and param.instanceIds.size() != 0">
+            and demand_instance_id in
+            <foreach collection="param.instanceIds" item="instanceId" open="(" separator="," close=")">
+                #{instanceId}
+            </foreach>
+        </if>
+        <if test="param.likeConfigData != null">
+            and config_data like concat('%', #{param.likeConfigData}, '%')
+        </if>
+    </sql>
+</mapper>

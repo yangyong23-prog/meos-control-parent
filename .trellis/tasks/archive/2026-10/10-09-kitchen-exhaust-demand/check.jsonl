@@ -1,0 +1,4 @@
+{"file": "docs/design/demand-management/extension-guide.md", "reason": "对照新增需求大类检查点逐项核验：枚举映射、策略覆盖、继承类型、黑名单、最小验证清单"}
+{"file": ".trellis/spec/backend/demand-config-result-precompute.md", "reason": "核对预计算边界未被误改：新模板类型不在 SUPPORTED 集合、supportsTemplateType 返回 false 属预期行为"}
+{"file": ".trellis/spec/backend/index.md", "reason": "核验实现符合 MUST-FOLLOW 规则（LogComponent、异常、DTO、批查询），并确认无 FORBIDDEN 写法"}
+{"file": ".trellis/spec/backend/running-monitor-strategy.md", "reason": "核验策略委托链与既有分发约定一致，未引入新的分发旁路"}

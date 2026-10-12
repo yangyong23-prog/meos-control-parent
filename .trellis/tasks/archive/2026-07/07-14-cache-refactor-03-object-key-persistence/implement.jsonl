@@ -1,0 +1,3 @@
+{"file":".trellis/spec/backend/cache-object-model.md","reason":"对象主键、JSON 列、范围替换和共享对象边界"}
+{"file":".trellis/spec/backend/database-guidelines.md","reason":"Mapper XML、批量 SQL 和禁止 N+1 规范"}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"Javadoc、null 注解、this/super 和批处理注释规范"}

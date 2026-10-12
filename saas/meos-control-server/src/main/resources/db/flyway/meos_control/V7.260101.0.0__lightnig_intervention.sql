@@ -1,0 +1,1 @@
+delete from intervention_task_config where running_monitor_type = 'LIGHTING';

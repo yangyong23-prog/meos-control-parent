@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.cache.CacheObjectModelViewMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.cache.CacheObjectModelView">
+        <id column="id" property="id"/>
+        <result column="project_id" property="projectId"/>
+        <result column="local_name" property="localName"/>
+        <result column="class_code" property="classCode"/>
+        <result column="object_type" property="objectType"/>
+        <result column="building_id" property="buildingId"/>
+        <result column="floor_id" property="floorId"/>
+        <result column="view_data" property="viewData"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" property="updateUser"/>
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        select
+        <choose>
+            <when test="withColumns != null and withColumns.length != 0">
+                <foreach collection="withColumns" item="withColumn" separator=",">
+                    ${withColumn}
+                </foreach>
+            </when>
+            <otherwise>
+                id,
+                local_name,
+                class_code,
+                object_type,
+                building_id,
+                floor_id,
+                view_data
+            </otherwise>
+        </choose>
+        from cache_object_model_view
+        <where>
+            project_id = #{projectId}
+            <if test="param.ids != null and param.ids.size() != 0">
+                and id in
+                <foreach collection="param.ids" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="param.classCodes != null and param.classCodes.size() != 0">
+                and class_code in
+                <foreach collection="param.classCodes" item="classCode" open="(" separator="," close=")">
+                    #{classCode}
+                </foreach>
+            </if>
+            <if test="param.buildingIds != null and param.buildingIds.size() != 0">
+                and building_id in
+                <foreach collection="param.buildingIds" item="buildingId" open="(" separator="," close=")">
+                    #{buildingId}
+                </foreach>
+            </if>
+            <if test="param.floorIds != null and param.floorIds.size() != 0">
+                and floor_id in
+                <foreach collection="param.floorIds" item="floorId" open="(" separator="," close=")">
+                    #{floorId}
+                </foreach>
+            </if>
+            <if test="param.objectType != null">
+                and object_type = #{param.objectType}
+            </if>
+        </where>
+        order by id
+    </select>
+
+    <insert id="upsertBatch">
+        insert into cache_object_model_view
+        (
+        id,
+        project_id,
+        local_name,
+        class_code,
+        object_type,
+        building_id,
+        floor_id,
+        view_data,
+        create_time,
+        create_user,
+        update_time,
+        update_user
+        )
+        values
+        <foreach collection="modelViews" item="modelView" separator=",">
+            (
+            #{modelView.id},
+            #{modelView.projectId},
+            #{modelView.localName},
+            #{modelView.classCode},
+            #{modelView.objectType},
+            #{modelView.buildingId},
+            #{modelView.floorId},
+            #{modelView.viewData},
+            #{modelView.createTime},
+            #{modelView.createUser},
+            #{modelView.updateTime},
+            #{modelView.updateUser}
+            )
+        </foreach>
+        on duplicate key update
+        project_id = values(project_id),
+        local_name = values(local_name),
+        class_code = values(class_code),
+        object_type = values(object_type),
+        building_id = values(building_id),
+        floor_id = values(floor_id),
+        view_data = values(view_data),
+        update_time = values(update_time),
+        update_user = values(update_user)
+    </insert>
+
+    <delete id="deleteByClassCodes">
+        delete from cache_object_model_view
+        where project_id = #{projectId}
+        and class_code in
+        <foreach collection="classCodes" item="classCode" open="(" separator="," close=")">
+            #{classCode}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,15 @@
+# ------------------------- tenant 自动创建集团库 -------------------------
+tenant:
+  data:
+    init:
+      data-init-configs:
+        - dir: meos_control
+          db-name: ${groupCode}_${persagy.db_name.meos_control}
+          share: true
+          baseline-version: ${tenant.data.init.default.baseline-version}
+        - dir: meos_control_common
+          db-name: ${persagy.db_name.meos_control}
+          share: false
+          baseline-version: ${tenant.data.init.default.baseline-version}
+      # 订阅租户创建消息的rabbitmq绑定的队列,每个服务一个队列,可以使用该配置指定,不指定会使用默认的服务名,即spring.application.name配置的值作为队列名
+      queue-name:

@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>paas-cloud</artifactId>
+        <groupId>com.persagy</groupId>
+        <version>1.7.9</version>
+    </parent>
+
+    <artifactId>meos-control-parent</artifactId>
+    <version>5.250501.0</version>
+    <packaging>pom</packaging>
+
+    <name>meos-control-parent</name>
+    <description>能源监控</description>
+    <modules>
+        <module>common</module>
+        <module>local</module>
+        <module>saas</module>
+    </modules>
+    <repositories>
+        <repository>
+            <id>persagy2021-yushu-public</id>
+            <name>persagy2021-yushu-public Repository</name>
+            <url>https://persagy2021-maven.pkg.coding.net/repository/yushu/public/</url>
+        </repository>
+        <repository>
+            <id>maven_central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+    </repositories>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <build-timestamp>${maven.build.timestamp}</build-timestamp>
+        <validate-utility-starter.version>1.6.2</validate-utility-starter.version>
+        <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+        <jspecify.version>1.0.0</jspecify.version>
+        <p3c-pmd.version>2.1.1</p3c-pmd.version>
+        <maven-pmd-plugin.version>3.21.0</maven-pmd-plugin.version>
+        <!-- ★ 覆盖父POM的测试跳过配置，启用测试 ★ -->
+        <maven.test.skip>false</maven.test.skip>
+        <surefire.argLine>-Xmx1024m -Djdk.net.URLClassPath.disableClassPathURLCheck=true</surefire.argLine>
+        <!-- ★ Module ★ -->
+        <knife4j-openapi3-spring-boot-starter.version>4.0.0</knife4j-openapi3-spring-boot-starter.version>
+        <modelmapper.version>3.1.0</modelmapper.version>
+        <!-- ★ Util ★ -->
+        <commons-math3.version>3.6.1</commons-math3.version>
+        <commons-text.version>1.12.0</commons-text.version>
+        <QLExpress.version>3.3.3</QLExpress.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+        </dependency>
+        <!-- PaasCloud -->
+        <dependency>
+            <groupId>com.persagy</groupId>
+            <artifactId>starter-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.persagy</groupId>
+            <artifactId>starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.persagy</groupId>
+            <artifactId>starter-cloud</artifactId>
+            <!-- 移除 nacos-client依赖-->
+            <exclusions>
+                <exclusion>
+                    <artifactId>nacos-client</artifactId>
+                    <groupId>com.alibaba.nacos</groupId>
+                </exclusion>
+                <!-- 版本冲突 -->
+                <exclusion>
+                    <artifactId>netty-all</artifactId>
+                    <groupId>io.netty</groupId>
+                </exclusion>
+
+            <!-- 版本漏洞修复 排除dubbo依赖 -->
+                <exclusion>
+                    <artifactId>dubbo</artifactId>
+                    <groupId>org.apache.dubbo</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>dubbo-filter-seata</artifactId>
+                    <groupId>org.apache.dubbo.extensions</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Prometheus -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- SpringBoot -->
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.jspecify</groupId>
+            <artifactId>jspecify</artifactId>
+            <version>${jspecify.version}</version>
+        </dependency>
+
+        <!-- Swagger -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.persagy</groupId>
+            <artifactId>starter-databases</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.persagy</groupId>
+            <artifactId>validate-utility-starter</artifactId>
+            <version>${validate-utility-starter.version}</version>
+        </dependency>
+
+        <!-- Util -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>${commons-text.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>${commons-math3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${modelmapper.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.persagy</groupId>
+            <artifactId>starter-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.lettuce</groupId>
+            <artifactId>lettuce-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-amqp</artifactId>
+            <version>2.4.17</version>
+        </dependency>
+
+         <dependency>
+             <groupId>com.persagy</groupId>
+             <artifactId>starter-rabbitmq</artifactId>
+             <!-- 版本漏洞修复 -->
+             <exclusions>
+                 <exclusion>
+                     <artifactId>spring-boot-starter-amqp</artifactId>
+                     <groupId>org.springframework.boot</groupId>
+                 </exclusion>
+             </exclusions>
+         </dependency>
+
+        <!-- 测试包 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>QLExpress</artifactId>
+            <version>${QLExpress.version}</version>
+        </dependency>
+
+        <!-- 使用starter-log -->
+        <dependency>
+            <groupId>com.persagy</groupId>
+            <artifactId>starter-log</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-dependencies</artifactId>
+                <version>${knife4j-openapi3-spring-boot-starter.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>0.9.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.yeauty</groupId>
+                <artifactId>netty-websocket-spring-boot-starter</artifactId>
+                <version>0.12.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!-- 解释配置文件中的分隔符 -->
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/bootstrap*.yml</include>
+                    <include>**/bootstrap*.yaml</include>
+                    <include>**/application*.yml</include>
+                    <include>**/application*.yaml</include>
+                    <include>**/application*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>**/bootstrap*.yml</exclude>
+                    <exclude>**/bootstrap*.yaml</exclude>
+                    <exclude>**/application*.yml</exclude>
+                    <exclude>**/application*.yaml</exclude>
+                    <exclude>**/application*.properties</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <!-- 允许参数配置 -->
+                    <parameters>true</parameters>
+                    <!-- ★ 覆盖父POM的skip配置，启用编译 ★ -->
+                    <skip>false</skip>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>${lombok-mapstruct-binding.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <skipTests>false</skipTests>
+                    <argLine>${surefire.argLine}</argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <charset>${project.build.sourceEncoding}</charset>
+                    <docencoding>${project.build.sourceEncoding}</docencoding>
+                    <!-- 忽略自定义javadoc标签检查 -->
+                    <doclint>none</doclint>
+                    <jarOutputDirectory>${project.build.directory}/jar</jarOutputDirectory>
+                    <skip>true</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadoc</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <outputDirectory>target/jar</outputDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <delimiters>
+                        <!-- 设置自定义分隔符 -->
+                        <delimiter>${resource.delimiter}</delimiter>
+                    </delimiters>
+                    <!-- 禁用默认分隔符 -->
+                    <useDefaultDelimiters>false</useDefaultDelimiters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/src/main/resources</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>**/application*.yml</include>
+                                        <include>**/application*.yaml</include>
+                                        <include>**/application*.properties</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>src/main/resources/</directory>
+                                    <includes>
+                                        <include>**/**.**</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${project.build.directory}</directory>
+                                    <includes>
+                                        <include>**/version.txt</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                            <outputDirectory>target/config</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-version</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>src/script</directory>
+                                </resource>
+                            </resources>
+                            <outputDirectory>target</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>${maven-pmd-plugin.version}</version>
+                <configuration>
+                    <rulesets>
+                        <ruleset>rulesets/java/ali-comment.xml</ruleset>
+                        <ruleset>rulesets/java/ali-concurrent.xml</ruleset>
+                        <ruleset>rulesets/java/ali-constant.xml</ruleset>
+                        <ruleset>rulesets/java/ali-exception.xml</ruleset>
+                        <ruleset>rulesets/java/ali-flowcontrol.xml</ruleset>
+                        <ruleset>rulesets/java/ali-naming.xml</ruleset>
+                        <ruleset>rulesets/java/ali-oop.xml</ruleset>
+                        <ruleset>rulesets/java/ali-orm.xml</ruleset>
+                        <ruleset>rulesets/java/ali-other.xml</ruleset>
+                        <ruleset>rulesets/java/ali-set.xml</ruleset>
+                        <ruleset>rulesets/vm/ali-other.xml</ruleset>
+                    </rulesets>
+                    <aggregate>true</aggregate>
+                    <failOnViolation>true</failOnViolation>
+                    <skip>true</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.alibaba.p3c</groupId>
+                        <artifactId>p3c-pmd</artifactId>
+                        <version>${p3c-pmd.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

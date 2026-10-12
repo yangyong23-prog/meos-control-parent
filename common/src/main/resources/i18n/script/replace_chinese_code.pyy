@@ -1,0 +1,341 @@
+import os
+import re
+import uuid
+import json
+
+# 定义匹配中文字符串的正则表达式（包含一个中文字符就算）
+chinese_pattern = re.compile(r'"[^"]*[\u4e00-\u9fa5]+[^"]*"')
+
+# 定义注释的正则表达式
+comment_pattern = re.compile(r'//.*?$|/\*.*?\*/', re.DOTALL | re.MULTILINE)
+
+log_special_pattern = re.compile(r'(ControlLogUtil|LOGGER|log|logger|System\.out|System\.err)\.(info|debug|warn|error|println)\(("[^"]*"|\S+)(,\s*("[^"]*"|\S+))*\);')
+
+# 定义日志语句的正则表达式（根据项目日志框架调整）
+log_pattern = re.compile(r'(ControlLogUtil|LOGGER|log|logger|System\.out|System\.err)\.(info|debug|warn|error|println)\([^)]*\)+;')
+
+log_debug_special_pattern = re.compile(r'(ControlLogUtil|LOGGER|log|logger|System\.out|System\.err)\.(info|debug|warn|error|println)\(\s*\"(.*?)\"\s*(?:\+\s*\"(.*?)\")*\s*\);')
+
+log_debug_some_comma_pattern = re.compile(r'(ControlLogUtil|LOGGER|log|logger|System\.out|System\.err)\.(info|debug|warn|error|println)\(\s*\"(.*?)\"\s*(?:,\s*(.*?))?\s*\);')
+
+# swagger数据特殊过滤
+swagger_special_tag_pattern = re.compile(r'@(ApiOperation|ApiModel|ApiModelProperty|ApiParam|Api|Operation)\s*\(\s*value\s*=\s*".*?",\s*tags\s*=\s*\{?.*?\}?\s*\)')
+
+swagger_special_top_tag_pattern = re.compile(r'@(Tag)\s*\(\s*name\s*=\s*"*.*?"*,*\s*(description)*\s*(=*)\s*\{?.*?\}?\s*\)')
+
+swagger_special_schema_pattern = re.compile(r'@(Schema)\s*\((\s*(?:title|description|name)\s*=\s*".*?"\s*)(?:,\s*(?:required|accessMode)\s*=\s*\{?.*?\}?\s*)?\)')
+
+# swagger数据特殊过滤
+swagger_special_pattern = re.compile(r'@(ApiOperation|ApiModel|ApiModelProperty|ApiParam|Api)\s*\(\s*value\s*=\s*".*?"\s*\)')
+
+# swagger数据特殊过滤
+swagger_special_no_value_pattern = re.compile(r'@(ApiOperation|ApiModel|ApiModelProperty|ApiParam|Api)\s*\(\s*".*?"\s*\)')
+
+# swagger数据过滤
+swagger_pattern = re.compile(r'@(ApiOperation|ApiModel|ApiModelProperty|ApiParam|Api|ApiSupport|ApiImplicitParam|Operation|RequestParam|Excel)\([^)]*\)')
+
+#自定义规则过滤
+custom_special_pattern = re.compile(r'(StopWatch|LogExecutor|logInstance|TenantTask\.log|TenantTask\.logInfo|stopWatch\.start|TenantTask\.logError|saveDrop)\([^,]+, "[^"]*", [^,]+.*, [^)]+\)+;')
+
+custom_special_no_brackets_pattern = re.compile(r'(TenantTask\.log|saveDrop)\([^,]+, .*\);')
+
+#自定义规则过滤
+custom_common_pattern = re.compile(r'(logInstance|logProjectInstance|printStackTraceFormat|TenantTask\.log|TenantTask\.logInfo|stopWatch\.start|TenantTask\.logError|watch0\.start|watch\.start|saveDrop|LogTimeUtils\.startWatch|errorLogHandler\.accept|LOG_TAG)\(([^)]*?)\)[^;]*?;')
+
+xxljob_custom_common_pattern = re.compile(r'(XxlJobHelper\.handleFail|XxlJobHelper\.log)\(([^)]*\))+;')
+
+custom_common_has_brackets_pattern = re.compile(r'(XxlJobHelper\.log)\(\s*"([^"]*)"\s*,\s*(.*?)\s*\);')
+
+xxljob_special_pattern = re.compile(r'@(XxlRegister)\s*\(\s*cron\s*=\s*".*?",\s*jobDesc\s*=\s*\{?.*?\}?\s*\)')
+
+#spring特殊过滤
+spring_pattern = re.compile(r'(@Value)\([^)]*\)')
+
+custom_common_start = re.compile(r'(StopWatch|logProjectInstance｜LogExecutor|LOG_TAG|logTag|DailyStringCounter|log)[\s\S]*?;')
+
+# project_root_all = ['/Users/yitao/IdeaProjects/apm-aim','/Users/yitao/IdeaProjects/asset-manage-server','/Users/yitao/IdeaProjects/apm-parent']
+
+# project_root_all = ['/Users/yitao/IdeaProjects/apm-dmp']
+
+# project_root_all = ['/Users/yitao/IdeaProjects/apm-parent']
+
+# project_root_all = ['/Users/yitao/IdeaProjects/asset-manage-server']
+
+project_root_all = ['/Users/xiaofengwang/java/meos-control-parent']
+
+common_config_root = '/Users/yitao/IdeaProjects/common-config'
+
+# 生成路径
+# project_create_root = '/Users/yitao/IdeaProjects/asset-manage-server/src/main/resources/i18n'
+project_create_root = '/Users/xiaofengwang/Document/international/i18n'
+
+log_path = '/Users/yitao/IdeaProjects/apm-aim/apm-aim-server/python.log'
+
+# 定义资源文件路径
+resource_file = os.path.join(project_create_root, 'messages.properties')
+
+# 需要注意不同的目录下是否有重复的文件名称
+skip_file_names = {"ApiVersion.java","ShellConfigAndInfoCodeEnum.java","ShellConfigGroupEnum.java","ShellConfigItemEnum.java","ShellConfigItemExtendEnum.java","ShellConfigSceneEnum.java",
+                    "ShellConfigTabEnum.java","EnumValues.java","XxlJobService.java","XxlJobUtil.java","WsClientTest.java","WebSocketTypeEnum.java","WeatherServerCacheClientImpl.java","RunningLogTemplateConfig.java","RunningLogTemplateEnum.java","LightingController.java",
+                    "PaasDatatransferClient.java","LogTraceController.java","SystemGraphEditorServiceImpl.java","DtpRwdClassCodeEnum.java","RunningLogSourceTypeEnum.java"}
+
+
+excluded_paths = ["/Users/xiaofengwang/java/meos-control-parent/locall"]
+
+# 存储中文字符串和 Key 的映射
+chinese_to_key = {}
+
+old_chinese_to_key = {}
+
+def getOldChineseToKey():
+    if os.path.isfile(resource_file):
+        with open(resource_file, 'r', encoding='utf-8') as code_file:
+            for line in code_file:
+                line = line.rstrip("\n")
+                if line:
+                    key, value = line.split('=',1)
+                    old_chinese_to_key[value] = key
+# 生成唯一 Key
+def generate_key():
+    return 'key_' + str(uuid.uuid4()).replace('-', '')
+
+# 移除注释
+def remove_comments(content):
+    return comment_pattern.sub('', content)
+
+# 移除日志语句
+def remove_logs(content):
+    text = log_special_pattern.sub('', content)
+    noLogText = log_pattern.sub('', text)
+    noLogDebugText = log_debug_special_pattern.sub('',noLogText)
+    return log_debug_some_comma_pattern.sub('',noLogDebugText)
+
+# 移除swagger
+def remove_swagger(content):
+    specialSchemaText = swagger_special_schema_pattern.sub('',content)
+    specialNoTopTagText = swagger_special_top_tag_pattern.sub('',specialSchemaText)
+    specialNoValueText = swagger_special_no_value_pattern.sub('',specialNoTopTagText)
+    specialTagText = swagger_special_tag_pattern.sub('',specialNoValueText)
+    specialText = swagger_special_pattern.sub('',specialTagText)
+    return swagger_pattern.sub('',specialText)
+
+def remove_custom(content):
+    removeXXLJobCommonLog = xxljob_custom_common_pattern.sub('',content)
+    removeXXlJobLog = custom_common_has_brackets_pattern.sub('',removeXXLJobCommonLog)
+    text = custom_special_pattern.sub('',removeXXlJobLog)
+    noBracketsText = custom_special_no_brackets_pattern.sub('',text)
+    return custom_common_pattern.sub('',noBracketsText)
+
+def remove_custom_start(content):
+    return custom_common_start.sub('',content)
+
+def remove_spring(content):
+    return spring_pattern.sub('',content)
+
+def remove_xxljob(content):
+    return xxljob_special_pattern.sub('',content)
+
+enum_pattern = re.compile(r'\benum\s+\w+\b')
+
+def isEnumFile(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        for i, line in enumerate(file):
+            stripLine = line.replace(" ", "")
+            if 'publicenum' in stripLine:
+                return True
+            elif 'protectedenum' in stripLine:
+                return True
+            # elif '@NotNull' in stripLine or '@NotEmpty' in stripLine:
+            #     return True
+            # elif enum_pattern.search(line):
+            #     return True
+            if i >= 70:
+                return False
+    return False
+
+def hasLocaleImport(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        for line in file:
+            if 'importcom.persagy.apccontrol.basic.utils.i18n.LocaleMessageUtil;' in line.replace(" ", ""):
+                return True
+    return False
+
+def insert_import(file_path):
+    new_import = "import com.persagy.apccontrol.basic.utils.i18n.LocaleMessageUtil;"
+    with open(file_path, 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+    insert_position = 0
+    package_found = False
+    for i, line in enumerate(lines):
+        stripped_line = line.strip()
+        if stripped_line.startswith("package"):
+            package_found = True 
+        elif package_found and not stripped_line.startswith("import"):
+            insert_position = i
+            break
+    if not package_found:
+        insert_position = 0
+    lines.insert(insert_position, f"{new_import}\n")
+    with open(file_path, 'w', encoding='utf-8') as finalFile:
+        finalFile.writelines(lines)
+
+chinese_single_pattern = re.compile(r'[\u4e00-\u9fa5]+')
+
+# 递归遍历 JSON 对象，抽取中文字符串并替换
+def process_json(data):
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if isinstance(value, str) and chinese_single_pattern.search(value):
+                # 如果值包含中文字符，生成唯一 Key 并替换
+                if value not in old_chinese_to_key:
+                    configKey = generate_key()
+                    chinese_to_key[value] = configKey
+                    old_chinese_to_key[value] = configKey
+                data[key] = f"${{{old_chinese_to_key[value]}}}"
+            elif isinstance(value, (dict, list)):
+                # 递归处理嵌套的字典或列表
+                process_json(value)
+    elif isinstance(data, list):
+        for index, item in enumerate(data):
+            if isinstance(item, str) and chinese_single_pattern.search(item):
+                # 如果值包含中文字符，生成唯一 Key 并替换
+                if item not in old_chinese_to_key:
+                    configKey = generate_key()
+                    chinese_to_key[item] = configKey
+                    old_chinese_to_key[item] = configKey
+                data[index] =  f'${{{old_chinese_to_key[item]}}}'
+            elif isinstance(item, (dict, list)):
+                # 递归处理嵌套的字典或列表
+                process_json(item)
+
+getOldChineseToKey()
+
+valid_pattern =  re.compile(r'(message\s*=\s*)')
+
+def matchValid(content,matchExpr):
+    valid_match_prefix = valid_pattern.findall(content)
+    if not valid_match_prefix:
+        return False
+    start_index = matchExpr.start()
+    valid_match_prefix = set(valid_match_prefix)
+    for prefix in valid_match_prefix:
+        pre_index = max(0, start_index - len(prefix))
+        if content[pre_index:start_index] == prefix:
+            return True
+    return False
+
+easy_excel_pattern =  re.compile(r'(@ExcelProperty\s*\(\s*value\s*=\s*|@ExcelProperty\s*\(\s*)')
+
+def matchEasyExcel(content,matchExpr):
+    esay_excel_match_prefix = easy_excel_pattern.findall(content)
+    if not esay_excel_match_prefix:
+        return False
+    start_index = matchExpr.start()
+    esay_excel_match_prefix = set(esay_excel_match_prefix)
+    for prefix in esay_excel_match_prefix:
+        pre_index = max(0, start_index - len(prefix))
+        if content[pre_index:start_index] == prefix:
+            return True
+    return False
+
+def filterContent(content):
+    # 移除注释
+    content_no_comments = remove_comments(content)
+
+    # 移除日志语句
+    content_no_logs = remove_logs(content_no_comments)
+
+    content_no_swaggers = remove_swagger(content_no_logs)
+
+    content_no_custom = remove_custom(content_no_swaggers)
+
+    content_custom_start = remove_custom_start(content_no_custom)
+
+    content_no_spring = remove_spring(content_custom_start)
+
+    content_no_xxljob = remove_xxljob(content_no_spring)
+
+
+    return  content_no_xxljob
+
+def chineseReplace(root,files):
+    for file in files:
+        if file in skip_file_names:
+            continue
+        # 根据项目类型调整文件后缀
+        if file.endswith(('.java')):
+            file_path = os.path.join(root, file)
+            with open(file_path, 'r', encoding='utf-8') as code_file:
+                content = code_file.read()
+            if file in 'DataAnalysisIotService':
+                print(content)
+            dealContent = filterContent(content)
+            # 查找中文字符串
+            matches = chinese_pattern.finditer(dealContent)
+            needImport = False;
+            if matches:
+                enumFile = isEnumFile(file_path)
+                localeImport = hasLocaleImport(file_path)
+                for matchExpr in matches:
+                    match = matchExpr.group()
+                    # 去掉字符串的引号
+                    chinese_str = match[1:-1]
+                    if chinese_str not in old_chinese_to_key:
+                        createKey = generate_key()
+                        chinese_to_key[chinese_str] = createKey
+                        old_chinese_to_key[chinese_str] = createKey
+                    # 替换代码中的中文字符串
+                    key = old_chinese_to_key[chinese_str]
+                    if enumFile or matchEasyExcel(dealContent,matchExpr):
+                        content = content.replace(match, f'"{key}"')
+                    elif matchValid(dealContent,matchExpr):
+                        content = content.replace(match, f'"{{{key}}}"')
+                    else:
+                        content = content.replace(match, f'LocaleMessageUtil.getMessage("{key}")')
+                        if not needImport:
+                            needImport = True
+                # 写回文件
+                with open(file_path, 'w', encoding='utf-8') as code_file:
+                    code_file.write(content)
+                if not localeImport and needImport:
+                    insert_import(file_path)
+for project_root in project_root_all:
+    # 遍历项目文件，提取中文字符串并替换
+    for root, dirs, files in os.walk(project_root):
+        dirs_to_visit_at_current_level = []
+
+        for d in dirs:
+            # 不使用 os.path.abspath()，直接拼接当前子目录的完整路径
+            current_subdir_full_path = os.path.join(root, d)
+
+            should_skip_this_subdir = False
+            for excluded_path in excluded_paths:
+                if (current_subdir_full_path == excluded_path or
+                    current_subdir_full_path.startswith(excluded_path + os.sep)):
+                    should_skip_this_subdir = True
+                    break # 找到匹配，此子目录应被跳过，无需检查其他排除路径
+            
+            if not should_skip_this_subdir:
+                dirs_to_visit_at_current_level.append(d)
+        # 就地修改 'dirs' 列表，防止 os.walk 进入被排除的目录
+        dirs[:] = dirs_to_visit_at_current_level
+        chineseReplace(root,files)
+for root, dirs, files in os.walk(common_config_root): 
+    for file in files:           
+        file_path = os.path.join(root, file)
+        with open(file_path, 'r', encoding='utf-8') as code_file:
+                content = code_file.read()
+        data = json.loads(content)
+        # 处理 JSON 数据
+        process_json(data)
+        # 将处理后的 JSON 转换回字符串
+        updated_json_str = json.dumps(data, ensure_ascii=False, indent=2) 
+        # 将替换后的 JSON 数据保存到文件
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(updated_json_str)
+# 将映射关系写入资源文件
+with open(resource_file, 'a', encoding='utf-8') as f:
+    for chinese, key in chinese_to_key.items():
+        f.write(f"{key}={chinese}\n")
+#增量替换以及所有的项目放一起
+print("替换完成，资源文件已保存到:", resource_file)

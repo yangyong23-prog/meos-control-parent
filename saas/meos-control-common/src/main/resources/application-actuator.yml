@@ -1,0 +1,16 @@
+management:
+  # 健康检查配置
+  health:
+    elasticsearch:
+      enabled: false
+    rabbit:
+      enabled: false
+  server:
+    port: 8091
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    tags:
+      application: ${spring.application.name}

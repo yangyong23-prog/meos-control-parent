@@ -1,0 +1,4 @@
+{"file":".trellis/spec/backend/cache-object-model.md","reason":"对象关系字段、索引、稳定 ID 和范围替换边界"}
+{"file":".trellis/spec/backend/database-guidelines.md","reason":"正反向批量 SQL、分片和禁止 N+1 规范"}
+{"file":".trellis/spec/backend/rwd-relation-direction.md","reason":"关系主体与目标方向约束"}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"Javadoc、null 注解、this/super 和事务注释规范"}

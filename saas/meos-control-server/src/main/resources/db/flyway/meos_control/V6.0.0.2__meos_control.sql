@@ -1,0 +1,1126 @@
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('GPBZ001', 'grouping', null, 'ACCC', null, null, null, '泵组信息', null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('GPCC001', 'grouping', null, 'ACCC', null, null, null, '效率', null, null, null, null, null, null, null, null,
+        null, null, null, null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('GPFJ001', 'grouping', null, 'ACCC', null, null, null, '风机信息', null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('GPJC001', 'grouping', null, 'ACCC', null, null, null, '设备基础信息', null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('GPLD001', 'grouping', null, 'ACCC', null, null, null, '冷冻侧', null, null, null, null, null, null, null, null,
+        null, null, null, null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('GPLQ001', 'grouping', null, 'ACCC', null, null, null, '冷却侧', null, null, null, null, null, null, null, null,
+        null, null, null, null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('GPLQT001', 'grouping', null, 'ACCC', null, null, null, '冷却塔信息', null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('GPLZJC001', 'grouping', null, 'ACCC', null, null, null, '冷站基础参数', null, null, null, null, null, null,
+        null, null, null, null, null, null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('GPLZSD001', 'grouping', null, 'ACCC', null, null, null, '冷站参数设定', null, null, null, null, null, null,
+        null, null, null, null, null, null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('GPSD001', 'grouping', null, 'ACCC', null, null, null, '设备参数设定', null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('GPYX001', 'grouping', null, 'ACCC', null, null, null, '设备运行情况', null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000001', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'localName', '系统本地名称', null, null, null, null,
+        null, null, null, '1', 'GPLZJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000002', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'primaryChillWaterMainSupplyTemp',
+        '冷冻水一次侧供水干管温度', null, null, '℃', null, 1, null, null, '1', 'GPLD001', '运行参数', '["details"]',
+        null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000003', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'primaryChillWaterMainReturnTemp',
+        '冷冻水一次侧回水干管温度', null, null, '℃', null, 1, null, null, '2', 'GPLD001', '运行参数', '["details"]',
+        null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000004', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'chillWaterMainSupplyPress', '冷冻水供水干管压力',
+        '冷冻一次侧供水压力', null, 'kPa', null, 1, null, null, '3', 'GPLD001', '运行参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000005', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'chillWaterMainReturnPress', '冷冻水回水干管压力',
+        '冷冻一次侧回水压力', null, 'kPa', null, 1, null, null, '4', 'GPLD001', '运行参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000006', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'primaryChillWaterFlow', '冷冻水一次侧干管流量',
+        '冷冻一次侧总流量', null, 'm³/h', null, 1, null, null, '5', 'GPLD001', '运行参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000007', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'chillWaterDetaTemp', '冷冻水供回水温差',
+        '冷冻一次侧供回水温差', null, '℃', null, 1, null, null, '6', 'GPLD001', '运行参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000008', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'distributorCollectorDetaPress', '分集水器压差', null,
+        null, 'kPa', null, 1, null, null, '7', 'GPLD001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000009', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'coolWaterMainReturnTemp', '冷机冷却水进水干管温度',
+        '冷却水回水温度', null, '℃', null, 1, null, null, '1', 'GPLQ001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000010', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'coolWaterMainSupplyTemp', '冷机冷却水出水干管温度',
+        '冷却水出水温度', null, '℃', null, 1, null, null, '2', 'GPLQ001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000011', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'coolWaterMainReturnPress', '冷机冷却水进水干管压力',
+        '冷却水回水压力', null, 'kPa', 1000, 1, null, null, '3', 'GPLQ001', '运行参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000012', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'coolWaterMainSupplyPress', '冷机冷却水出水干管压力',
+        '冷却水出水压力', null, 'kPa', 1000, 1, null, null, '4', 'GPLQ001', '运行参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000013', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'coolWaterFlow', '冷却水总流量', null, null, 'm³/h',
+        null, 1, null, null, '5', 'GPLQ001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000014', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'sysCOP', '系统COP', '冷站EER', null, null, null, 1,
+        null, null, '1', 'GPCC001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000015', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'chillersCOP', '冷机组COP', null, null, null, null, 1,
+        null, null, '2', 'GPCC001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000016', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'wTFch', '冷冻水输配系数', null, null, null, null, 1,
+        null, null, '3', 'GPCC001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000017', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'wTFc', '冷却水输配系数', null, null, null, null, 1,
+        null, null, '4', 'GPCC001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000018', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'coolWaterReturnTempSet', '冷机冷却水进水温度设定',
+        '冷却塔出水温度设定', null, '℃', null, 1, null, null, '1', 'GPLZSD001', '设定参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000019', 'info', null, 'ACCC', 'ACCC', '中央供冷系统', 'distributorCollectorDetaPressSet',
+        '分集水器压差设定', null, null, 'kPa', 1000, 1, null, null, '2', 'GPLZSD001', '设定参数', '["details"]', null,
+        null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000020', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'localId', '设备本地编码', null, null, null, null,
+        null, null, null, '1', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000021', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'localName', '设备本地名称', null, null, null,
+        null, null, null, null, '2', 'GPJC001', '基础参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000022', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'ratedP', '额定功率', null, null, 'kW', null,
+        null, null, null, '3', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000023', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'ratedCool', '额定制冷量', null, null, 'kW', null,
+        null, null, null, '4', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000024', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'ratedCOP', '额定COP', null, null, null, null,
+        null, null, null, '5', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000025', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'startDate', '投产日期', null, null, null, null,
+        null, null, null, '6', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000026', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'onlineStatus', '在线状态', null, null, null,
+        null, null, null, null, '1', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "离线"}, {"code": "1", "name": "在线"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000027', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'runStatus', '运行状态', null, null, null, null,
+        null, null, null, '2', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "停止"}, {"code": "1", "name": "运行"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000028', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'faultStatus', '故障状态', null, null, null, null,
+        null, null, null, '3', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "正常"}, {"code": "1", "name": "故障"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000029', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'manualAutoStatus', '手自动状态', null, null,
+        null, null, null, null, null, '4', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "手动"}, {"code": "1", "name": "自动"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000030', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'localRemoteStatus', '本地远程状态', null, null,
+        null, null, null, null, null, '5', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "本地"}, {"code": "1", "name": "远程"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000031', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'chillWaterValveSwitch', '冷冻侧水阀开关', null,
+        null, null, null, null, null, null, '6', 'GPYX001', '运行参数', '["details"]', null,
+        '[{"code": "1", "name": "开启"}, {"code": "2", "name": "关闭"}, {"code": "3", "name": "进行中"}, {"code": "99", "name": "其他"}]',
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000032', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'coolWaterValveSwitch', '冷却侧水阀开关', null,
+        null, null, null, null, null, null, '7', 'GPYX001', '运行参数', '["details"]', null,
+        '[{"code": "1", "name": "开启"}, {"code": "2", "name": "关闭"}, {"code": "3", "name": "进行中"}, {"code": "99", "name": "其他"}]',
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000033', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'evapWaterInTemp', '蒸发器入口水温',
+        '冷机冷冻水回水温度', null, '℃', null, 1, null, null, '8', 'GPYX001', '运行参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000034', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'evapWaterOutTemp', '蒸发器出口水温',
+        '冷机冷冻水出水温度', null, '℃', null, 1, null, null, '9', 'GPYX001', '运行参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000035', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'condWaterInTemp', '冷凝器入口水温',
+        '冷机冷却水回水温度', null, '℃', null, 1, null, null, '10', 'GPYX001', '运行参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000036', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'condWaterOutTemp', '冷凝器出口水温',
+        '冷机冷却水出水温度', null, '℃', null, 1, null, null, '11', 'GPYX001', '运行参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000037', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'evapWaterInPress', '蒸发器入口水压',
+        '冷机冷冻水回水压力', null, 'kPa', 1000, 1, null, null, '12', 'GPYX001', '运行参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000038', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'evapWaterOutPress', '蒸发器出口水压',
+        '冷机冷冻水出水压力', null, 'kPa', 1000, 1, null, null, '13', 'GPYX001', '运行参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000039', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'condWaterInPress', '冷凝器入口水压',
+        '冷机冷却水回水压力', null, 'kPa', 1000, 1, null, null, '14', 'GPYX001', '运行参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000040', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'condWaterOutPress', '冷凝器出口水压',
+        '冷机冷却水出水压力', null, 'kPa', 1000, 1, null, null, '15', 'GPYX001', '运行参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000041', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'chillWaterFlow', '冷冻水流量', null, null,
+        'm³/h', null, 1, null, null, '16', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000042', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'coolWaterFlow', '冷却水流量', null, null, 'm³/h',
+        null, 1, null, null, '17', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000043', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'aPhaseU', 'A相电压', null, null, 'V', null, 1,
+        null, null, '18', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000044', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'bPhaseU', 'B相电压', null, null, 'V', null, 1,
+        null, null, '19', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000045', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'cPhaseU', 'C相电压', null, null, 'V', null, 1,
+        null, null, '20', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000046', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'i', '运行电流', null, null, 'A', null, 1, null,
+        null, '21', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000047', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'iPLR', '电流负载率', null, null, '%', null, 1,
+        null, null, '22', 'GPYX001', '运行参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000048', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'cOP', 'COP', null, null, null, null, 1, null,
+        null, '23', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000049', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'condApproachTemp', '冷凝趋近温度', null, null,
+        '℃', null, 1, null, null, '24', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000050', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'evapApproachTemp', '蒸发趋近温度', null, null,
+        '℃', null, 1, null, null, '25', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000051', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'evapTemp', '蒸发温度', null, null, '℃', null, 1,
+        null, null, '26', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000052', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'evapPress', '蒸发压力', null, null, 'kPa', null,
+        1, null, null, '27', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000053', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'condTemp', '冷凝温度', null, null, '℃', null, 1,
+        null, null, '28', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000054', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'condPress', '冷凝压力', null, null, 'kPa', null,
+        1, null, null, '29', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000055', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'compressOutTemp', '压缩机排气温度', null, null,
+        '℃', null, 1, null, null, '30', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000056', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'compressOutPress', '压缩机排气压力', null, null,
+        'kPa', 1000, 1, null, null, '31', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000057', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'lubeTemp', '油温', null, null, '℃', null, 1,
+        null, null, '32', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000058', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'lubePress', '供油压力', null, null, 'kPa', null,
+        1, null, null, '33', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000059', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'manualAutoSet', '手自动状态设定', null, null,
+        null, null, null, null, null, '1', 'GPSD001', '设定参数', '["details"]', null,
+        '[{"code": "0", "name": "手动"}, {"code": "1", "name": "自动"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000060', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'enableCtrl', '启用命令', null, null, null, null,
+        null, null, null, '2', 'GPSD001', '设定参数', '["details"]',
+        '[{"infoCode": "equipSwitchSet", "classCode": "ACCCCC"}, {"infoCode": "chillWaterValveSwitchSet", "classCode": "ACCCCC"}, {"infoCode": "coolWaterValveSwitchSet", "classCode": "ACCCCC"}]',
+        '[{"code": "0", "name": "关闭"}, {"code": "1", "name": "开启"}]',
+        '{"variables": [{"dataType": 0, "infoCode": "onlineStatus"}, {"dataType": 1, "infoCode": "enableCtrl"}, {"dataType": 0, "infoCode": "runStatus"}], "sourceIotType": 0, "triggerFormula": "onlineStatus != nil && onlineStatus != 1 ? -1:(enableCtrl == nil ? runStatus : enableCtrl == 0 ? 2 : 3)", "triggerInfoCode": "rcRunStatus"}');
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000061', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'chillWaterOutTempSet', '冷冻水出水温度设定值',
+        '冷机出水温度设定', null, '℃', null, 1, null, null, '3', 'GPSD001', '设定参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000062', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'equipSwitchSet', '设备开关设定', null, null,
+        null, null, null, null, null, '1', 'GPSD001', '设定参数', '["details"]', null,
+        '[{"code": "0", "name": "关闭"}, {"code": "1", "name": "开启"}]',
+        '{"variables": [{"dataType": 0, "infoCode": "onlineStatus"}, {"dataType": 1, "infoCode": "equipSwitchSet"}, {"dataType": 0, "infoCode": "runStatus"}], "sourceIotType": 0, "triggerFormula": "onlineStatus != nil && onlineStatus != 1 ? -1:(equipSwitchSet == nil ? runStatus : equipSwitchSet == 0 ? 2 : 3)", "triggerInfoCode": "rcRunStatus"}');
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000063', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'chillWaterValveSwitchSet', '冷冻侧水阀开关设定',
+        null, null, null, null, null, null, null, '2', 'GPSD001', '设定参数', '["details"]', null,
+        '[{"code": "0", "name": "关闭"}, {"code": "1", "name": "开启"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000064', 'info', null, 'ACCC', 'ACCCCC', '离心式冷水机组', 'coolWaterValveSwitchSet', '冷却侧水阀开关设定',
+        null, null, null, null, null, null, null, '3', 'GPSD001', '设定参数', '["details"]', null,
+        '[{"code": "0", "name": "关闭"}, {"code": "1", "name": "开启"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000065', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'localId', '设备本地编码', null, null, null, null,
+        null, null, null, '1', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000066', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'localName', '设备本地名称', null, null, null, null,
+        null, null, null, '2', 'GPJC001', '基础参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000067', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'ratedI', '额定电流', null, null, 'A', null, null,
+        null, null, '3', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000068', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'ratedP', '额定功率', null, null, 'kW', null, null,
+        null, null, '4', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000069', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'vFDMinFreq', '变频最低频率', null, null, 'Hz',
+        null, null, null, null, '5', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000070', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'startDate', '投产日期', null, null, null, null,
+        null, null, null, '6', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000071', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'onlineStatus', '在线状态', null, null, null, null,
+        null, null, null, '1', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "离线"}, {"code": "1", "name": "在线"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000072', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'runStatus', '运行状态', null, null, null, null,
+        null, null, null, '2', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "停止"}, {"code": "1", "name": "运行"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000073', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'faultStatus', '故障状态', null, null, null, null,
+        null, null, null, '3', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "正常"}, {"code": "1", "name": "故障"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000074', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'localRemoteStatus', '本地远程状态', null, null,
+        null, null, null, null, null, '4', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "本地"}, {"code": "1", "name": "远程"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000075', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'manualAutoStatus', '手自动状态', null, null, null,
+        null, null, null, null, '5', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "手动"}, {"code": "1", "name": "自动"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000076', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'aPhaseU', 'A相电压', null, null, 'V', null, 1,
+        null, null, '6', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000077', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'bPhaseU', 'B相电压', null, null, 'V', null, 1,
+        null, null, '7', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000078', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'cPhaseU', 'C相电压', null, null, 'V', null, 1,
+        null, null, '8', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000079', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'i', '运行电流', null, null, 'A', null, 1, null,
+        null, '9', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000080', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'workFreq', '运行频率', null, null, 'Hz', null, 1,
+        null, null, '10', 'GPYX001', '运行参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000081', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'manualAutoSet', '手自动状态设定', null, null, null,
+        null, null, null, null, '1', 'GPSD001', '设定参数', '["details"]', null,
+        '[{"code": "0", "name": "手动"}, {"code": "1", "name": "自动"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000082', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'equipSwitchSet', '设备开关设定', null, null, null,
+        null, null, null, null, '2', 'GPSD001', '设定参数', '["details"]', null,
+        '[{"code": "0", "name": "关闭"}, {"code": "1", "name": "开启"}]',
+        '{"variables": [{"dataType": 0, "infoCode": "onlineStatus"}, {"dataType": 1, "infoCode": "equipSwitchSet"}, {"dataType": 0, "infoCode": "runStatus"}], "sourceIotType": 0, "triggerFormula": "onlineStatus != nil && onlineStatus != 1 ? -1:(equipSwitchSet == nil ? runStatus : equipSwitchSet == 0 ? 2 : 3)", "triggerInfoCode": "rcRunStatus"}');
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000083', 'info', null, 'ACCC', 'ACCCCP', '供冷冷冻水泵', 'equipFreqSet', '设备频率设定', '水泵频率设定',
+        null, 'Hz', null, 1, null, null, '3', 'GPSD001', '设定参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000084', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'localId', '设备本地编码', null, null, null, null,
+        null, null, null, '1', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000085', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'localName', '设备本地名称', null, null, null, null,
+        null, null, null, '2', 'GPJC001', '基础参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000086', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'ratedI', '额定电流', null, null, 'A', null, null,
+        null, null, '3', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000087', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'ratedP', '额定功率', null, null, 'kW', null, null,
+        null, null, '4', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000088', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'vFDMinFreq', '变频最低频率', null, null, 'Hz',
+        null, null, null, null, '5', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000089', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'startDate', '投产日期', null, null, null, null,
+        null, null, null, '6', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000090', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'runStatus', '运行状态', null, null, null, null,
+        null, null, null, '1', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "停止"}, {"code": "1", "name": "运行"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000091', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'faultStatus', '故障状态', null, null, null, null,
+        null, null, null, '2', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "正常"}, {"code": "1", "name": "故障"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000092', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'onlineStatus', '在线状态', null, null, null, null,
+        null, null, null, '3', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "离线"}, {"code": "1", "name": "在线"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000093', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'manualAutoStatus', '手自动状态', null, null, null,
+        null, null, null, null, '4', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "手动"}, {"code": "1", "name": "自动"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000094', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'localRemoteStatus', '本地远程状态', null, null,
+        null, null, null, null, null, '5', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "本地"}, {"code": "1", "name": "远程"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000095', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'aPhaseU', 'A相电压', null, null, 'V', null, 1,
+        null, null, '6', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000096', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'bPhaseU', 'B相电压', null, null, 'V', null, 1,
+        null, null, '7', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000097', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'cPhaseU', 'C相电压', null, null, 'V', null, 1,
+        null, null, '8', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000098', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'i', '运行电流', null, null, 'A', null, 1, null,
+        null, '9', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000099', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'workFreq', '运行频率', null, null, 'Hz', null, 1,
+        null, null, '10', 'GPYX001', '运行参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000100', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'manualAutoSet', '手自动状态设定', null, null, null,
+        null, null, null, null, '1', 'GPSD001', '设定参数', '["details"]', null,
+        '[{"code": "0", "name": "手动"}, {"code": "1", "name": "自动"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000101', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'equipSwitchSet', '设备开关设定', null, null, null,
+        null, null, null, null, '2', 'GPSD001', '设定参数', '["details"]', null,
+        '[{"code": "0", "name": "关闭"}, {"code": "1", "name": "开启"}]',
+        '{"variables": [{"dataType": 0, "infoCode": "onlineStatus"}, {"dataType": 1, "infoCode": "equipSwitchSet"}, {"dataType": 0, "infoCode": "runStatus"}], "sourceIotType": 0, "triggerFormula": "onlineStatus != nil && onlineStatus != 1 ? -1:(equipSwitchSet == nil ? runStatus : equipSwitchSet == 0 ? 2 : 3)", "triggerInfoCode": "rcRunStatus"}');
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000102', 'info', null, 'ACCC', 'ACCCOP', '供冷冷却水泵', 'equipFreqSet', '设备频率设定', '水泵频率设定',
+        null, 'Hz', null, 1, null, null, '3', 'GPSD001', '设定参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000103', 'info', null, 'ACCC', 'ACOTU', '冷却塔控制单元', 'localName', '设备本地名称', null, null, null,
+        null, null, null, null, '2', 'GPJC001', '基础信息', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000104', 'info', null, 'ACCC', 'ACOTU', '冷却塔控制单元', 'runStatus', '运行状态', null, null, null, null,
+        null, null, null, '3', 'GPLQT001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "停止"}, {"code": "1", "name": "运行"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000105', 'info', null, 'ACCC', 'ACOTU', '冷却塔控制单元', 'manualAutoStatus', '手自动状态', null, null, null,
+        null, null, null, null, '4', 'GPLQT001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "手动"}, {"code": "1", "name": "自动"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000106', 'info', null, 'ACCC', 'ACOTU', '冷却塔控制单元', 'manualAutoSet', '手自动状态设定', null, null,
+        null, null, null, null, null, '1', 'GPSD001', '设定参数', '["details"]', null,
+        '[{"code": "0", "name": "手动"}, {"code": "1", "name": "自动"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000107', 'info', null, 'ACCC', 'ACOTU', '冷却塔控制单元', 'enableCtrl', '启用命令', null, null, null, null,
+        null, null, null, '2', 'GPSD001', '设定参数', '["details"]',
+        '[{"relCode": "Eg2Eq", "infoCode": "equipSwitchSet", "classCode": "ACCCOF", "graphCode": "CombineSubset", "relDirection": "from"}, {"relCode": "Eg2Eq", "infoCode": "equipFreqSet", "classCode": "ACCCOF", "graphCode": "CombineSubset", "relDirection": "from"}, {"relCode": "Eg2Eq", "infoCode": "switchStatusCtrl", "classCode": "ACVVEO", "graphCode": "CombineSubset", "relDirection": "from"}]',
+        '[{"code": "0", "name": "关闭"}, {"code": "1", "name": "开启"}]',
+        '{"variables": [{"dataType": 1, "infoCode": "enableCtrl"}, {"dataType": 0, "infoCode": "runStatus"}], "sourceIotType": 0, "triggerFormula": "runStatus != nil && runStatus != 1 ? -1: (enableCtrl == nil ? runStatus : enableCtrl == 0 ? 2 : 3)", "triggerInfoCode": "rcRunStatus"}');
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000108', 'info', null, 'ACCC', 'ACCCOF', '冷却塔风机', 'localId', '设备本地编码', null, null, null, null,
+        null, null, null, '1', 'GPJC001', '基础信息', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000109', 'info', null, 'ACCC', 'ACCCOF', '冷却塔风机', 'localName', '设备本地名称', null, null, null, null,
+        null, null, null, '2', 'GPJC001', '基础信息', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000110', 'info', null, 'ACCC', 'ACCCOF', '冷却塔风机', 'onlineStatus', '在线状态', null, null, null, null,
+        null, null, null, '3', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "离线"}, {"code": "1", "name": "在线"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000111', 'info', null, 'ACCC', 'ACCCOF', '冷却塔风机', 'runStatus', '运行状态', null, null, null, null, null,
+        null, null, '4', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "停止"}, {"code": "1", "name": "运行"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000112', 'info', null, 'ACCC', 'ACCCOF', '冷却塔风机', 'faultStatus', '故障状态', null, null, null, null,
+        null, null, null, '5', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "正常"}, {"code": "1", "name": "故障"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000113', 'info', null, 'ACCC', 'ACCCOF', '冷却塔风机', 'localRemoteStatus', '本地远程状态', null, null, null,
+        null, null, null, null, '6', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "本地"}, {"code": "1", "name": "远程"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000114', 'info', null, 'ACCC', 'ACCCOF', '冷却塔风机', 'freq', '工作频率', null, null, 'Hz', null, 1, null,
+        null, '7', 'GPYX001', '运行参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000115', 'info', null, 'ACCC', 'ACCCOF', '冷却塔风机', 'equipSwitchSet', '设备开关设定', null, null, null,
+        null, null, null, null, '8', 'GPSD001', '设定参数', '["details"]', null,
+        '[{"code": "0", "name": "关闭"}, {"code": "1", "name": "开启"}]',
+        '{"variables": [{"dataType": 0, "infoCode": "onlineStatus"}, {"dataType": 1, "infoCode": "equipSwitchSet"}, {"dataType": 0, "infoCode": "runStatus"}], "sourceIotType": 0, "triggerFormula": "onlineStatus != nil && onlineStatus != 1 ? -1:(equipSwitchSet == nil ? runStatus : equipSwitchSet == 0 ? 2 : 3)", "triggerInfoCode": "rcRunStatus"}');
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000116', 'info', null, 'ACCC', 'ACCCOF', '冷却塔风机', 'equipFreqSet', '设备频率设定', null, null, 'Hz',
+        null, 1, null, null, '9', 'GPSD001', '设定参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000117', 'info', null, 'ACCC', 'ACCPC', '冷冻水泵控制组', 'localName', '设备本地名称', null, null, null,
+        null, null, null, null, '2', 'GPJC001', '基础信息', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000118', 'info', null, 'ACCC', 'ACCPC', '冷冻水泵控制组', 'branchDetaTempSet', '对应支路供回水温差设定',
+        '供回水温差设定', null, '℃', null, null, null, null, '3', 'GPSD001', '设定参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000119', 'info', null, 'ACCC', 'ACCPC', '冷冻水泵控制组', 'branchDetaPressSet', '对应支路供回水压差设定',
+        '供回水压差设定', null, 'kPa', 1000, null, null, null, '4', 'GPSD001', '设定参数', '["details"]', null, null,
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000120', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'localId', '设备本地编码', null, null, null, null,
+        null, null, null, '1', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000121', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'localName', '设备本地名称', null, null, null, null,
+        null, null, null, '2', 'GPJC001', '基础参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000122', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'runStatus', '运行状态', null, null, null, null, null,
+        null, null, '1', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "停止"}, {"code": "1", "name": "运行"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000123', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'manualAutoStatus', '手自动状态', null, null, null,
+        null, null, null, null, '2', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "手动"}, {"code": "1", "name": "自动"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000124', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'lowInTemp', '低温侧进水温度', null, null, '℃', null,
+        1, null, null, '3', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000125', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'lowInPress', '低温侧进水压力', null, null, 'kPa',
+        1000, 1, null, null, '4', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000126', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'lowOutTemp', '低温侧出水温度', null, null, '℃', null,
+        1, null, null, '5', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000127', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'lowOutPress', '低温侧出水压力', null, null, 'kPa',
+        1000, 1, null, null, '6', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000128', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'lowFlow', '低温侧瞬时流量', null, null, 'm³/h', null,
+        1, null, null, '7', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000129', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'lowValveSwitch', '低温侧水阀开关', null, null, null,
+        null, null, null, null, '8', 'GPYX001', '运行参数', '["details"]', null,
+        '[{"code": "0", "name": "关闭"}, {"code": "1", "name": "开启"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000130', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'highInTemp', '高温侧进水温度', null, null, '℃', null,
+        1, null, null, '9', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000131', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'highInPress', '高温侧进水压力', null, null, 'kPa',
+        1000, 1, null, null, '10', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000132', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'highOutTemp', '高温侧出水温度', null, null, '℃',
+        null, 1, null, null, '11', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000133', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'highOutPress', '高温侧出水压力', null, null, 'kPa',
+        1000, 1, null, null, '12', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000134', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'highFlow', '高温侧瞬时流量', null, null, 'm³/h',
+        null, 1, null, null, '13', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000135', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'highValveSwitch', '高温侧水阀开关', null, null, null,
+        null, null, null, null, '14', 'GPYX001', '运行参数', '["details"]', null,
+        '[{"code": "0", "name": "关闭"}, {"code": "1", "name": "开启"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000136', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'manualAutoSet', '手自动状态设定', null, null, null,
+        null, null, null, null, '1', 'GPSD001', '设定参数', '["details"]', null,
+        '[{"code": "0", "name": "手动"}, {"code": "1", "name": "自动"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000137', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'equipSwitchSet', '设备开关设定', null, null, null,
+        null, null, null, null, '2', 'GPSD001', '设定参数', '["details"]',
+        '[{"infoCode": "lowValveSwitchSet", "classCode": "ACGEHE"}, {"infoCode": "highValveSwitchSet", "classCode": "ACGEHE"}]',
+        '[{"code": "0", "name": "关闭"}, {"code": "1", "name": "开启"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000138', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'lowValveSwitchSet', '低温侧水阀开关设定', null, null,
+        null, null, null, null, null, '3', 'GPSD001', '设定参数', '["details"]', null,
+        '[{"code": "0", "name": "关闭"}, {"code": "1", "name": "开启"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000139', 'info', null, 'ACCC', 'ACGEHE', '空调换热器', 'highValveSwitchSet', '高温侧水阀开关设定', null,
+        null, null, null, null, null, null, '4', 'GPSD001', '设定参数', '["details"]', null,
+        '[{"code": "0", "name": "关闭"}, {"code": "1", "name": "开启"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000140', 'info', null, 'ACCC', 'ACGEDB', '分水器', 'localName', '设备本地名称', null, null, null, null, null,
+        null, null, '1', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000141', 'info', null, 'ACCC', 'ACGEDB', '分水器', 'localId', '设备本地编码', null, null, null, null, null,
+        null, null, '2', 'GPJC001', '基础参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000142', 'info', null, 'ACCC', 'ACGEDB', '分水器', 'branchPipeNum', '分管数量', null, null, null, null, null,
+        null, null, '3', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000143', 'info', null, 'ACCC', 'ACGEDB', '分水器', 'tankPress', '罐体压力', null, null, 'kPa', 1000, null,
+        null, null, '1', 'GPYX001', '运行参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000144', 'info', null, 'ACCC', 'ACGECL', '集水器', 'localName', '设备本地名称', null, null, null, null, null,
+        null, null, '1', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000145', 'info', null, 'ACCC', 'ACGECL', '集水器', 'localId', '设备本地编码', null, null, null, null, null,
+        null, null, '2', 'GPJC001', '基础参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000146', 'info', null, 'ACCC', 'ACGECL', '集水器', 'branchPipeNum', '分管数量', null, null, null, null, null,
+        null, null, '3', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000147', 'info', null, 'ACCC', 'ACGECL', '集水器', 'tankPress', '罐体压力', null, null, 'kPa', 1000, null,
+        null, null, '1', 'GPYX001', '运行参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000148', 'info', null, 'ACCC', 'ACGEFP', '补水泵', 'localId', '设备本地编码', null, null, null, null, null,
+        null, null, '1', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000149', 'info', null, 'ACCC', 'ACGEFP', '补水泵', 'localName', '设备本地名称', null, null, null, null, null,
+        null, null, '2', 'GPJC001', '基础参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000150', 'info', null, 'ACCC', 'ACGEFP', '补水泵', 'runStatus', '运行状态', null, null, null, null, null,
+        null, null, '1', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "停止"}, {"code": "1", "name": "运行"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000151', 'info', null, 'ACCC', 'ACGEFP', '补水泵', 'faultStatus', '故障状态', null, null, null, null, null,
+        null, null, '2', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "正常"}, {"code": "1", "name": "故障"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000152', 'info', null, 'ACCC', 'ACGEFP', '补水泵', 'onlineStatus', '在线状态', null, null, null, null, null,
+        null, null, '3', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "离线"}, {"code": "1", "name": "在线"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000153', 'info', null, 'ACCC', 'ACGEFP', '补水泵', 'i', '运行电流', null, null, 'A', null, 1, null, null,
+        '4', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000154', 'info', null, 'ACCC', 'ACGEFP', '补水泵', 'workFreq', '运行频率', null, null, 'Hz', null, 1, null,
+        null, '5', 'GPYX001', '运行参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000155', 'info', null, 'ACCC', 'ACCCWT', '补水箱', 'localId', '设备本地编码', null, null, null, null, null,
+        null, null, '1', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000156', 'info', null, 'ACCC', 'ACCCWT', '补水箱', 'localName', '设备本地名称', null, null, null, null, null,
+        null, null, '2', 'GPJC001', '基础参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000157', 'info', null, 'ACCC', 'ACCCWT', '补水箱', 'onlineStatus', '在线状态', null, null, null, null, null,
+        null, null, '1', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "离线"}, {"code": "1", "name": "在线"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000158', 'info', null, 'ACCC', 'ACCCWT', '补水箱', 'tankWaterLev', '水箱水位', null, null, 'm', null, 1,
+        null, null, '2', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000159', 'info', null, 'ACCC', 'ACGEET', '膨胀水箱', 'localId', '设备本地编码', null, null, null, null, null,
+        null, null, '1', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000160', 'info', null, 'ACCC', 'ACGEET', '膨胀水箱', 'localName', '设备本地名称', null, null, null, null,
+        null, null, null, '2', 'GPJC001', '基础参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000161', 'info', null, 'ACCC', 'ACGEET', '膨胀水箱', 'onlineStatus', '在线状态', null, null, null, null,
+        null, null, null, '1', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "离线"}, {"code": "1", "name": "在线"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000162', 'info', null, 'ACCC', 'ACGEET', '膨胀水箱', 'tankWaterLev', '水箱水位', null, null, 'm', null, 1,
+        null, null, '2', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000163', 'info', null, 'ACCC', 'ACCCCD', '水加药装置', 'localId', '设备本地编码', null, null, null, null,
+        null, null, null, '1', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000164', 'info', null, 'ACCC', 'ACCCCD', '水加药装置', 'localName', '设备本地名称', null, null, null, null,
+        null, null, null, '2', 'GPJC001', '基础参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000165', 'info', null, 'ACCC', 'ACCCCD', '水加药装置', 'runStatus', '运行状态', null, null, null, null, null,
+        null, null, '1', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "停止"}, {"code": "1", "name": "运行"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000166', 'info', null, 'ACCC', 'ACCCCD', '水加药装置', 'faultStatus', '故障状态', null, null, null, null,
+        null, null, null, '2', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "正常"}, {"code": "1", "name": "故障"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000167', 'info', null, 'ACCC', 'ACCCCD', '水加药装置', 'onlineStatus', '在线状态', null, null, null, null,
+        null, null, null, '3', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "离线"}, {"code": "1", "name": "在线"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000168', 'info', null, 'ACCC', 'ACCCCD', '水加药装置', 'chemicalRemain', '药剂余量', null, null, 'g', null,
+        1, null, null, '4', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000169', 'info', null, 'ACCC', 'WESSTP', '温度传感器', 'localId', '设备本地编码', null, null, null, null,
+        null, null, null, '1', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000170', 'info', null, 'ACCC', 'WESSTP', '温度传感器', 'localName', '设备本地名称', null, null, null, null,
+        null, null, null, '2', 'GPJC001', '基础参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000171', 'info', null, 'ACCC', 'WESSTP', '温度传感器', 'temp', '温度传感器温度测量值', '温度', null, '℃',
+        null, 1, null, null, '1', 'GPYX001', '运行参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000172', 'info', null, 'ACCC', 'WESSPM', '水压表', 'localId', '设备本地编码', null, null, null, null, null,
+        null, null, '1', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000173', 'info', null, 'ACCC', 'WESSPM', '水压表', 'localName', '设备本地名称', null, null, null, null, null,
+        null, null, '2', 'GPJC001', '基础参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000174', 'info', null, 'ACCC', 'WESSPM', '水压表', 'press', '压力传感器压力测量值', '压力', null, 'kPa',
+        null, null, null, null, '1', 'GPYX001', '运行参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000175', 'info', null, 'ACCC', 'WESSFL', '流量传感器', 'localId', '设备本地编码', null, null, null, null,
+        null, null, null, '1', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000176', 'info', null, 'ACCC', 'WESSFL', '流量传感器', 'localName', '设备本地名称', null, null, null, null,
+        null, null, null, '2', 'GPJC001', '基础参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000177', 'info', null, 'ACCC', 'WESSFL', '流量传感器', 'flow', '流量传感器流量测量值', '流量', null, 'm³/h',
+        null, null, null, null, '1', 'GPYX001', '运行参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000178', 'info', null, 'ACCC', 'WESSHS', '热量表', 'localId', '设备本地编码', null, null, null, null, null,
+        null, null, '1', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000179', 'info', null, 'ACCC', 'WESSHS', '热量表', 'localName', '设备本地名称', null, null, null, null, null,
+        null, null, '2', 'GPJC001', '基础参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000180', 'info', null, 'ACCC', 'WESSHS', '热量表', 'heatAccCool', '累计冷量测量值', null, null, 'kWh', null,
+        null, null, null, '1', 'GPYX001', '运行参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000181', 'info', null, 'ACCC', 'WESSHS', '热量表', 'highSideTemp', '高温侧水温', null, null, '℃', null, null,
+        null, null, '2', 'GPYX001', '运行参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000182', 'info', null, 'ACCC', 'WESSHS', '热量表', 'lowSideTemp', '低温侧水温', null, null, '℃', null, null,
+        null, null, '3', 'GPYX001', '运行参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000183', 'info', null, 'ACCC', 'WESSHS', '热量表', 'heatTempDifference', '热量传感器温差测量值',
+        '温差测量值', null, '℃', null, null, null, null, '4', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000184', 'info', null, 'ACCC', 'WESSHS', '热量表', 'heatFlow', '热量传感器流量测量值', '流量', null, 'm³/h',
+        null, null, null, null, '5', 'GPYX001', '运行参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000185', 'info', null, 'ACCC', 'ACVVEO', '通断水阀', 'localId', '设备本地编码', null, null, null, null, null,
+        null, null, '1', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000186', 'info', null, 'ACCC', 'ACVVEO', '通断水阀', 'localName', '设备本地名称', null, null, null, null,
+        null, null, null, '2', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000187', 'info', null, 'ACCC', 'ACVVEO', '通断水阀', 'switchStatus', '开闭状态', null, null, null, null,
+        null, null, null, '1', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "1", "name": "开启"}, {"code": "2", "name": "关闭"}, {"code": "3", "name": "进行中"}, {"code": "99", "name": "其他"}]',
+        null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000188', 'info', null, 'ACCC', 'ACVVEO', '通断水阀', 'manualAutoStatus', '手自动状态', null, null, null,
+        null, null, null, null, '2', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "手动"}, {"code": "1", "name": "自动"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000189', 'info', null, 'ACCC', 'ACVVEO', '通断水阀', 'manualAutoSet', '手自动状态设定', null, null, null,
+        null, null, null, null, '1', 'GPSD001', '设定参数', '["details"]', null,
+        '[{"code": "0", "name": "手动"}, {"code": "1", "name": "自动"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000190', 'info', null, 'ACCC', 'ACVVEO', '通断水阀', 'switchStatusCtrl', '开闭状态控制', null, null, null,
+        null, null, null, null, '2', 'GPSD001', '设定参数', '["details"]', null,
+        '[{"code": "0", "name": "关闭"}, {"code": "1", "name": "开启"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000191', 'info', null, 'ACCC', 'ACVVEJ', '调节水阀', 'localId', '设备本地编码', null, null, null, null, null,
+        null, null, '1', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000192', 'info', null, 'ACCC', 'ACVVEJ', '调节水阀', 'localName', '设备本地名称', null, null, null, null,
+        null, null, null, '2', 'GPJC001', '基础参数', '["details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000193', 'info', null, 'ACCC', 'ACVVEJ', '调节水阀', 'opening', '开度', null, null, '%', null, null, null,
+        null, '1', 'GPYX001', '运行参数', '["home_page", "details"]', null, null, null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000194', 'info', null, 'ACCC', 'ACVVEJ', '调节水阀', 'manualAutoStatus', '手自动状态', null, null, null,
+        null, null, null, null, '2', 'GPYX001', '运行参数', '["home_page", "details"]', null,
+        '[{"code": "0", "name": "手动"}, {"code": "1", "name": "自动"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000195', 'info', null, 'ACCC', 'ACVVEJ', '调节水阀', 'manualAutoSet', '手自动状态设定', null, null, null,
+        null, null, null, null, '1', 'GPSD001', '设定参数', '["details"]', null,
+        '[{"code": "0", "name": "手动"}, {"code": "1", "name": "自动"}]', null);
+INSERT IGNORE INTO rc_info_code_cfg (id, data_type, system_id, system_type, class_code, class_name, info_code, name,
+                                     alias, feedback_code, unit, scale, iot_decimal, max, min, ordered, group_info,
+                                     parameter_type, display_position, force_info, data_source, extend_info)
+VALUES ('IF000196', 'info', null, 'ACCC', 'ACVVEJ', '调节水阀', 'openingSet', '开度设定', null, null, '%', null, null,
+        null, null, '2', 'GPSD001', '设定参数', '["details"]', null, null, null);

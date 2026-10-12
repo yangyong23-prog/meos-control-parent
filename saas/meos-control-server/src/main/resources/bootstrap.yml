@@ -1,0 +1,30 @@
+# ------------------------- Spring Setting -------------------------
+spring:
+  messages:
+    basename: i18n/messages  # 指向资源文件前缀
+    encoding: UTF-8
+  application:
+    name: meos-control-server
+  cloud:
+    nacos:
+      config:
+        server-addr: ${NACOS_SERVERS}
+        username: ${NACOS_USERNAME}
+        password: ${NACOS_PASSWORD}
+        namespace: ${NACOS_NAMESPACE}
+        group: ${NACOS_GROUP}
+        file-extension: yml
+        shared-configs:
+          - dataId: x-common.yml
+            group: ${NACOS_GROUP}
+            refresh: true
+        enabled: true
+        configLongPollTimeout: 6000
+      discovery:
+        username: ${NACOS_USERNAME}
+        password: ${NACOS_PASSWORD}
+        server-addr: ${NACOS_SERVERS}
+        namespace: ${NACOS_NAMESPACE}
+        group: ${NACOS_GROUP}
+        metadata: # 元数据，用于权限服务实时获取各个服务的所有接口
+          management.context-path: ${server.servlet.context-path:}${spring.mvc.servlet.path:}${management.endpoints.web.base-path:}

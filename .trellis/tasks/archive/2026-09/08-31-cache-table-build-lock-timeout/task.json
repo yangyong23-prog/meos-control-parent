@@ -1,0 +1,33 @@
+{
+  "id": "cache-table-build-lock-timeout",
+  "name": "cache-table-build-lock-timeout",
+  "title": "修复 Cache 表缓存构建偶发锁等待超时",
+  "description": "通过项目级保存互斥和有上限的锁获取重试，修复 Cache 对象模型构建时跨类型并发写共享对象行导致的 MySQL 锁等待超时，并恢复缓存批量写入边界。",
+  "status": "completed",
+  "dev_type": "bugfix",
+  "scope": "backend",
+  "package": null,
+  "priority": "P2",
+  "creator": "jiyinchuan",
+  "assignee": "jiyinchuan",
+  "createdAt": "2026-08-31",
+  "completedAt": "2026-09-01",
+  "branch": null,
+  "base_branch": "master",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [],
+  "parent": null,
+  "relatedFiles": [
+    "common/src/main/java/com/persagy/apccontrol/basic/model/base/CacheLockKey.java",
+    "common/src/main/java/com/persagy/apccontrol/basic/service/cache/RedissonDistributedLockerService.java",
+    "common/src/main/java/com/persagy/apccontrol/basic/service/cache/impl/RedissonDistributedLockerServiceImpl.java",
+    "common/src/main/java/com/persagy/apccontrol/basic/structure/cacherwd/service/CacheObjectModelWriteServiceImpl.java",
+    "common/src/main/java/com/persagy/apccontrol/basic/resource/cache/support/CacheBatchExecutor.java",
+    ".trellis/spec/backend/cache-object-model.md"
+  ],
+  "notes": "",
+  "meta": {}
+}

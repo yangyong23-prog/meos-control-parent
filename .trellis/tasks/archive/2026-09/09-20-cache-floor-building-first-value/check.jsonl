@@ -1,0 +1,2 @@
+{"file": ".trellis/spec/backend/cache-object-model.md", "reason": "校验多值取首个值的独立列语义与规范三处描述一致"}
+{"file": ".trellis/spec/backend/quality-guidelines.md", "reason": "校验代码质量与注释规范"}

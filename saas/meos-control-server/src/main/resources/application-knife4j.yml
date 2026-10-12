@@ -1,0 +1,14 @@
+# ------------------------- Knife4j Setting -------------------------
+knife4j:
+  enable: true
+  setting:
+    # 重命名SwaggerModel名称
+    swaggerModelName: Model列表
+    # 是否在每个Debug调试栏后显示刷新变量按钮,默认不显示
+    enableReloadCacheParameter: true
+    # 是否开启请求参数缓存
+    enableRequestCache: false
+    # 自定义Footer内容
+    enableFooter: false
+    enableFooterCustom: true
+    footerCustomContent: "© 2016 Persagy.All rights reserved"

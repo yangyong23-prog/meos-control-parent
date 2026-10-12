@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.cache.CacheRuleMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.cache.CacheRule">
+        <id column="id" property="id"/>
+        <result column="project_id" property="projectId"/>
+        <result column="object_id" property="objectId"/>
+        <result column="info_code" property="infoCode"/>
+        <result column="type" property="type"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" property="updateUser"/>
+    </resultMap>
+
+    <select id="listByBusinessKeys" resultMap="BaseResultMap">
+        select
+        id,
+        project_id,
+        object_id,
+        info_code,
+        type
+        from cache_rule
+        where project_id = #{projectId}
+        and
+        (
+        <!-- 复合条件保持完整业务键，避免把对象、信息点和类型拆成独立 IN 后产生组合误命中。 -->
+        <foreach collection="businessKeys" item="businessKey" separator=" or ">
+            (
+            object_id = #{businessKey.objectId}
+            and info_code = #{businessKey.infoCode}
+            and type = #{businessKey.type}
+            )
+        </foreach>
+        )
+        order by id
+    </select>
+
+    <select id="listByObjectIds" resultMap="BaseResultMap">
+        select
+        id,
+        project_id,
+        object_id,
+        info_code,
+        type
+        from cache_rule
+        where project_id = #{projectId}
+        and type = #{type}
+        and object_id in
+        <foreach collection="objectIds" item="objectId" open="(" separator="," close=")">
+            #{objectId}
+        </foreach>
+        and info_code in
+        <foreach collection="infoCodes" item="infoCode" open="(" separator="," close=")">
+            #{infoCode}
+        </foreach>
+        order by object_id, info_code, id
+    </select>
+
+    <insert id="upsertBatch">
+        insert into cache_rule
+        (
+        id,
+        project_id,
+        object_id,
+        info_code,
+        type,
+        create_time,
+        create_user,
+        update_time,
+        update_user
+        )
+        values
+        <foreach collection="rules" item="rule" separator=",">
+            (
+            #{rule.id},
+            #{rule.projectId},
+            #{rule.objectId},
+            #{rule.infoCode},
+            #{rule.type},
+            #{rule.createTime},
+            #{rule.createUser},
+            #{rule.updateTime},
+            #{rule.updateUser}
+            )
+        </foreach>
+        on duplicate key update
+        project_id = values(project_id),
+        object_id = values(object_id),
+        info_code = values(info_code),
+        type = values(type),
+        update_time = values(update_time),
+        update_user = values(update_user)
+    </insert>
+
+    <delete id="deleteOrphanByIds">
+        delete from cache_rule
+        where project_id = #{projectId}
+        and id in
+        <foreach collection="ruleIds" item="ruleId" open="(" separator="," close=")">
+            #{ruleId}
+        </foreach>
+        and not exists
+        (
+        select 1
+        from cache_rule_key_rel relation
+        where relation.project_id = cache_rule.project_id
+        and relation.rule_id = cache_rule.id
+        )
+    </delete>
+</mapper>

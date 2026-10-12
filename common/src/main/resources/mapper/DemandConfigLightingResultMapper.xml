@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.DemandConfigLightingResultMapper">
+    <resultMap id="BaseResultMap"
+               type="com.persagy.apccontrol.basic.model.entity.demand.lighting.DemandConfigLightingResult">
+        <!--@mbg.generated-->
+        <!--@Table demand_config_lighting_result-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="project_id" jdbcType="VARCHAR" property="projectId"/>
+        <result column="circuit_id" jdbcType="VARCHAR" property="circuitId"/>
+        <result column="config_data" jdbcType="LONGVARCHAR" property="configData"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result column="config_source_type" jdbcType="VARCHAR" property="configSourceType"/>
+        <result column="config_source_obj_id" jdbcType="VARCHAR" property="configSourceObjId"/>
+        <result column="rel_demand_template_id" jdbcType="BIGINT" property="relDemandTemplateId"/>
+        <result column="rel_demand_lighting_scene_id" jdbcType="BIGINT" property="relDemandLightingSceneId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+    </resultMap>
+    <insert id="batchSave">
+        insert into demand_config_lighting_result (project_id, circuit_id, config_data, config_source_type,
+        config_source_obj_id, rel_demand_template_id, rel_demand_lighting_scene_id,
+        create_time, create_user,update_time, update_user)
+        values
+        <foreach collection="param" item="item" separator=",">
+            (
+            #{item.projectId},
+            #{item.circuitId},
+            #{item.configData, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},
+            #{item.configSourceType},
+            #{item.configSourceObjId},
+            #{item.relDemandTemplateId},
+            #{item.relDemandLightingSceneId},
+            #{item.createTime},
+            #{item.createUser},
+            #{item.updateTime},
+            #{item.updateUser}
+            )
+        </foreach>
+    </insert>
+
+    <select id="get" resultMap="BaseResultMap">
+        select *
+        from demand_config_lighting_result
+        <where>
+            <include refid="DemandConfigLightingSceneQueryDaoParam"/>
+        </where>
+    </select>
+
+    <select id="list" resultMap="BaseResultMap">
+        select *
+        from demand_config_lighting_result
+        <where>
+            <include refid="DemandConfigLightingSceneQueryDaoParam"/>
+        </where>
+    </select>
+    <select id="cfgCount" resultType="java.lang.Integer">
+        select count(distinct circuit_id)
+        from demand_config_lighting_result
+        <where>
+            <include refid="DemandConfigLightingSceneQueryDaoParam"/>
+        </where>
+    </select>
+
+    <sql id="DemandConfigLightingSceneQueryDaoParam">
+        <!--@sql select * from demand_config_lighting_result where -->
+        <if test="param.id != null">
+            id = #{param.id}
+        </if>
+        <if test="param.ids != null and param.ids.size() != 0">
+            and id in
+            <foreach collection="param.ids" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        <if test="param.projectId != null and param.projectId != ''">
+            and project_id = #{param.projectId}
+        </if>
+        <if test="param.circuitId != null and param.circuitId != ''">
+            and circuit_id = #{param.circuitId}
+        </if>
+        <if test="param.circuitIds != null and param.circuitIds.size() != 0">
+            and circuit_id in
+            <foreach collection="param.circuitIds" item="circuitId" open="(" separator="," close=")">
+                #{circuitId}
+            </foreach>
+        </if>
+        <if test="param.circuitSettingMode != null">
+            and json_extract(config_data, '$.circuitSettingMode') = #{param.circuitSettingMode}
+        </if>
+        <if test="param.relDemandTemplateId != null">
+            and rel_demand_template_id = #{param.relDemandTemplateId}
+        </if>
+        <if test="param.relDemandTemplateIds != null and param.relDemandTemplateIds.size() != 0">
+            and rel_demand_template_id in
+            <foreach collection="param.relDemandTemplateIds" item="relDemandTemplateId" open="(" separator=","
+                     close=")">
+                #{relDemandTemplateId}
+            </foreach>
+        </if>
+        <if test="param.relDemandLightingSceneId != null">
+            and rel_demand_lighting_scene_id = #{param.relDemandLightingSceneId}
+        </if>
+        <if test="param.relDemandLightingSceneIds != null and param.relDemandLightingSceneIds.size() != 0">
+            and rel_demand_lighting_scene_id in
+            <foreach collection="param.relDemandLightingSceneIds" item="relDemandLightingSceneId" open="(" separator=","
+                     close=")">
+                #{relDemandLightingSceneId}
+            </foreach>
+        </if>
+    </sql>
+</mapper>

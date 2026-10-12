@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.SystemGraphMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.systemgraph.SystemGraph">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="classCode" column="class_code" jdbcType="VARCHAR"/>
+            <result property="systemObjectId" column="system_object_id" jdbcType="VARCHAR"/>
+            <result property="graphTypeCode" column="graph_type_code" jdbcType="VARCHAR"/>
+            <result property="systemGraphDuplicateId" column="system_graph_duplicate_id" jdbcType="BIGINT"/>
+            <result property="graphName" column="graph_name" jdbcType="VARCHAR"/>
+            <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="passBy" column="pass_by" jdbcType="TINYINT"/>
+            <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,class_code,system_object_id,
+        graph_type_code,system_graph_data_id,system_graph_detail_id,
+        graph_name,project_id,status,
+        pass_by,create_user,create_time,
+        update_user,update_time
+    </sql>
+</mapper>

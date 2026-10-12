@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.AnalysisAirConditionerSpaceMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.po.AnalysisAirConditionerSpacePO">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="buildingId" column="building_id" jdbcType="VARCHAR"/>
+        <result property="floorId" column="floor_id" jdbcType="VARCHAR"/>
+        <result property="spaceId" column="space_id" jdbcType="VARCHAR"/>
+        <result property="spaceName" column="space_name" jdbcType="VARCHAR"/>
+        <result property="day" column="day" jdbcType="TIMESTAMP"/>
+        <result property="abnormalEvent" column="abnormal_event" jdbcType="TINYINT"/>
+        <result property="timeNumber" column="time_number" jdbcType="INTEGER"/>
+        <result property="satisfyTimeNumber" column="satisfy_time_number" jdbcType="INTEGER"/>
+        <result property="infoCodeRule" column="info_code_rule"
+                typeHandler="com.persagy.apccontrol.basic.convert.FastjsonTypeHandlerPlus"/>
+        <result property="businessTime" column="business_time"
+                typeHandler="com.persagy.apccontrol.basic.convert.FastjsonTypeHandlerPlus"/>
+        <result property="timeTag" column="time_tag"
+                typeHandler="com.persagy.apccontrol.basic.convert.FastjsonTypeHandlerPlus"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+    <select id="projectSatisfyPercentage" resultType="java.lang.Double">
+        select SUM(satisfy_time_number) / SUM(time_number)
+        from analysis_air_conditioner_space
+        where project_id = #{projectId}
+          and day = #{day}
+          and tag_type = #{tagType};
+    </select>
+
+    <select id="spaceSatisfyPercentage" resultType="java.lang.Double">
+        select SUM(satisfy_time_number) / SUM(time_number)
+        from analysis_air_conditioner_space
+        where project_id = #{projectId}
+                  and day = #{day}
+          and space_id in
+        <foreach collection="spaceIds" item="spaceId" open="(" separator="," close=")">
+            #{spaceId}
+        </foreach>
+          and tag_type = #{tagType};
+    </select>
+</mapper>

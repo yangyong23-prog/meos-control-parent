@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.RcSystemPicMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.RcSystemPic">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="width" column="width" jdbcType="DOUBLE"/>
+        <result property="height" column="height" jdbcType="DOUBLE"/>
+        <result property="pictureCode" column="picture_code" jdbcType="VARCHAR"/>
+        <result property="classCode" column="class_code" jdbcType="VARCHAR"/>
+        <result property="classStatus" column="class_status" jdbcType="VARCHAR"/>
+        <result property="deviation" column="deviation" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="synTime" column="syn_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,name,project_id,
+        type,width,height,
+        picture_code,class_code,
+        class_status,deviation,create_time,
+        create_user,update_time,update_user,
+        syn_time
+    </sql>
+    <select id="querySyn" resultType="com.persagy.apccontrol.basic.model.entity.RcSystemPic">
+        SELECT *
+        FROM rc_basics_config t1
+        WHERE t1.project_id = #{projectId}
+          and type = #{type}
+          and not exists(select 1
+                         from rc_basics_config t2
+                         where t2.project_id = #{projectId}
+                           and t2.type = #{type} t2.update_time = t1.syn_time)
+
+    </select>
+</mapper>

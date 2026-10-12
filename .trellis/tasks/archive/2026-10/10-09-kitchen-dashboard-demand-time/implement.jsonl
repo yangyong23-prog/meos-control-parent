@@ -1,0 +1,5 @@
+{"file": ".trellis/spec/backend/quality-guidelines.md", "reason": "规范三件套：this./super. 前缀、org.jspecify.annotations 注解、@since/Javadoc——所有新类/方法/字段交付前逐项自查"}
+{"file": ".trellis/spec/backend/directory-structure.md", "reason": "目录结构约定：controller/service/param/vo/utils 各层放置规则，新文件按此落位"}
+{"file": ".trellis/spec/backend/error-handling.md", "reason": "空值与错误处理风格：空入参短路、缺配置返回空结构、不抛无谓异常"}
+{"file": ".trellis/spec/backend/logging-guidelines.md", "reason": "日志规范：LogExecutor 项目级事件日志，模板缺失/日出日落缺失的 warn 场景"}
+{"file": "docs/design/demand-management/overview.md", "reason": "需求管理概览：KITCHEN_RANGE_HOOD 配置模型（exhaustTimeIntervals）与查询链路背景（承接 UYAI-1556）"}

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.RcEqInfoCodeCfgMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.RcEqInfoCodeCfg">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="equipmentId" column="equipment_id" jdbcType="VARCHAR"/>
+        <result property="classCode" column="class_code" jdbcType="VARCHAR"/>
+        <result property="infoCode" column="info_code" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="alias" column="alias" jdbcType="VARCHAR"/>
+        <result property="unit" column="unit" jdbcType="VARCHAR"/>
+        <result property="scale" column="scale" jdbcType="DOUBLE"/>
+        <result property="displayPosition" column="display_position" jdbcType="VARCHAR"/>
+        <result property="max" column="max" jdbcType="INTEGER"/>
+        <result property="min" column="min" jdbcType="INTEGER"/>
+        <result property="ordered" column="ordered" jdbcType="INTEGER"/>
+        <result property="parameterType" column="parameter_type" jdbcType="VARCHAR"/>
+        <result property="extendInfo" column="extend_info" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="sysTime" column="sys_time" jdbcType="TIMESTAMP"/>
+        <result property="systemId" column="system_id" jdbcType="VARCHAR"/>
+        <result property="groupInfo" column="group_info" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,project_id,equipment_id,
+        class_code,info_code,name,
+        alias,unit,scale,
+        display_position,max,min,
+        ordered,parameter_type,extend_info,
+        create_time,sys_time
+    </sql>
+
+    <insert id="insertBatch">
+        INSERT INTO rc_eq_info_code_cfg
+        (
+        id,
+        project_id,
+        equipment_id,
+        class_code,
+        info_code,
+        name,
+        alias,
+        unit,
+        scale,
+        display_position,
+        max,
+        min,
+        ordered,
+        parameter_type,
+        extend_info,
+        create_time,
+        sys_time,
+        system_id,
+        group_info,
+        enum
+        )
+        VALUES
+        <foreach collection="listCfg" separator="," item="listCfg">
+            (
+            #{listCfg.id},
+            #{listCfg.projectId},
+            #{listCfg.equipmentId},
+            #{listCfg.classCode},
+            #{listCfg.infoCode},
+            #{listCfg.name},
+            #{listCfg.alias},
+            #{listCfg.unit},
+            #{listCfg.scale},
+            #{listCfg.displayPosition},
+            #{listCfg.max},
+            #{listCfg.min},
+            #{listCfg.ordered},
+            #{listCfg.parameterType},
+            #{listCfg.extendInfo},
+            #{listCfg.createTime},
+            #{listCfg.sysTime},
+            #{listCfg.systemId},
+            #{listCfg.groupInfo},
+            #{listCfg.enumTpye}
+            )
+        </foreach>
+
+    </insert>
+
+
+</mapper>

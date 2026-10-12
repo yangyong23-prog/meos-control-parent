@@ -1,0 +1,72 @@
+# ------------------------- Paas Setting -------------------------
+paas:
+  async:
+    enabled: false
+    # schema: TENANT_ENERGY_CHARGE
+  database:
+    tenantDatabasePrefix: ${persagy.db_name.meos_control}
+    multiTenantType: SCHEMA
+    tenantLocation: HEAD
+    isNotWrite: false
+    isBlockAttack: false
+    isSeata: false
+    id-type: HU_TOOL
+    ignoreTables:
+      - websocket_config
+      - info_code_config
+      - common_config
+      - graph_icon
+      - graph_legend
+      - equipment_info_code_config
+      - equipment_info_code_group
+      - equipment_info_code_template_type
+      - object_info_code_config
+      - object_info_code_group
+      - object_info_code_template_type
+  # 提供一份默认配置
+  mqtt:
+    enabled: true
+    url: ${mqtt.url}
+    username: ${mqtt.username}
+    password: ${mqtt.password}
+    auth-type: USERNAME
+    cleanSession: true
+    ca-crt: classpath:/certs/ca.crt
+    client-key-pass: paas-client
+    client-key: classpath:/certs/client.key
+    client-crt: classpath:/certs/client.crt
+    receive-topics: #接收topic配置
+      - qos: 1
+        name: ${mqtt.topic.meos-control.name}
+      - qos: 1
+        name: ${mqtt.topic.meos-compute.name}
+      - qos: 1
+        name: ${mqtt.topic.event-change.name}
+      - qos: 1
+        name: ${mqtt.topic.danger-event.name}
+      - qos: 1
+        name: ${mqtt.topic.dtp-meos.name}
+    keep-alive: 150
+    completion-timeout: 30000
+    client: ${spring.application.name}_client
+    client-id-random: true
+    comsumer:
+      consumer-batch-size: 50  # 线程池一次批处理数据大小
+      consumer-buffer-queue-size: 102400  #缓冲队列大小
+      handler: drop                      #阻塞处理策略,drop 丢弃，caller_runs 主线程执行,有断联重连风险
+      consumer-thread:
+        core-pool-size: 5       #初始池大小
+        maximum-pool-size: 50   #最大池大小（允许同时执行的最大线程数）
+        capacity: 1024          #默认的等待队列容
+
+# ------------------------- Feign Setting -------------------------
+feign:
+  client:
+    config:
+      default:
+        read-timeout: 300000
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+

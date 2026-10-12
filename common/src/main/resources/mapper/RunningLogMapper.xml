@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.RunningLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.RunningLog">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="objectId" column="object_id" jdbcType="VARCHAR"/>
+        <result property="objectName" column="object_name" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="keyWord" column="key_word" jdbcType="VARCHAR"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="dataTime" column="data_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="content" column="content"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler"/>
+        <result property="classCode" column="class_code" jdbcType="VARCHAR"/>
+        <result property="systemId" column="system_id" jdbcType="VARCHAR"/>
+        <result property="systemName" column="system_name" jdbcType="VARCHAR"/>
+        <result property="systemClassCode" column="system_class_code" jdbcType="VARCHAR"/>
+        <result property="firstLevelCategory" column="first_level_category" jdbcType="VARCHAR"/>
+        <result property="secondLevelCategory" column="second_level_category" jdbcType="VARCHAR"/>
+        <result property="effectStartTime" column="effect_start_time" jdbcType="TIMESTAMP"/>
+        <result property="effectEndTime" column="effect_end_time" jdbcType="TIMESTAMP"/>
+        <result property="traceId" column="trace_id" jdbcType="VARCHAR"/>
+        <result property="infoCode" column="info_code" jdbcType="VARCHAR"/>
+        <result property="infoValue" column="info_value" jdbcType="VARCHAR"/>
+        <result property="sourceType" column="source_type" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="createPartitionAndDeleteHistoryPartition">
+        CALL auto_check_and_create_partitions(#{month});
+    </select>
+</mapper>

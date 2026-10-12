@@ -1,0 +1,4 @@
+{"_example": "Fill with {\"file\": \"<path>\", \"reason\": \"<why>\"}. Put spec/research files only — no code paths. Run `python .trellis/scripts/get_context.py --mode packages` to list available specs. Delete this line once real entries are added."}
+{"file": ".trellis/spec/backend/rwd-relation-direction.md", "reason": "RWD关系查询方向规则: relationFrom/To+objFrom/To组合约束与invalid()语义, 修复关系查询参数构造须遵守"}
+{"file": ".trellis/spec/backend/running-monitor-strategy.md", "reason": "运行监测策略契约: 改动RunningMonitorStrategy实现的规范与验证要求"}
+{"file": ".trellis/spec/backend/quality-guidelines.md", "reason": "代码质量规范: null注解与代码模式"}

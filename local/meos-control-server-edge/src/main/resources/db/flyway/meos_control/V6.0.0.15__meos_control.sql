@@ -1,0 +1,1 @@
+update rc_basics_config set result =  replace('##{dateTime} ##{localName}的##{infoCodeCfg.name}设定为##{dataValue}##{infoCodeCfg.unit}', '##', '$') where id = '02';

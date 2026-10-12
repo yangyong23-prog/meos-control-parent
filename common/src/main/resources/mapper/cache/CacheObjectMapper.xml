@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.persagy.apccontrol.basic.mapper.cache.CacheObjectMapper">
+
+    <resultMap id="BaseResultMap" type="com.persagy.apccontrol.basic.model.entity.cache.CacheObject">
+        <id column="id" property="id"/>
+        <result column="project_id" property="projectId"/>
+        <result column="local_id" property="localId"/>
+        <result column="local_name" property="localName"/>
+        <result column="class_code" property="classCode"/>
+        <result column="object_type" property="objectType"/>
+        <result column="floor_id" property="floorId"/>
+        <result column="building_id" property="buildingId"/>
+        <result column="monitoring_surveillance_status" property="monitoringSurveillanceStatus"/>
+        <result column="object_data" property="objectData"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" property="updateUser"/>
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        select
+        <choose>
+            <when test="withColumns != null and withColumns.length != 0">
+                <foreach collection="withColumns" item="withColumn" separator=",">
+                    ${withColumn}
+                </foreach>
+            </when>
+            <otherwise>
+                *
+            </otherwise>
+        </choose>
+        from cache_object
+        <where>
+            project_id = #{projectId}
+            <if test="param.ids != null and param.ids.size() != 0">
+                and id in
+                <foreach collection="param.ids" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="param.classCodes != null and param.classCodes.size() != 0">
+                and class_code in
+                <foreach collection="param.classCodes" item="classCode" open="(" separator="," close=")">
+                    #{classCode}
+                </foreach>
+            </if>
+            <if test="param.monitoringSurveillanceStatusCodes != null
+                    and param.monitoringSurveillanceStatusCodes.size() != 0">
+                and monitoring_surveillance_status in
+                <foreach collection="param.monitoringSurveillanceStatusCodes" item="statusCode"
+                         open="(" separator="," close=")">
+                    #{statusCode}
+                </foreach>
+            </if>
+        </where>
+        order by id
+    </select>
+
+    <insert id="upsertBatch">
+        insert into cache_object
+        (
+        id,
+        project_id,
+        local_id,
+        local_name,
+        class_code,
+        object_type,
+        floor_id,
+        building_id,
+        monitoring_surveillance_status,
+        object_data,
+        create_time,
+        create_user,
+        update_time,
+        update_user
+        )
+        values
+        <foreach collection="objects" item="object" separator=",">
+            (
+            #{object.id},
+            #{object.projectId},
+            #{object.localId},
+            #{object.localName},
+            #{object.classCode},
+            #{object.objectType},
+            #{object.floorId},
+            #{object.buildingId},
+            #{object.monitoringSurveillanceStatus},
+            #{object.objectData},
+            #{object.createTime},
+            #{object.createUser},
+            #{object.updateTime},
+            #{object.updateUser}
+            )
+        </foreach>
+        on duplicate key update
+        project_id = values(project_id),
+        local_id = values(local_id),
+        local_name = values(local_name),
+        class_code = values(class_code),
+        object_type = values(object_type),
+        floor_id = values(floor_id),
+        building_id = values(building_id),
+        monitoring_surveillance_status = values(monitoring_surveillance_status),
+        object_data = values(object_data),
+        update_time = values(update_time),
+        update_user = values(update_user)
+    </insert>
+
+    <delete id="deleteByClassCodes">
+        delete from cache_object
+        where project_id = #{projectId}
+        and class_code in
+        <foreach collection="classCodes" item="classCode" open="(" separator="," close=")">
+            #{classCode}
+        </foreach>
+    </delete>
+
+</mapper>

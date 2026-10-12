@@ -1,0 +1,7 @@
+{"file":".trellis/spec/backend/index.md","reason":"后端规范索引与本任务必须遵循的通用规则"}
+{"file":".trellis/spec/backend/cache-object-model.md","reason":"对象模型写入、事务、READY、并发保护和批量写入的主契约"}
+{"file":".trellis/spec/backend/database-guidelines.md","reason":"Mapper 多值写入、1000 条分片和事务异常传播规范"}
+{"file":".trellis/spec/backend/error-handling.md","reason":"数据库基础设施异常不得伪装成缓存未命中或被吞掉"}
+{"file":".trellis/spec/backend/logging-guidelines.md","reason":"保存锁等待与失败日志需使用项目日志组件并避免敏感数据"}
+{"file":".trellis/spec/backend/quality-guidelines.md","reason":"新增锁 Key、辅助方法、注解和 Javadoc 的质量约束"}
+{"file":".trellis/tasks/08-31-cache-table-build-lock-timeout/research/cache-write-lock-root-cause.md","reason":"现场异常、调用链、已证伪假设以及锁获取重试与事务动作分离契约"}
