@@ -2,6 +2,7 @@ package com.persagy.apccontrol.common.opt;
 
 import com.persagy.framework.redis.cache.RedisCacheUtil;
 import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisOperations;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class OptRedisRealtimeStore implements OptRealtimeStore {
             for (int i = 0; i < part.size(); i++) {
                 raw[i] = bytes(part.get(i));
             }
-            List<byte[]> values = redisCacheUtil.getRedisTemplate()
+            List<byte[]> values = template()
                     .execute((RedisCallback<List<byte[]>>) connection -> connection.mGet(raw));
             for (int i = 0; i < part.size(); i++) {
                 byte[] v = values == null || values.size() <= i ? null : values.get(i);
@@ -42,15 +43,24 @@ public class OptRedisRealtimeStore implements OptRealtimeStore {
 
     @Override
     public String get(String key) {
-        byte[] v = redisCacheUtil.getRedisTemplate()
+        byte[] v = template()
                 .execute((RedisCallback<byte[]>) connection -> connection.get(bytes(key)));
         return v == null ? null : new String(v, StandardCharsets.UTF_8);
     }
 
     @Override
     public void set(String key, String json) {
-        redisCacheUtil.getRedisTemplate()
+        template()
                 .execute((RedisCallback<Boolean>) connection -> connection.set(bytes(key), bytes(json)));
+    }
+
+    /**
+     * RedisCacheUtil#getRedisTemplate 返回原始类型，直接 execute 会丢泛型；这里只用连接级回调，
+     * 与模板的 key/value 类型无关。
+     */
+    @SuppressWarnings("unchecked")
+    private RedisOperations<Object, Object> template() {
+        return (RedisOperations<Object, Object>) redisCacheUtil.getRedisTemplate();
     }
 
     private static byte[] bytes(String s) {
