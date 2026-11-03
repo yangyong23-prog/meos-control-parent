@@ -54,7 +54,11 @@ public class OptMetrics {
      * 不受 metrics 开关控制的计数，用于各改造项自身的丢弃计数（丢弃必须可见）。
      */
     public static void incAlways(String name) {
-        COUNTERS.computeIfAbsent(name, k -> new LongAdder()).increment();
+        addAlways(name, 1);
+    }
+
+    public static void addAlways(String name, long delta) {
+        COUNTERS.computeIfAbsent(name, k -> new LongAdder()).add(delta);
     }
 
     /**

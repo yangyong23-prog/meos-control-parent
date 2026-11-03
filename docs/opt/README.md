@@ -16,6 +16,12 @@
 | `switch.opt.asyncDiscardOnFull` | B0 | false | 热生效 | `@Async` 池满时丢弃任务并计数 `async.drop`，不再 CallerRuns 压回调用线程（MQTT 消费线程） |
 | `opt.scheduling.pool-size` | B0 | 1 | 需重启 | >1 时 `@Scheduled` 使用该大小的独立线程池；≤1 不做任何改动 |
 | `opt.xxl.executor-timeout` | B0 | 0 | 新注册的任务生效 | XXL 任务执行超时（秒），0 为不限制 |
+| `switch.opt.mqttIsolation` | B1 | false | 热生效 | Twin 报文只解析一次；`"~"` 日志降为 debug、warn 每分钟一条；`handlerMessage` 结束在 finally 清理 ContextUtil（16.18）；记录收包时间和 `mqtt.recv` |
+| `switch.opt.runningLogQueue` | B1 | false | 热生效 | 运行日志上云改为本地有界队列（默认 1 万）+ 后台线程合批发送；失败写本地文件，恢复后按序重放 |
+| `switch.opt.autoLogDedupe` | B1 | false | 热生效 | 自动日志建档按 (traceId, objectId, infoCode) 进程内去重 10 分钟，后续“未完成”帧不再做分类远程查询、加锁、查库 |
+| `switch.opt.ctrlFrameOrderFix` | B1 | false | 热生效 | 修 16.9：同一控制指令“完成”帧已在缓存时，丢弃后到的帧（不计算、不写缓存、不推送；运行日志仍处理） |
+| `switch.opt.mqttHealth` | B1 | false | 需重启 | 注册 MQTT 健康检查 `optMqtt`：超过 `opt.mqtt.health.max-silence-seconds`（默认 600）未收包为 DOWN。依赖 mqttIsolation 记录收包时间 |
+| `opt.runninglog.queue-capacity` / `spool-file` / `spool-max-bytes` | B1 | 10000 / `./opt-spool/running-log.jsonl` / 50MB | 需重启 | 运行日志队列容量、本地重放文件位置和上限 |
 
 ## B0 试点站点建议的 Nacos 配置
 
@@ -53,3 +59,7 @@ management:
 |---|---|---|
 | `feign.<服务>.<Client#方法>` | B0 | 每分钟各下游、各 Feign 方法的调用次数 |
 | `async.drop` | B0 | async 池满被丢弃的任务数（不受 metrics 开关控制，始终计数） |
+| `mqtt.recv` / `mqtt.invalidValue` / `mqtt.parseFallback` | B1 | MQTT 收包数、`"~"`/空值条数、Jackson 解析失败退回 fastjson 的条数 |
+| `mqtt.ctrlFrameDiscard` | B1 | 16.9 丢弃的乱序控制帧数 |
+| `runningLog.sent` / `fail` / `drop` / `spoolDrop` / `replayed` | B1 | 运行日志队列发送、失败、队列满丢弃、重放文件满丢弃、重放成功条数（drop/fail/spoolDrop 始终计数） |
+| `runningLog.autoDedupeHit` | B1 | 建档去重命中次数 |
