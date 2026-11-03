@@ -2,6 +2,7 @@ package com.persagy.apccontrol.basic.config;
 
 import com.alibaba.ttl.TtlRunnable;
 import com.persagy.apccontrol.basic.executor.log.LogExecutor;
+import com.persagy.apccontrol.basic.opt.OptRejectedExecutionHandler;
 import com.persagy.framework.common.context.ContextUtil;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
@@ -40,7 +41,11 @@ public class AsyncTaskConfigurer extends AsyncConfigurerSupport {
 
     private static final String LOG_TAG = "异步任务";
 
-    public static final RejectedExecutionHandler REJECTED_EXECUTION_HANDLER = new ThreadPoolExecutor.CallerRunsPolicy();
+    /**
+     * 默认 CallerRuns；opt 分支 B0：switch.opt.asyncDiscardOnFull=true 时改为丢弃并计数
+     */
+    public static final RejectedExecutionHandler REJECTED_EXECUTION_HANDLER =
+            new OptRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
 
     @Autowired
     private TaskExecutionProperties properties;

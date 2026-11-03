@@ -10,6 +10,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 
@@ -26,6 +27,9 @@ import java.util.Map;
 @Component
 @Slf4j
 public class XxlJobService {
+
+    @Value("${opt.xxl.executor-timeout:0}")
+    private int executorTimeoutSeconds;
 
     @Resource
     XxlJobUtil xxlJobUtil;
@@ -151,7 +155,8 @@ public class XxlJobService {
         map.add("executorParam", vo.getExecutorParam());
         // map.add("alarmEmail", "yuyao@persagy.com");
         map.add("childJobId", null);
-        map.add("executorTimeout", "0");
+        // opt 分支 B0：可由 Nacos opt.xxl.executor-timeout 配置（秒），默认 0 与原行为一致
+        map.add("executorTimeout", String.valueOf(executorTimeoutSeconds));
         map.add("executorFailRetryCount", vo.getExecutorFailRetryCount());
         map.add("glueRemark", "");
         map.add("glueSource", "");
