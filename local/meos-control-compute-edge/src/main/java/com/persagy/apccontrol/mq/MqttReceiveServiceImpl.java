@@ -20,6 +20,7 @@ import com.persagy.apccontrol.basic.sse.SseEmitterEventEnum;
 import com.persagy.apccontrol.basic.sse.strategy.SseHandlerContext;
 import com.persagy.apccontrol.basic.utils.ControlLogUtil;
 import com.persagy.apccontrol.basic.utils.DailyStringCounter;
+import com.persagy.apccontrol.common.opt.OptRealtimeMqttWriter;
 import com.persagy.apccontrol.common.service.MqttService;
 import com.persagy.framework.common.context.ContextUtil;
 import com.persagy.framework.mqtt.service.MqttReceiveService;
@@ -53,6 +54,10 @@ public class MqttReceiveServiceImpl implements MqttReceiveService {
 
     @Resource
     SseHandlerContext sshHandlerContext;
+
+    /** opt 分支 B2（switch.opt.realtimeCacheWrite）：反馈值第一步写共享缓存 */
+    @Resource
+    OptRealtimeMqttWriter optRealtimeMqttWriter;
 
     //反馈值队列
     @Value("${mqtt.topic.meos-compute.name}")
@@ -211,6 +216,7 @@ public class MqttReceiveServiceImpl implements MqttReceiveService {
             }
             parsed.setProjectId(projectCfg.getProjectId());
             parsed.setGroupCode(projectCfg.getGroupCode());
+            writeRealtimeCache(parsed, receivedTopic);
             if (null == parsed.getDataValue() || "~".equals(parsed.getDataValue())) {
                 OptMqttPayloads.logInvalidValue(message.getPayload());
                 return;
@@ -235,12 +241,22 @@ public class MqttReceiveServiceImpl implements MqttReceiveService {
             ControlLogUtil.error("MQTT推送数据，数据格式错误:{}", jsonValue.toJSONString(), e);
             return;
         }
+        writeRealtimeCache(vo, receivedTopic);
         if (null == vo.getDataValue() || "~".equals(vo.getDataValue())) {
             //无效消息值
             ControlLogUtil.warn("MQTT推送数据，无效消息值-:{}", jsonValue.toJSONString());
             return;
         }
         twinMqttExpense(vo, message, receivedTopic);
+    }
+
+    /**
+     * opt B2：反馈值主题的报文在任何换算之前写共享缓存（含 "~" 离线标记）。
+     */
+    private void writeRealtimeCache(FeedbackInfoMsgMqttVO raw, String receivedTopic) {
+        if (StringUtils.equals(compute, receivedTopic)) {
+            optRealtimeMqttWriter.onTwinFeedback(raw);
+        }
     }
 
     private void twinMqttExpense(FeedbackInfoMsgMqttVO vo, Message<String> message, String receivedTopic) {

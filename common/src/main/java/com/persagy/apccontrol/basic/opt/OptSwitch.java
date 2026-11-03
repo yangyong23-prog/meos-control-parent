@@ -31,6 +31,11 @@ public class OptSwitch {
     /** B1：修 16.9，同一控制指令“完成”帧先到后，丢弃后到的“进行中”帧 */
     public static final String CTRL_FRAME_ORDER_FIX = "ctrlFrameOrderFix";
 
+    /** B2：MQTT 收到 Twin 反馈值即写共享缓存 apc:iot_real_time_data:{objectId}:{infoCode} */
+    public static final String REALTIME_CACHE_WRITE = "realtimeCacheWrite";
+    /** B2：Twin on-moment 查询读缓存，三态 off / verify / on */
+    public static final String REALTIME_CACHE_READ = "realtimeCacheRead";
+
     private static volatile Environment environment;
 
     public OptSwitch(Environment environment) {
@@ -75,8 +80,8 @@ public class OptSwitch {
         }
     }
 
-    /** 仅供单测注入 */
-    static void setEnvironmentForTest(Environment env) {
+    /** 仅供单测注入（各模块单测共用，故为 public） */
+    public static void setEnvironmentForTest(Environment env) {
         environment = env;
     }
 }

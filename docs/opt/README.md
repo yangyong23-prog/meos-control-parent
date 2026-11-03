@@ -21,6 +21,9 @@
 | `switch.opt.autoLogDedupe` | B1 | false | 热生效 | 自动日志建档按 (traceId, objectId, infoCode) 进程内去重 10 分钟，后续“未完成”帧不再做分类远程查询、加锁、查库 |
 | `switch.opt.ctrlFrameOrderFix` | B1 | false | 热生效 | 修 16.9：同一控制指令“完成”帧已在缓存时，丢弃后到的帧（不计算、不写缓存、不推送；运行日志仍处理） |
 | `switch.opt.mqttHealth` | B1 | false | 需重启 | 注册 MQTT 健康检查 `optMqtt`：超过 `opt.mqtt.health.max-silence-seconds`（默认 600）未收包为 DOWN。依赖 mqttIsolation 记录收包时间。**⚠ 必须与 mqttIsolation 同时打开**：只开 mqttHealth 时收包时间从不更新，10 分钟后健康检查恒为 DOWN；若存活探针用 `/actuator/health`，服务会被反复重启 |
+| `switch.opt.realtimeCacheWrite` | B2 | false | 热生效 | MQTT 反馈值在任何换算之前写 `apc:iot_real_time_data:{objectId}:{infoCode}`（Twin 原始值，`"~"` 写离线标记，旧帧不覆盖）。契约见 contract-iot-real-time-data.md |
+| `switch.opt.realtimeCacheRead` | B2 | off | 热生效 | `verify`：仍返回 Twin 结果，同时读缓存比对计数；`on`：Twin 当前值查询先读缓存，未命中按 ≤200 对象分片回源并回填，回源仍无效的点负缓存 60 秒 |
+| `opt.realtime.stale-seconds` / `negative-seconds` | B2 | 120 / 60 | 需重启 | 缓存陈旧阈值（超过即回源）、负缓存时长 |
 | `opt.runninglog.queue-capacity` / `spool-file` / `spool-max-bytes` | B1 | 10000 / `./opt-spool/running-log.jsonl` / 50MB | 需重启 | 运行日志队列容量、本地重放文件位置和上限 |
 
 ## B0 试点站点建议的 Nacos 配置
@@ -63,3 +66,6 @@ management:
 | `mqtt.ctrlFrameDiscard` | B1 | 16.9 丢弃的乱序控制帧数 |
 | `runningLog.sent` / `fail` / `drop` / `spoolDrop` / `replayed` | B1 | 运行日志队列发送、失败、队列满丢弃、重放文件满丢弃、重放成功条数（drop/fail/spoolDrop 始终计数） |
 | `runningLog.autoDedupeHit` | B1 | 建档去重命中次数 |
+| `rt.write` / `rt.write.olderSkipped` / `rt.write.duplicateSkipped` / `rt.write.error` | B2 | 写缓存次数、旧帧跳过、重复帧跳过、写失败（error 始终计数） |
+| `rt.read.hit` / `miss` / `negative` / `twinCall` / `twinFail` | B2 | 读缓存命中、未命中、负缓存命中的点数；回源 Twin 次数、回源失败次数 |
+| `rt.verify.match` / `mismatch` / `cacheMiss` / `bothEmpty` | B2 | 双读校验结果（始终计数）。验收：mismatch / (match + mismatch) < 0.1% |
