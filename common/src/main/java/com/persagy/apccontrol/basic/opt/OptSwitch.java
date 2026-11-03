@@ -52,6 +52,9 @@ public class OptSwitch {
     /** B9：定时全量推送内容无变化时不推，15 分钟兜底 */
     public static final String SSE_PUSH_DEDUPE = "ssePushDedupe";
 
+    /** B10：FeignPageExecutor 不分页查询的首发也按 limit（默认 1000）分页 */
+    public static final String FEIGN_PAGE_FIRST_LIMIT = "feignPageFirstLimit";
+
     private static volatile Environment environment;
 
     public OptSwitch(Environment environment) {
