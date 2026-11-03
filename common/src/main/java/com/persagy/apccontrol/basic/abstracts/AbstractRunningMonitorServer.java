@@ -1,5 +1,7 @@
 package com.persagy.apccontrol.basic.abstracts;
 
+import com.persagy.apccontrol.basic.opt.OptRwdObjectsById;
+import com.persagy.apccontrol.basic.opt.OptSwitch;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
@@ -114,6 +116,10 @@ public abstract class AbstractRunningMonitorServer {
 
     @Resource
     InfoCodeSetExtendService infoCodeSetExtendService;
+
+    /** opt B10：按 id 取空间（switch.opt.monitorSpaceById） */
+    @Autowired(required = false)
+    protected OptRwdObjectsById optRwdObjectsById;
 
     public JSONObject queryObjectGroupInfoBySystemId(String groupCode, String projectId, String systemId, String systemClassCode, String graphTypeCode) throws Exception {
         JSONObject resultObject = new JSONObject();
@@ -1077,14 +1083,21 @@ public abstract class AbstractRunningMonitorServer {
         // 非设备类信息，不返回
         final Set<String> noEquipmentTypes = Sets.newHashSet("building", "floor", "project", "shaft", "space", "system");
 
+        // opt B10（switch.opt.monitorSpaceById）：先查设备所在空间关系，再只按这些空间 id 取空间，不再查全项目空间
+        boolean spaceById = OptSwitch.on(OptSwitch.MONITOR_SPACE_BY_ID) && optRwdObjectsById != null;
+
         // 获取当前所有的空间数据
-        List<JSONObject> allSpaceList = this.bizDtpRwdService.queryObjectList(groupCode, projectId, Lists.newArrayList(DtpRwdClassCodeEnum.SPACE.getValue()), null, null, null, null);
-        Map<String, JSONObject> space_info = CollectionUtil.isEmpty(allSpaceList) ? new HashMap<>()
-                : allSpaceList.stream().collect(Collectors.toMap(key -> key.getString("id"), Function.identity(), (v1, v2) -> v1));
+        List<JSONObject> allSpaceList = spaceById ? null : this.bizDtpRwdService.queryObjectList(groupCode, projectId, Lists.newArrayList(DtpRwdClassCodeEnum.SPACE.getValue()), null, null, null, null);
 
         // 获取当前所有设备所对应的物业分区
         List<JSONObject> jsonObjects = this.bizDtpRwdService.queryRelation(groupCode, projectId, "MechInArch", "Eq2Sp", DtpRwdClassCodeEnum.SPACE.getValue(), objectIds, null);
         Map<String, String> object_space = CollectionUtil.isEmpty(jsonObjects) ? new HashMap<>() : jsonObjects.stream().collect(Collectors.toMap(key -> key.getString("objFrom"), value -> value.getString("objTo"), (v1, v2) -> v1));
+        if (spaceById) {
+            allSpaceList = optRwdObjectsById.list(groupCode, projectId, Lists.newArrayList(DtpRwdClassCodeEnum.SPACE.getValue()),
+                    object_space.values().stream().filter(StrUtil::isNotBlank).collect(Collectors.toList()));
+        }
+        Map<String, JSONObject> space_info = CollectionUtil.isEmpty(allSpaceList) ? new HashMap<>()
+                : allSpaceList.stream().collect(Collectors.toMap(key -> key.getString("id"), Function.identity(), (v1, v2) -> v1));
 
         // 数据封装
         Set<String> tempSpace = new HashSet<>();
