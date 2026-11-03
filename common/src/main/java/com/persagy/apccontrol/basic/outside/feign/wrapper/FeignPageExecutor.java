@@ -139,6 +139,21 @@ public class FeignPageExecutor {
                         () -> execute(new PageQuery(1, Integer.MAX_VALUE), callback, limit),
                         BusinessThreadPoolExecutor.ttlExecutor());
             }
+            if (OptPagedFetch.MODE_VERIFY.equals(OptSwitch.value(OptSwitch.FEIGN_PAGE_FIRST_LIMIT, ""))) {
+                // verify：返回原逻辑结果，另按分页查一次比对条数
+                CustomerResponse<List<T>> legacy = execute(new PageQuery(1, Integer.MAX_VALUE), callback, limit);
+                return OptPagedFetch.verify(legacy,
+                        () -> OptPagedFetch.fetchAll(limit,
+                                (no, size) -> callback.apply(new PageQuery(no, size)),
+                                CustomerResponse::getContent, CustomerResponse::getTotal,
+                                (r, all) -> {
+                                    r.setContent(all);
+                                    r.setCount(all.size());
+                                },
+                                // 下游无 total 时分页本就退回原逻辑，视为一致
+                                () -> legacy, null),
+                        CustomerResponse::getContent, "execute");
+            }
             return execute(new PageQuery(1, Integer.MAX_VALUE), callback, limit);
         }
         // 当仅查询数量时, 直接执行
@@ -212,6 +227,20 @@ public class FeignPageExecutor {
                         },
                         () -> executeToDmpResult(new PageQuery(1, Integer.MAX_VALUE), callback, limit),
                         null);
+            }
+            if (OptPagedFetch.MODE_VERIFY.equals(OptSwitch.value(OptSwitch.FEIGN_PAGE_FIRST_LIMIT, ""))) {
+                DmpResult<List<T>> legacy = executeToDmpResult(new PageQuery(1, Integer.MAX_VALUE), callback, limit);
+                return OptPagedFetch.verify(legacy,
+                        () -> OptPagedFetch.fetchAll(limit,
+                                (no, size) -> callback.apply(new PageQuery(no, size)),
+                                DmpResult::getData, DmpResult::getTotal,
+                                (r, all) -> {
+                                    r.setData(all);
+                                    r.setCount(all.size());
+                                },
+                                // 下游无 total 时分页本就退回原逻辑，视为一致
+                                () -> legacy, null),
+                        DmpResult::getData, "executeToDmpResult");
             }
             return executeToDmpResult(new PageQuery(1, Integer.MAX_VALUE), callback, limit);
         }
