@@ -5,6 +5,8 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.persagy.apccontrol.basic.opt.OptTwinResponses;
+import com.persagy.apccontrol.basic.outside.feign.model.response.CustomerResponse;
 import com.persagy.apccontrol.basic.config.ProjectCfg;
 import com.persagy.apccontrol.basic.config.cache.LocalContextStorage;
 import com.persagy.apccontrol.basic.model.dto.QueryTwinDataDTO;
@@ -141,6 +143,21 @@ public class DtpTwinClientServiceImpl implements DtpTwinClientService, BaseFeign
             return;
         }
         insert(false, LocaleMessageUtil.getMessage("key_b29f91f5b39b4e6aa296018c3e1e35fa"), params, () -> dtpTwinClient.autoCommandBatchSend(params));
+    }
+
+    /**
+     * opt B8：同 {@link #autoCommandBatchSend}（同样的错误日志、不抛 FeignException），但返回是否成功。
+     */
+    @Override
+    public boolean autoCommandBatchSendChecked(@NonNull List<DtpTwinAutoBatchSendDTO> params) {
+        if (CollectionUtils.isEmpty(params)) {
+            return true;
+        }
+        CustomerResponse<Object> response = baseOperation(false, getGroupCode(), getProjectId(),
+                LocaleMessageUtil.getMessage("key_6cc5c1e16b074d669b45cdbd4f5a5d91"),
+                LocaleMessageUtil.getMessage("key_b29f91f5b39b4e6aa296018c3e1e35fa"), params,
+                () -> dtpTwinClient.autoCommandBatchSend(params));
+        return OptTwinResponses.succeeded(response == null, response == null ? null : response.getUndefinedProperties());
     }
 
     @Override
