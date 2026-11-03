@@ -13,7 +13,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * opt 分支 B8（switch.opt.lightingSendDiff，默认关）：周期性下发的指令“相同不重发”。
@@ -65,6 +67,39 @@ public class OptRepeatSuppressor {
             result.add(order);
         }
         return result;
+    }
+
+    /**
+     * 过滤后下发。开关关闭时原样调用 plainSender（与原逻辑一致）；打开时调用 checkedSender，
+     * 其返回 false 或抛异常都视为下发失败，本次指令全部 {@link #forget}，下一轮重新下发。
+     *
+     * @return 开关打开时本次是否成功（无需下发也算成功）
+     */
+    public <T> boolean send(String scope, List<T> orders, Function<T, String> objectIdOf,
+                            Consumer<List<T>> plainSender, Predicate<List<T>> checkedSender) {
+        if (!OptSwitch.on(OptSwitch.LIGHTING_SEND_DIFF)) {
+            if (orders != null && !orders.isEmpty()) {
+                plainSender.accept(orders);
+            }
+            return true;
+        }
+        List<T> toSend = filter(scope, orders, objectIdOf);
+        if (toSend == null || toSend.isEmpty()) {
+            return true;
+        }
+        boolean ok;
+        try {
+            ok = checkedSender.test(toSend);
+        } catch (RuntimeException e) {
+            forget(scope, toSend, objectIdOf);
+            OptMetrics.incAlways("lighting.sendFail");
+            throw e;
+        }
+        if (!ok) {
+            forget(scope, toSend, objectIdOf);
+            OptMetrics.incAlways("lighting.sendFail");
+        }
+        return ok;
     }
 
     /** 下发失败时调用，使这些对象下一轮重新下发 */
