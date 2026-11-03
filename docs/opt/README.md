@@ -17,7 +17,7 @@
 | `opt.scheduling.pool-size` | B0 | 1 | 需重启 | >1 时 `@Scheduled` 使用该大小的独立线程池；≤1 不做任何改动 |
 | `opt.xxl.executor-timeout` | B0 | 0 | 新注册的任务生效 | XXL 任务执行超时（秒），0 为不限制 |
 | `switch.opt.mqttIsolation` | B1 | false | 热生效 | Twin 报文只解析一次；`"~"` 日志降为 debug、warn 每分钟一条；`handlerMessage` 结束在 finally 清理 ContextUtil（16.18）；记录收包时间和 `mqtt.recv` |
-| `switch.opt.runningLogQueue` | B1 | false | 热生效 | 运行日志上云改为本地有界队列（默认 1 万）+ 后台线程合批发送；失败写本地文件，恢复后按序重放；有积压时新消息排在积压之后，保证旧消息先到；单条发送失败而紧随其后的一条成功时，判定为毒消息移入 `<spool-file>.dead`（指标 `runningLog.dead`），不卡住重放 |
+| `switch.opt.runningLogQueue` | B1 | false | 热生效 | 运行日志上云改为本地有界队列（默认 1 万）+ 后台线程合批发送；失败写本地文件，恢复后按序重放；有积压时新消息排在积压之后，保证旧消息先到；单条发送失败而紧随其后的一条成功时，判定为毒消息移入 `<spool-file>.dead`（指标 `runningLog.dead`），不卡住重放；判定下游不可用后退避 30 秒，期间新消息只追加到本地文件。**⚠ 下游抖动时正常消息也可能被误判，`.dead` 文件需人工核对后补发** |
 | `switch.opt.autoLogDedupe` | B1 | false | 热生效 | 自动日志建档按 (traceId, objectId, infoCode) 进程内去重 10 分钟，后续“未完成”帧不再做分类远程查询、加锁、查库 |
 | `switch.opt.ctrlFrameOrderFix` | B1 | false | 热生效 | 修 16.9：同一控制指令“完成”帧已在缓存时，丢弃后到的帧（不计算、不写缓存、不推送；运行日志仍处理） |
 | `switch.opt.mqttHealth` | B1 | false | 需重启 | 注册 MQTT 健康检查 `optMqtt`：超过 `opt.mqtt.health.max-silence-seconds`（默认 600）未收包为 DOWN。依赖 mqttIsolation 记录收包时间。**⚠ 必须与 mqttIsolation 同时打开**：只开 mqttHealth 时收包时间从不更新，10 分钟后健康检查恒为 DOWN；若存活探针用 `/actuator/health`，服务会被反复重启 |
