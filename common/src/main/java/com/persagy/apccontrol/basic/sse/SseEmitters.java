@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.persagy.apccontrol.basic.opt.OptSseKeepalive;
+import com.persagy.apccontrol.basic.opt.OptSsePushDedupe;
 import com.persagy.apccontrol.basic.sse.annotation.SsePollingParam;
 import com.persagy.apccontrol.basic.utils.DailyStringCounter;
 import lombok.Getter;
@@ -43,6 +44,9 @@ public class SseEmitters {
     @Autowired
     @Qualifier("asyncSSEExecutor")
     private ThreadPoolTaskExecutor asyncSSEExecutor;
+
+    @Autowired(required = false)
+    private OptSsePushDedupe optSsePushDedupe;
 
     /**
      * key:   eventId
@@ -111,6 +115,10 @@ public class SseEmitters {
      */
     private SseEmitter add(String eventKey, SseEmitter emitter) {
         this.multiEmitters.computeIfAbsent(eventKey, v -> new CopyOnWriteArrayList<>()).add(emitter);
+        // opt B9：新连接必须立即拿到全量数据，清除“无变化不推”的记录
+        if (optSsePushDedupe != null) {
+            optSsePushDedupe.forget(eventKey);
+        }
         log.info("eventKey: {}, Emitter count: {}, key count: {}", eventKey, multiEmitters.get(eventKey).size(), multiEmitters.keySet().size());
         emitter.onCompletion(() -> {
             log.info("eventKey: {}, Emitter completed: {}", eventKey, emitter);

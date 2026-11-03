@@ -47,6 +47,10 @@ public class OptSwitch {
     public static final String SSE_SPACE_STATUS_CACHE = "sseSpaceStatusCache";
     /** B9：按条件推送的 SSE 事件先按订阅者范围过滤，再提交线程池计算 */
     public static final String SSE_PRE_FILTER = "ssePreFilter";
+    /** B9：照明等“全量重算”事件按窗口合并 */
+    public static final String SSE_COALESCE = "sseCoalesce";
+    /** B9：定时全量推送内容无变化时不推，15 分钟兜底 */
+    public static final String SSE_PUSH_DEDUPE = "ssePushDedupe";
 
     private static volatile Environment environment;
 
