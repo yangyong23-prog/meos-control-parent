@@ -20,6 +20,7 @@ import com.persagy.apccontrol.basic.outside.feign.model.param.rwd.common.DtpRwdC
 import com.persagy.apccontrol.basic.outside.feign.service.DtpTwinClientService;
 import com.persagy.apccontrol.basic.utils.BeanUtil;
 import com.persagy.apccontrol.basic.utils.i18n.LocaleMessageUtil;
+import com.persagy.apccontrol.common.opt.OptRealtimeTwinReader;
 import com.persagy.apccontrol.common.outside.feign.DtpTwinClient;
 import com.persagy.framework.common.context.ContextUtil;
 import com.persagy.framework.common.enums.ResponseCode;
@@ -53,6 +54,10 @@ public class DtpTwinClientServiceImpl implements DtpTwinClientService, BaseFeign
     @Resource
     private DtpTwinClient dtpTwinClient;
 
+    /** opt 分支 B2（switch.opt.realtimeCacheRead）：当前值查询先读共享缓存 */
+    @Resource
+    private OptRealtimeTwinReader optRealtimeTwinReader;
+
     /**
      * @author wxf
      * @description 用于统一记录IOT数据供前端计算过期时间
@@ -77,6 +82,12 @@ public class DtpTwinClientServiceImpl implements DtpTwinClientService, BaseFeign
 
     @Override
     public List<DtpTwinIotData> queryTwinDataOnMoment(String groupCode, String projectId, String userId, QueryTwinDataDTO queryTwinDataDTO) {
+        if (optRealtimeTwinReader.handles(queryTwinDataDTO)) {
+            List<DtpTwinIotData> content = optRealtimeTwinReader.query(queryTwinDataDTO,
+                    dto -> queryTwinDataOnMomentFromTwin(groupCode, projectId, userId, dto));
+            handleTwinDataOnMoment(content);
+            return content;
+        }
         try {
             // log.info("查看当前反馈孪生:"+ JSONObject.toJSONString(queryTwinDataDTO));
             DtpTwinR<DtpTwinIotData> dtpTwinIotDataDtpTwinR = dtpTwinClient.queryTwinDataOnMoment(groupCode, projectId, userId, queryTwinDataDTO);
@@ -84,6 +95,21 @@ public class DtpTwinClientServiceImpl implements DtpTwinClientService, BaseFeign
                 List<DtpTwinIotData> content = dtpTwinIotDataDtpTwinR.getContent();
                 handleTwinDataOnMoment(content);
                 return content;
+            }
+        } catch (Exception e) {
+            throw new BusinessException(ResponseCode.USER_ERROR_A0400.getCode(), LocaleMessageUtil.getMessage("key_0f41958a07e54e9d8e64a0a967358e71"));
+        }
+        return Lists.newArrayList();
+    }
+
+    /**
+     * opt 分支 B2：与 queryTwinDataOnMoment 原逻辑相同、但不做前端过期提示记录的 Twin 调用，供缓存回源和双读校验使用。
+     */
+    private List<DtpTwinIotData> queryTwinDataOnMomentFromTwin(String groupCode, String projectId, String userId, QueryTwinDataDTO queryTwinDataDTO) {
+        try {
+            DtpTwinR<DtpTwinIotData> r = dtpTwinClient.queryTwinDataOnMoment(groupCode, projectId, userId, queryTwinDataDTO);
+            if (r != null && r.getIsSuccess()) {
+                return r.getContent() == null ? Lists.newArrayList() : r.getContent();
             }
         } catch (Exception e) {
             throw new BusinessException(ResponseCode.USER_ERROR_A0400.getCode(), LocaleMessageUtil.getMessage("key_0f41958a07e54e9d8e64a0a967358e71"));
