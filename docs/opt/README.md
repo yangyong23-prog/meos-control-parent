@@ -34,7 +34,7 @@
 | `switch.opt.sseCoalesce` | B9 | false | 热生效 | `opt.sse.coalesce-events`（默认 LIGHT_LOOP、LIGHT_SPACE_STATUS、LIGHT_EQUIPMENT_STATUS、LIGHT_DEMAND_CHANGE）的全量重算触发，同一 (事件, 项目, 订阅类型) 在 `opt.sse.coalesce-window-ms`（默认 3000）内只执行一次，最大延迟一个窗口 |
 | `switch.opt.ssePushDedupe` | B9 | false | 热生效 | 定时全量推送内容与上次相同且距上次推送不到 `opt.sse.full-push-minutes`（默认 15）分钟时不推；有新连接加入该 eventKey 时立即推 |
 | `executor.pool.sse.queueCapacity` | B9 | 1000000（bootstrap.yml） | 需重启 | 建议试点在 Nacos 覆盖为 10000；满时由原拒绝策略丢弃最老任务 |
-| `switch.opt.feignPageFirstLimit` | B10 | false | 热生效 | FeignPageExecutor 不分页查询的首发由 size=Integer.MAX_VALUE 改为按 `page.size.limit`（默认 1000）分页，再按 total 拉剩余页、按页序拼接；下游不返回 total 且首页已满时退回原逻辑。**⚠ 最后打开**：分页依赖下游排序稳定、两页之间数据不变，否则会重复或漏行。先取 `verify`（仍返回原逻辑结果，另按分页查一次比对条数，指标 `feign.page.verifyMatch` / `verifyMismatch` / `verifyError`；下游查询量约翻倍），观察 `verifyMismatch` 持续为 0 后再取 `true` |
+| `switch.opt.feignPageFirstLimit` | B10 | false | 热生效 | FeignPageExecutor 不分页查询的首发由 size=Integer.MAX_VALUE 改为按 `page.size.limit`（默认 1000）分页，再按 total 拉剩余页、按页序拼接；下游不返回 total 且首页已满时退回原逻辑。**⚠ 最后打开**：分页依赖下游排序稳定、两页之间数据不变，否则会重复或漏行。先取 `verify`（仍返回原逻辑结果，另按分页查一次比对条数，指标 `feign.page.verifyMatch` / `verifyMismatch` / `verifyError`；下游查询量约翻倍），观察 `verifyMismatch` 持续为 0 后再取 `true`。行内有 id 字段时同时比对 id 集合（重复或漏行即使条数相同也算不一致）。verify 期间每个请求多查一遍下游，只在试点站点短期打开 |
 | `opt.realtime.twin-parallelism` | B10 | 4 | 需重启 | B2 读路径回源 Twin 时 ≤200 对象一片，多片用独立小池并行（满时调用线程执行） |
 | `opt.runninglog.queue-capacity` / `spool-file` / `spool-max-bytes` | B1 | 10000 / `./opt-spool/running-log.jsonl` / 50MB | 需重启 | 运行日志队列容量、本地重放文件位置和上限 |
 
