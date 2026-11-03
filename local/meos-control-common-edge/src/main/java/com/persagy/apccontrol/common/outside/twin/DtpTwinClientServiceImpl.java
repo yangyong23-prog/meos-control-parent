@@ -5,6 +5,8 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.persagy.apccontrol.basic.opt.OptTwinResponses;
+import com.persagy.apccontrol.basic.outside.feign.model.response.CustomerResponse;
 import com.persagy.apccontrol.basic.config.ProjectCfg;
 import com.persagy.apccontrol.basic.config.cache.LocalContextStorage;
 import com.persagy.apccontrol.basic.model.dto.QueryTwinDataDTO;
@@ -21,6 +23,7 @@ import com.persagy.apccontrol.basic.outside.feign.service.DtpTwinClientService;
 import com.persagy.apccontrol.basic.utils.BeanUtil;
 import com.persagy.apccontrol.basic.utils.i18n.LocaleMessageUtil;
 import com.persagy.apccontrol.common.opt.OptRealtimeTwinReader;
+import com.persagy.apccontrol.common.opt.OptTwinWriteGuard;
 import com.persagy.apccontrol.common.outside.feign.DtpTwinClient;
 import com.persagy.framework.common.context.ContextUtil;
 import com.persagy.framework.common.enums.ResponseCode;
@@ -57,6 +60,10 @@ public class DtpTwinClientServiceImpl implements DtpTwinClientService, BaseFeign
     /** opt 分支 B2（switch.opt.realtimeCacheRead）：当前值查询先读共享缓存 */
     @Resource
     private OptRealtimeTwinReader optRealtimeTwinReader;
+
+    /** opt 分支 B8：壳配置定时同步只写差量 */
+    @Resource
+    private OptTwinWriteGuard optTwinWriteGuard;
 
     /**
      * @author wxf
@@ -138,6 +145,21 @@ public class DtpTwinClientServiceImpl implements DtpTwinClientService, BaseFeign
         insert(false, LocaleMessageUtil.getMessage("key_b29f91f5b39b4e6aa296018c3e1e35fa"), params, () -> dtpTwinClient.autoCommandBatchSend(params));
     }
 
+    /**
+     * opt B8：同 {@link #autoCommandBatchSend}（同样的错误日志、不抛 FeignException），但返回是否成功。
+     */
+    @Override
+    public boolean autoCommandBatchSendChecked(@NonNull List<DtpTwinAutoBatchSendDTO> params) {
+        if (CollectionUtils.isEmpty(params)) {
+            return true;
+        }
+        CustomerResponse<Object> response = baseOperation(false, getGroupCode(), getProjectId(),
+                LocaleMessageUtil.getMessage("key_6cc5c1e16b074d669b45cdbd4f5a5d91"),
+                LocaleMessageUtil.getMessage("key_b29f91f5b39b4e6aa296018c3e1e35fa"), params,
+                () -> dtpTwinClient.autoCommandBatchSend(params));
+        return OptTwinResponses.succeeded(response == null, response == null ? null : response.getUndefinedProperties());
+    }
+
     @Override
     public void autoSendBatch(List<DtpTwinAutoSendDTO> dtpTwinAutoSendDTOList) {
 
@@ -195,37 +217,50 @@ public class DtpTwinClientServiceImpl implements DtpTwinClientService, BaseFeign
 
     @Override
     public void saveList(List<JSONObject> paramList) {
-        this.dtpTwinClient.saveList(projectCfg.getGroupCode(), projectCfg.getProjectId(), paramList);
+        // opt B8：定时同步内且 switch.opt.twinWriteDiff 打开时只写变化，否则原样调用
+        optTwinWriteGuard.write("conf", "saveList", paramList,
+                () -> this.dtpTwinClient.saveList(projectCfg.getGroupCode(), projectCfg.getProjectId(), paramList));
     }
 
     @Override
     public void saveClassConfs(List<JSONObject> paramList) {
-        this.dtpTwinClient.saveClassConfs(projectCfg.getGroupCode(), projectCfg.getProjectId(), paramList);
+        // opt B8：定时同步内且 switch.opt.twinWriteDiff 打开时只写变化，否则原样调用
+        optTwinWriteGuard.write("classConf", "saveClassConfs", paramList,
+                () -> this.dtpTwinClient.saveClassConfs(projectCfg.getGroupCode(), projectCfg.getProjectId(), paramList));
     }
 
     @Override
     public void deleteByClassConf(List<JSONObject> paramList) {
-        this.dtpTwinClient.deleteByClassConf(projectCfg.getGroupCode(), projectCfg.getProjectId(), paramList);
+        // opt B8：定时同步内且 switch.opt.twinWriteDiff 打开时只写变化，否则原样调用
+        optTwinWriteGuard.write("classConf", "deleteByClassConf", paramList,
+                () -> this.dtpTwinClient.deleteByClassConf(projectCfg.getGroupCode(), projectCfg.getProjectId(), paramList));
     }
 
     @Override
     public void saveExclusions(List<JSONObject> paramList) {
-        this.dtpTwinClient.saveExclusions(projectCfg.getGroupCode(), projectCfg.getProjectId(), paramList);
+        // opt B8：定时同步内且 switch.opt.twinWriteDiff 打开时只写变化，否则原样调用
+        optTwinWriteGuard.write("conf", "saveExclusions", paramList,
+                () -> this.dtpTwinClient.saveExclusions(projectCfg.getGroupCode(), projectCfg.getProjectId(), paramList));
     }
 
     @Override
     public void deleteByConf(List<JSONObject> paramList) {
-        this.dtpTwinClient.deleteByConf(projectCfg.getGroupCode(), projectCfg.getProjectId(), paramList);
+        // opt B8：定时同步内且 switch.opt.twinWriteDiff 打开时只写变化，否则原样调用
+        optTwinWriteGuard.write("conf", "deleteByConf", paramList,
+                () -> this.dtpTwinClient.deleteByConf(projectCfg.getGroupCode(), projectCfg.getProjectId(), paramList));
     }
 
     @Override
     public void saveStartIntervals(List<JSONObject> paramList) {
-        this.dtpTwinClient.saveStartIntervals(projectCfg.getGroupCode(), projectCfg.getProjectId(), paramList);
+        // opt B8：定时同步内且 switch.opt.twinWriteDiff 打开时只写变化，否则原样调用
+        optTwinWriteGuard.write("conf", "saveStartIntervals", paramList,
+                () -> this.dtpTwinClient.saveStartIntervals(projectCfg.getGroupCode(), projectCfg.getProjectId(), paramList));
     }
 
     @Override
     public void reviseObjectInSys(JSONObject param) {
-        this.dtpTwinClient.reviseObjectInSys(projectCfg.getGroupCode(), projectCfg.getProjectId(), param);
+        optTwinWriteGuard.write("revise", "reviseObjectInSys", Collections.singletonList(param),
+                () -> this.dtpTwinClient.reviseObjectInSys(projectCfg.getGroupCode(), projectCfg.getProjectId(), param));
     }
 
 

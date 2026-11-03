@@ -1,6 +1,7 @@
 package com.persagy.apccontrol.task.lighting;
 
 import com.google.common.collect.Lists;
+import com.persagy.apccontrol.common.opt.OptRepeatSuppressor;
 import com.persagy.apccontrol.basic.config.cache.provider.redis.RedisCacheTemplate;
 import com.persagy.apccontrol.basic.config.properties.edge.children.task.child.LightingFeedbackAdjustTaskProperties;
 import com.persagy.apccontrol.basic.model.base.CachePersistenceKey;
@@ -59,6 +60,7 @@ public class LightingFeedbackAdjustTask extends BaseEdgeTask {
     private final DtpTwinClientService dtpTwinClientService;
     private final DemandConfigGateway<DemandConfigLightingValueObject> demandConfigGateway;
     private final RedisCacheTemplate redisCacheTemplate;
+    private final OptRepeatSuppressor optRepeatSuppressor;
 
     private static final List<DemandTemplateTypeEnum> ALLOWED_TEMPLATE_TYPES = Lists.newArrayList(
             DemandTemplateTypeEnum.PUBLIC_AREA_LIGHTING, DemandTemplateTypeEnum.PARKING_LOT_LIGHTING
@@ -125,7 +127,7 @@ public class LightingFeedbackAdjustTask extends BaseEdgeTask {
                         Pair.of("templateType", templateType),
                         Pair.of("orders", orders)
                 ));
-                this.dtpTwinClientService.autoCommandBatchSend(orders);
+                sendChanged("space", orders);
                 List<DtpTwinAutoBatchSendDTO> validOrders = orders.stream()
                         .filter(item -> !item.allClear())
                         .collect(Collectors.toList());
@@ -139,6 +141,16 @@ public class LightingFeedbackAdjustTask extends BaseEdgeTask {
             // 回路级反馈调节条件下发
             this.executeCircuitFeedbackAdjust(templateType, nowSceneSpaceIdAndConfig);
         }
+    }
+
+    /**
+     * opt B8（switch.opt.lightingSendDiff）：只下发与上次不同的指令，N 轮强制重发；开关关闭时原样全部下发。
+     * 上次指令记录（Redis）仍按全部指令维护，不受影响。
+     */
+    private void sendChanged(String scope, List<DtpTwinAutoBatchSendDTO> orders) {
+        optRepeatSuppressor.send(scope, orders, DtpTwinAutoSendDTO::getObjectId,
+                this.dtpTwinClientService::autoCommandBatchSend,
+                this.dtpTwinClientService::autoCommandBatchSendChecked);
     }
 
     /**
@@ -255,7 +267,7 @@ public class LightingFeedbackAdjustTask extends BaseEdgeTask {
                 Pair.of("templateType", templateType),
                 Pair.of("orders", circuitOrders)
         ));
-        this.dtpTwinClientService.autoCommandBatchSend(circuitOrders);
+        sendChanged("circuit", circuitOrders);
         List<DtpTwinAutoBatchSendDTO> validCircuitOrders = circuitOrders.stream()
                 .filter(item -> !item.allClear())
                 .collect(Collectors.toList());
