@@ -522,7 +522,7 @@ public class RunningMonitorWeakPowerStrategy extends BaseRunningMonitorStrategy 
                     continue;
                 }
                 OptMetrics.add("weakPower.relationBatch.saved", part.size() - 1L);
-                split.forEach((id, rows) -> prefetched.put(r.getGraphType() + "/" + r.getEdgeType() + "|" + id, rows));
+                split.forEach((id, idRows) -> prefetched.put(r.getGraphType() + "/" + r.getEdgeType() + "|" + id, idRows));
             }
         });
     }
