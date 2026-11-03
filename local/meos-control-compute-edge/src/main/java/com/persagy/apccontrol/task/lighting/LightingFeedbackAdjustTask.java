@@ -148,16 +148,9 @@ public class LightingFeedbackAdjustTask extends BaseEdgeTask {
      * 上次指令记录（Redis）仍按全部指令维护，不受影响。
      */
     private void sendChanged(String scope, List<DtpTwinAutoBatchSendDTO> orders) {
-        List<DtpTwinAutoBatchSendDTO> toSend = optRepeatSuppressor.filter(scope, orders, DtpTwinAutoSendDTO::getObjectId);
-        if (CollectionUtils.isEmpty(toSend)) {
-            return;
-        }
-        try {
-            this.dtpTwinClientService.autoCommandBatchSend(toSend);
-        } catch (RuntimeException e) {
-            optRepeatSuppressor.forget(scope, toSend, DtpTwinAutoSendDTO::getObjectId);
-            throw e;
-        }
+        optRepeatSuppressor.send(scope, orders, DtpTwinAutoSendDTO::getObjectId,
+                this.dtpTwinClientService::autoCommandBatchSend,
+                this.dtpTwinClientService::autoCommandBatchSendChecked);
     }
 
     /**
