@@ -36,6 +36,8 @@
 | `executor.pool.sse.queueCapacity` | B9 | 1000000（bootstrap.yml） | 需重启 | 建议试点在 Nacos 覆盖为 10000；满时由原拒绝策略丢弃最老任务 |
 | `switch.opt.feignPageFirstLimit` | B10 | false | 热生效 | FeignPageExecutor 不分页查询的首发由 size=Integer.MAX_VALUE 改为按 `page.size.limit`（默认 1000）分页，再按 total 拉剩余页、按页序拼接；下游不返回 total 且首页已满时退回原逻辑 |
 | `opt.realtime.twin-parallelism` | B10 | 4 | 需重启 | B2 读路径回源 Twin 时 ≤200 对象一片，多片用独立小池并行（满时调用线程执行） |
+| `switch.opt.twinWriteDiff` | B8 | false | 热生效 | 仅 InnerSchdule 壳配置定时同步内：Twin twc/conf 写入（saveList、saveClassConfs、deleteByClassConf、saveExclusions、deleteByConf、saveStartIntervals、reviseObjectInSys）按项记账 `apc:twinWrite:{group}:{projectId}:{identity}`，全部项不变且距上次成功写入不到 `opt.twin-write.full-rewrite-hours`（默认 24）小时不写；写入结果校验 isSuccess，失败抛异常、不记账、下一轮重写；设备频率快照改存合并后的全量、删除时移除 |
+| `switch.opt.lightingSendDiff` | B8 | false | 热生效 | 照明反馈调节（空间级、回路级）指令与上次相同不重发，距上次下发满 `opt.lighting.resend-rounds`（默认 6 轮 = 30 分钟）强制重发；下发失败的对象下一轮重发 |
 | `opt.runninglog.queue-capacity` / `spool-file` / `spool-max-bytes` | B1 | 10000 / `./opt-spool/running-log.jsonl` / 50MB | 需重启 | 运行日志队列容量、本地重放文件位置和上限 |
 
 ## B0 试点站点建议的 Nacos 配置
@@ -96,3 +98,5 @@ management:
 | `sse.spaceStatus.cache` / `sse.preFiltered` | B9 | 空间带状态走缓存的次数、提交前被过滤掉的订阅者任务数 |
 | `sse.coalesced` / `sse.pushSkipped` | B9 | 被窗口合并掉的触发次数、内容无变化跳过的推送次数 |
 | `feign.page.limitedFirst` / `feign.page.noTotalFallback` | B10 | 首发按 limit 分页的次数、因下游无 total 退回原逻辑的次数（后者始终计数） |
+| `twinWrite.skipped` / `twinWrite.written` / `twinWrite.fail` | B8 | 壳配置同步跳过、实际写入、写入失败的调用数（fail 始终计数）。验收：配置不变时每轮 written 接近 0 |
+| `lighting.sendSkipped` | B8 | 照明反馈调节未重发的指令数 |

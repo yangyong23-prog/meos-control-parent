@@ -55,6 +55,11 @@ public class OptSwitch {
     /** B10：FeignPageExecutor 不分页查询的首发也按 limit（默认 1000）分页 */
     public static final String FEIGN_PAGE_FIRST_LIMIT = "feignPageFirstLimit";
 
+    /** B8：壳配置定时同步到 Twin 时 payload 不变不写、写失败下一轮重写，并修正设备频率快照 */
+    public static final String TWIN_WRITE_DIFF = "twinWriteDiff";
+    /** B8：照明反馈调节指令相同不重发，N 轮强制重发 */
+    public static final String LIGHTING_SEND_DIFF = "lightingSendDiff";
+
     private static volatile Environment environment;
 
     public OptSwitch(Environment environment) {

@@ -1,5 +1,8 @@
 package com.persagy.apccontrol.task.scheduled;
 
+import com.persagy.apccontrol.basic.opt.OptSwitch;
+import com.persagy.apccontrol.common.opt.OptTwinWriteGuard;
+import com.persagy.apccontrol.opt.OptClassConfSnapshot;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
@@ -84,6 +87,11 @@ public class InnerSchdule {
      */
     @Scheduled(cron = "0 0/5 * * * ?")
     public void synShellConfigToTwin() {
+        // opt B8：标记定时同步，switch.opt.twinWriteDiff 打开时 Twin 配置写入只写变化（OptTwinWriteGuard）
+        OptTwinWriteGuard.runScheduledSync(this::doSynShellConfigToTwin);
+    }
+
+    private void doSynShellConfigToTwin() {
         ContextUtil.setGroupCode(projectCfg.getGroupCode());
         ContextUtil.setTenant(projectCfg.getGroupCode());
         ContextUtil.setProjectId(projectCfg.getProjectId());
@@ -206,10 +214,17 @@ public class InnerSchdule {
             if (updateParamList.size() > 0) {
                 this.dtpTwinClientService.saveClassConfs(updateParamList);
                 // 将本次写入的数据，存入redis
-                this.redisCacheUtil.set(redisKey, JsonUtils.toJson(updateParamList));
+                // opt B8：原来只存本轮写入的子集，导致另一项下轮又被判为变化、永久交替重写；打开开关后存合并后的全量快照
+                this.redisCacheUtil.set(redisKey, JsonUtils.toJson(OptSwitch.on(OptSwitch.TWIN_WRITE_DIFF)
+                        ? OptClassConfSnapshot.merge(preList, updateParamList) : updateParamList));
             }
             if (deleteParamList.size() > 0) {
                 this.dtpTwinClientService.deleteByClassConf(deleteParamList);
+                if (OptSwitch.on(OptSwitch.TWIN_WRITE_DIFF)) {
+                    // opt B8：删除后快照里去掉对应项，配置恢复时会重新写入
+                    this.redisCacheUtil.set(redisKey, JsonUtils.toJson(OptClassConfSnapshot.remove(
+                            OptClassConfSnapshot.merge(preList, updateParamList), deleteParamList)));
+                }
             }
         } catch (Exception e) {
             log.error("设备频率设定参数写入BDTP异常", e);
