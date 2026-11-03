@@ -1,5 +1,7 @@
 package com.persagy.apccontrol.basic.sse.strategy;
 
+import com.persagy.apccontrol.basic.opt.OptMetrics;
+import com.persagy.apccontrol.basic.opt.OptSwitch;
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.nacos.api.cmdb.pojo.EntityEventType;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -125,7 +127,7 @@ public abstract class AbstractSseEventStrategyTemplate implements SseEventStrate
 
         // 异步执行发布事件任务
         eventKeyMap.forEach((eventKey, sseSubscribeParam) -> {
-            if (isSubscribedEventType(sseSubscribeParam)) {
+            if (isSubscribedEventType(sseSubscribeParam) || preFiltered(sseSubscribeParam, condition)) {
                 return;
             }
             asyncSSEExecutor.execute(() -> publishEvent(eventKey, sseSubscribeParam, condition));
@@ -284,7 +286,7 @@ public abstract class AbstractSseEventStrategyTemplate implements SseEventStrate
 
         // 异步执行发布事件任务
         eventKeyMap.forEach((eventKey, sseSubscribeParam) -> {
-            if (isSubscribedEventType(sseSubscribeParam)) {
+            if (isSubscribedEventType(sseSubscribeParam) || preFiltered(sseSubscribeParam, condition)) {
                 return;
             }
             asyncSSEExecutor.execute(() -> publishEvent(eventKey, sseSubscribeParam, condition));
@@ -319,6 +321,34 @@ public abstract class AbstractSseEventStrategyTemplate implements SseEventStrate
     protected SseEmitterObject getSseEmitterObject(SseSubscribeParam param, Object condition) {
         log.error("实现类未重写，不支持改方法调用");
         return null;
+    }
+
+    /**
+     * opt B9（switch.opt.ssePreFilter）：提交线程池前判断该订阅者是否一定收不到这条消息。
+     * 子类只在结论确定时返回 true（与 getSseEmitterObject 会返回 null 的条件一致），默认不过滤。
+     *
+     * @param param     订阅参数
+     * @param condition 触发条件
+     * @return true 表示跳过，不提交计算任务
+     */
+    protected boolean skipBeforeCompute(SseSubscribeParam param, Object condition) {
+        return false;
+    }
+
+    private boolean preFiltered(SseSubscribeParam param, Object condition) {
+        if (!OptSwitch.on(OptSwitch.SSE_PRE_FILTER)) {
+            return false;
+        }
+        try {
+            boolean skip = skipBeforeCompute(param, condition);
+            if (skip) {
+                OptMetrics.inc("sse.preFiltered");
+            }
+            return skip;
+        } catch (Exception e) {
+            // 判断出错时按原逻辑提交，由计算阶段处理
+            return false;
+        }
     }
 
     /**

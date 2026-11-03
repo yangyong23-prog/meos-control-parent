@@ -1,6 +1,7 @@
 package com.persagy.apccontrol.basic.sse.strategy.airterminal;
 
 import com.persagy.apccontrol.basic.model.enumtype.airterminal.AirTerminalInstanceTypeEnum;
+import com.persagy.apccontrol.basic.opt.OptSpaceWithStatusCacheReader;
 import com.persagy.apccontrol.basic.model.param.airterminal.AirTerminalSpaceWithStatusQueryParam;
 import com.persagy.apccontrol.basic.model.vo.airterminal.AirTerminalSpaceWithStatusVO;
 import com.persagy.apccontrol.basic.service.airterminal.AirTerminalService;
@@ -25,6 +26,9 @@ public class SpaceWithStatus extends AbstractSseEventStrategyTemplate {
     @Resource
     AirTerminalService airportService;
 
+    @Resource
+    OptSpaceWithStatusCacheReader optSpaceWithStatusCacheReader;
+
     @Override
     protected SseEmitterEventEnum getEventType() {
         return SseEmitterEventEnum.SPACE_WITH_STATUS;
@@ -41,7 +45,10 @@ public class SpaceWithStatus extends AbstractSseEventStrategyTemplate {
         queryParam.setInstanceId(param.getInstanceId());
         queryParam.setInstanceType(AirTerminalInstanceTypeEnum.analyze(param.getInstanceType().getValue()));
         queryParam.setProjectId(param.getProjectId());
-        AirTerminalSpaceWithStatusVO spaceWithStatus = airportService.listSpaceWithStatus(queryParam);
+        // opt B9：对象模型新缓存 READY 且 switch.opt.sseSpaceStatusCache 打开时不再每拍查 RWD
+        AirTerminalSpaceWithStatusVO spaceWithStatus = optSpaceWithStatusCacheReader.applicable()
+                ? optSpaceWithStatusCacheReader.read(queryParam)
+                : airportService.listSpaceWithStatus(queryParam);
 
         return SseEmitterObject.builder()
                 .projectId(param.getProjectId())

@@ -1,6 +1,7 @@
 package com.persagy.apccontrol.basic.sse;
 
 import cn.hutool.core.collection.CollUtil;
+import com.persagy.apccontrol.basic.opt.OptSseKeepalive;
 import com.persagy.apccontrol.basic.sse.annotation.SsePollingParam;
 import com.persagy.framework.common.context.ContextUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +46,7 @@ public class SseEmitterServer {
         if(CollUtil.isEmpty(params))
             return null;
 
-        SseEmitter sseEmitter = new CustomSseEmitter(0L);
+        SseEmitter sseEmitter = new CustomSseEmitter(OptSseKeepalive.emitterTimeout());
         params.forEach(param->{
             param.setGroupCode(ContextUtil.getGroupCode());
             String eventKey = genEventKey(param);

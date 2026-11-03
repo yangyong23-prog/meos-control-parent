@@ -3,6 +3,7 @@ package com.persagy.apccontrol.basic.sse;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+import com.persagy.apccontrol.basic.opt.OptSseKeepalive;
 import com.persagy.apccontrol.basic.sse.annotation.SsePollingParam;
 import com.persagy.apccontrol.basic.utils.DailyStringCounter;
 import lombok.Getter;
@@ -65,7 +66,8 @@ public class SseEmitters {
      */
     public SseEmitter add(String eventKey, SseSubscribeParam param) {
         sseParamMap.put(eventKey, param);
-        return add(eventKey, new CustomSseEmitter(0L));
+        // opt B9：switch.opt.sseKeepalive 打开时带超时，关闭时为 0L（永不超时）
+        return add(eventKey, new CustomSseEmitter(OptSseKeepalive.emitterTimeout()));
     }
 
     /**
@@ -89,7 +91,11 @@ public class SseEmitters {
         if (emitter == null) {
             return;
         }
-        this.multiEmitters.get(eventKey).remove(emitter);
+        // 16.17：onCompletion / onError / onTimeout 可能先后触发，key 已被清理时不再 NPE
+        CopyOnWriteArrayList<SseEmitter> emitters = this.multiEmitters.get(eventKey);
+        if (emitters != null) {
+            emitters.remove(emitter);
+        }
         if (CollUtil.isEmpty(this.multiEmitters.get(eventKey))) {
             sseParamMap.remove(eventKey);
             multiEmitters.remove(eventKey);

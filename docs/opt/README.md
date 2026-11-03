@@ -28,6 +28,10 @@
 | `mqtt.topic.meos-compute-point.name` | B3 | 空 | 需重启 | 专用主题名，填 `twin/compute_meos`。必须与 `receive-topics` 同时配置，否则该主题报文会被当作控制值处理 |
 | `switch.opt.meosTopicFullPipeline` | B3 | false | 热生效 | 关：专用主题报文只写共享缓存（需同时打开 realtimeCacheWrite）；开：同时按反馈值走完整处理。只有在 receive-topics 去掉按类主题后才可打开，否则同一点会处理两次 |
 | `opt.subscribe.extra-points` | B3 | 空 | 下次同步生效 | 手工补充的订阅点，格式 `classCode:infoCode,classCode:infoCode` |
+| `switch.opt.sseKeepalive` | B9 | false | 热生效（超时对新连接生效） | 新建 SSE 连接带 `opt.sse.emitter-timeout-minutes`（默认 30）超时，浏览器自动重连；每 `opt.sse.heartbeat-seconds`（默认 30）秒发注释心跳，写失败即回收；调用过 `GET /server-event/sse/ping?eventKey=` 的前端超过 `opt.sse.lease-seconds`（默认 60）秒未再 ping 即回收（拔网线场景） |
+| `switch.opt.sseSpaceStatusCache` | B9 | false | 热生效 | SSE 空间带状态在对象模型新缓存 READY 后读缓存（同 listSpaceEquipment 的 READY 路径）+ 补标签，不再每拍查 RWD；未 READY 仍走原实现 |
+| `switch.opt.ssePreFilter` | B9 | false | 热生效 | IOT_DATA_CHANGE / INFO_EXTEND_SET / RELEASE_INTERVENTION 按订阅者范围先过滤，再提交 SSE 线程池 |
+| `executor.pool.sse.queueCapacity` | B9 | 1000000（bootstrap.yml） | 需重启 | 建议试点在 Nacos 覆盖为 10000；满时由原拒绝策略丢弃最老任务 |
 | `opt.runninglog.queue-capacity` / `spool-file` / `spool-max-bytes` | B1 | 10000 / `./opt-spool/running-log.jsonl` / 50MB | 需重启 | 运行日志队列容量、本地重放文件位置和上限 |
 
 ## B0 试点站点建议的 Nacos 配置
@@ -84,3 +88,5 @@ management:
 | `rt.verify.match` / `mismatch` / `cacheMiss` / `bothEmpty` | B2 | 双读校验结果（始终计数）。验收：mismatch / (match + mismatch) < 0.1% |
 | `sub.sync` / `sub.addPoints` / `sub.autoPending` / `sub.autoAdded` / `sub.error` | B3 | 订阅全量同步次数、同步新增点数、待补订阅点数、自动补订阅点数、同步失败次数（始终计数） |
 | `mqtt.recv.point` | B3 | 专用主题收包数 |
+| `sse.heartbeat` / `sse.heartbeatFail` / `sse.leaseExpired` | B9 | 心跳发送数、心跳失败回收的连接数、租约过期回收的连接数（后两者始终计数） |
+| `sse.spaceStatus.cache` / `sse.preFiltered` | B9 | 空间带状态走缓存的次数、提交前被过滤掉的订阅者任务数 |

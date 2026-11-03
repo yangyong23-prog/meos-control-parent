@@ -38,6 +38,19 @@ public class ReleaseIntervention extends AbstractSseEventStrategyTemplate {
         return null;
     }
 
+    /**
+     * opt B9：与 getSseEmitterObject 的参数校验和对象范围过滤一致。
+     */
+    @Override
+    protected boolean skipBeforeCompute(SseSubscribeParam param, Object condition) {
+        if (!(condition instanceof ReleaseInterventionDTO)) {
+            return true;
+        }
+        ReleaseInterventionDTO dto = (ReleaseInterventionDTO) condition;
+        return !StrUtil.isAllNotBlank(dto.getObjectId(), dto.getInfoCode())
+                || checkClaasCode2objectIds(param, dto.getClassCode(), dto.getObjectId());
+    }
+
     @Override
     protected SseEmitterObject getSseEmitterObject(SseSubscribeParam param, Object condition) {
         ReleaseInterventionDTO interventionDTO = condition instanceof ReleaseInterventionDTO ? (ReleaseInterventionDTO) condition : null;
