@@ -183,4 +183,30 @@ public class OptRealtimeTwinReaderTest {
         Assertions.assertEquals(1, reader.query(request("Eq1", "a"), twin).size());
         Assertions.assertEquals(Collections.singletonList("ACCCCC:a"), misses);
     }
+
+    @Test
+    void parallelChunksKeepOrderAndPropagateFailure() {
+        mode("on");
+        reader.setTwinExecutor(java.util.concurrent.Executors.newFixedThreadPool(4));
+        List<QueryTwinDataOnMomentDTO> objects = new ArrayList<>();
+        for (int i = 0; i < 450; i++) {
+            objects.add(new QueryTwinDataOnMomentDTO("Pj1", "Eq" + i, new LinkedHashSet<>(Collections.singletonList("a"))));
+        }
+        List<DtpTwinIotData> r = reader.query(new QueryTwinDataDTO(objects), twin);
+        Assertions.assertEquals(3, twinCalls.size(), "≤200 个对象一片");
+        Assertions.assertEquals(450, r.size());
+        for (int i = 0; i < 450; i++) {
+            Assertions.assertEquals("Eq" + i, r.get(i).getObjectId(), "按分片顺序拼接");
+        }
+
+        List<QueryTwinDataOnMomentDTO> fresh = new ArrayList<>();
+        for (int i = 0; i < 450; i++) {
+            fresh.add(new QueryTwinDataOnMomentDTO("Pj1", "New" + i, new LinkedHashSet<>(Collections.singletonList("a"))));
+        }
+        IllegalStateException boom = new IllegalStateException("twin down");
+        Assertions.assertSame(boom, Assertions.assertThrows(IllegalStateException.class,
+                () -> reader.query(new QueryTwinDataDTO(fresh), d -> {
+                    throw boom;
+                })), "全部未命中时原样抛出 Twin 异常");
+    }
 }

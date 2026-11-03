@@ -22,6 +22,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
 
@@ -52,6 +55,7 @@ public class OptRealtimeTwinReader {
     private final AtomicLong lastSampleLog = new AtomicLong();
     /** B3：缓存没有而 Twin 有有效值时通知（自动补订阅），可为空 */
     private volatile OptRealtimeMissListener missListener;
+    private volatile Executor twinExecutor;
 
     public OptRealtimeTwinReader(OptRealtimeCacheCore core) {
         this.core = core;
@@ -60,6 +64,35 @@ public class OptRealtimeTwinReader {
     @Autowired(required = false)
     public void setMissListener(OptRealtimeMissListener missListener) {
         this.missListener = missListener;
+    }
+
+    @Autowired(required = false)
+    public void setTwinReadPool(OptTwinReadPool pool) {
+        this.twinExecutor = pool == null ? null : pool.executor();
+    }
+
+    /** B10：多分片回源时使用的线程池；为空时顺序回源 */
+    public void setTwinExecutor(Executor twinExecutor) {
+        this.twinExecutor = twinExecutor;
+    }
+
+    private static void addAll(List<DtpTwinIotData> fetched, List<DtpTwinIotData> r) {
+        OptMetrics.inc("rt.read.twinCall");
+        if (r != null) {
+            fetched.addAll(r);
+        }
+    }
+
+    private static List<DtpTwinIotData> joinUnwrapped(CompletableFuture<List<DtpTwinIotData>> f) {
+        try {
+            return f.join();
+        } catch (CompletionException e) {
+            Throwable cause = e.getCause();
+            if (cause instanceof RuntimeException) {
+                throw (RuntimeException) cause;
+            }
+            throw e;
+        }
     }
 
     private void notifyMiss(DtpTwinIotData d) {
@@ -130,12 +163,24 @@ public class OptRealtimeTwinReader {
 
         List<DtpTwinIotData> fetched = new ArrayList<>();
         try {
+            List<QueryTwinDataDTO> chunks = new ArrayList<>();
             for (int from = 0; from < twinObjects.size(); from += TWIN_OBJECT_BATCH) {
                 List<QueryTwinDataOnMomentDTO> part = twinObjects.subList(from, Math.min(twinObjects.size(), from + TWIN_OBJECT_BATCH));
-                List<DtpTwinIotData> r = twin.apply(new QueryTwinDataDTO(new ArrayList<>(part)));
-                OptMetrics.inc("rt.read.twinCall");
-                if (r != null) {
-                    fetched.addAll(r);
+                chunks.add(new QueryTwinDataDTO(new ArrayList<>(part)));
+            }
+            Executor executor = twinExecutor;
+            if (executor == null || chunks.size() == 1) {
+                for (QueryTwinDataDTO chunk : chunks) {
+                    addAll(fetched, twin.apply(chunk));
+                }
+            } else {
+                // B10：多个分片并行回源，结果按分片顺序拼接
+                List<CompletableFuture<List<DtpTwinIotData>>> futures = new ArrayList<>(chunks.size());
+                for (QueryTwinDataDTO chunk : chunks) {
+                    futures.add(CompletableFuture.supplyAsync(() -> twin.apply(chunk), executor));
+                }
+                for (CompletableFuture<List<DtpTwinIotData>> f : futures) {
+                    addAll(fetched, joinUnwrapped(f));
                 }
             }
         } catch (RuntimeException e) {
