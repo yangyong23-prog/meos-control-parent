@@ -59,8 +59,8 @@ public class OptBatchUploaderTest {
 
         down.set(false);
         uploader.flush(Collections.singletonList(new Msg("add-3")));
-        // 新消息先发，随后按原顺序重放积压
-        Assertions.assertEquals(Arrays.asList("add-3", "del-1", "add-1", "add-2"), sent);
+        // 有积压时新消息排在积压之后，旧消息一定先到
+        Assertions.assertEquals(Arrays.asList("del-1", "add-1", "add-2", "add-3"), sent);
         Assertions.assertFalse(Files.exists(spool));
     }
 
@@ -94,5 +94,80 @@ public class OptBatchUploaderTest {
         Assertions.assertEquals(25, sent.size());
         Assertions.assertEquals("0", sent.get(0));
         Assertions.assertEquals("24", sent.get(24));
+    }
+
+    @Test
+    void poisonMessageIsMovedToDeadFileAndDoesNotBlockReplay() throws Exception {
+        AtomicBoolean down = new AtomicBoolean(true);
+        List<String> sent = new CopyOnWriteArrayList<>();
+        Path spool = dir.resolve("s.jsonl");
+        OptBatchUploader<Msg> uploader = new OptBatchUploader<>("t", Msg.class, batch -> {
+            if (down.get() || batch.stream().anyMatch(m -> "poison".equals(m.key))) {
+                throw new IllegalStateException("rejected");
+            }
+            batch.forEach(m -> sent.add(m.key));
+        }, 100, 10, spool, 1024 * 1024, new ObjectMapper());
+
+        uploader.flush(Arrays.asList(new Msg("a"), new Msg("poison"), new Msg("b")));
+        down.set(false);
+        uploader.flush(Collections.singletonList(new Msg("c")));
+
+        Assertions.assertEquals(Arrays.asList("a", "b", "c"), sent);
+        Assertions.assertFalse(Files.exists(spool));
+        List<String> dead = Files.readAllLines(dir.resolve("s.jsonl.dead"));
+        Assertions.assertEquals(1, dead.size());
+        Assertions.assertTrue(dead.get(0).contains("poison"));
+    }
+
+    @Test
+    void poisonAtEndOfBacklogIsJudgedWhenNextMessageArrives() throws Exception {
+        List<String> sent = new CopyOnWriteArrayList<>();
+        Path spool = dir.resolve("s.jsonl");
+        OptBatchUploader<Msg> uploader = new OptBatchUploader<>("t", Msg.class, batch -> {
+            if (batch.stream().anyMatch(m -> "poison".equals(m.key))) {
+                throw new IllegalStateException("rejected");
+            }
+            batch.forEach(m -> sent.add(m.key));
+        }, 100, 10, spool, 1024 * 1024, new ObjectMapper());
+
+        uploader.flush(Collections.singletonList(new Msg("poison")));
+        Assertions.assertTrue(Files.exists(spool), "单条失败无法判定，先留在积压里");
+        uploader.flush(Collections.singletonList(new Msg("next")));
+        Assertions.assertEquals(Collections.singletonList("next"), sent);
+        Assertions.assertFalse(Files.exists(spool));
+        Assertions.assertEquals(1, Files.readAllLines(dir.resolve("s.jsonl.dead")).size());
+    }
+
+    @Test
+    void outageKeepsEverythingInOrderAndDeadLettersNothing() throws Exception {
+        List<String> sent = new CopyOnWriteArrayList<>();
+        AtomicBoolean down = new AtomicBoolean(true);
+        Path spool = dir.resolve("s.jsonl");
+        OptBatchUploader<Msg> uploader = new OptBatchUploader<>("t", Msg.class, batch -> {
+            if (down.get()) {
+                throw new IllegalStateException("down");
+            }
+            batch.forEach(m -> sent.add(m.key));
+        }, 100, 2, spool, 1024 * 1024, new ObjectMapper());
+        for (int i = 0; i < 5; i++) {
+            uploader.flush(Arrays.asList(new Msg("d" + i), new Msg("a" + i)));
+        }
+        Assertions.assertEquals(10, Files.readAllLines(spool).size());
+        Assertions.assertFalse(Files.exists(dir.resolve("s.jsonl.dead")));
+        down.set(false);
+        uploader.flush(Collections.singletonList(new Msg("x")));
+        Assertions.assertEquals(Arrays.asList("d0", "a0", "d1", "a1", "d2", "a2", "d3", "a3", "d4", "a4", "x"), sent);
+    }
+
+    @Test
+    void unparseableSpoolLineIsMovedToDeadFile() throws Exception {
+        List<String> sent = new CopyOnWriteArrayList<>();
+        Path spool = dir.resolve("s.jsonl");
+        Files.write(spool, Arrays.asList("{\"key\":\"a\"}", "not-json", "{\"key\":\"b\"}"));
+        OptBatchUploader<Msg> uploader = new OptBatchUploader<>("t", Msg.class,
+                b -> b.forEach(m -> sent.add(m.key)), 100, 10, spool, 1024 * 1024, new ObjectMapper());
+        uploader.flush(Collections.singletonList(new Msg("c")));
+        Assertions.assertEquals(Arrays.asList("a", "b", "c"), sent);
+        Assertions.assertEquals(Collections.singletonList("not-json"), Files.readAllLines(dir.resolve("s.jsonl.dead")));
     }
 }

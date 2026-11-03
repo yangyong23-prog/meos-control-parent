@@ -184,12 +184,9 @@ public class OptRealtimeTwinReader {
                 }
             }
         } catch (RuntimeException e) {
+            // 与原逻辑一致：回源失败整体抛出，不返回只含缓存命中的残缺结果
             OptMetrics.incAlways("rt.read.twinFail");
-            if (result.isEmpty()) {
-                throw e;
-            }
-            log.warn("[opt] 实时值回源 Twin 失败，返回缓存中的 {} 条: {}", result.size(), e.toString());
-            return result;
+            throw e;
         }
         result.addAll(fetched);
         backfill(lookup.getMisses(), fetched);
