@@ -10,6 +10,10 @@ import com.persagy.apccontrol.basic.model.dto.twin.BusinessExternalPushDTO;
 import com.persagy.apccontrol.basic.model.enumtype.EnumIotDataType;
 import com.persagy.apccontrol.basic.model.enumtype.websocket.WebSocketTypeEnum;
 import com.persagy.apccontrol.basic.model.vo.FeedbackInfoMsgMqttVO;
+import com.persagy.apccontrol.basic.opt.OptMetrics;
+import com.persagy.apccontrol.basic.opt.OptSwitch;
+import com.persagy.apccontrol.opt.OptMqttPayloads;
+import com.persagy.apccontrol.opt.OptMqttStatus;
 import com.persagy.apccontrol.basic.outside.dto.dangerevent.DangerEventMsgDTO;
 import com.persagy.apccontrol.basic.outside.dto.riskevent.ExceptionEventMsgDTO;
 import com.persagy.apccontrol.basic.sse.SseEmitterEventEnum;
@@ -96,6 +100,21 @@ public class MqttReceiveServiceImpl implements MqttReceiveService {
      * @param message 消息
      */
     public void handlerMessage(Message<String> message) {
+        if (!OptSwitch.on(OptSwitch.MQTT_ISOLATION)) {
+            doHandlerMessage(message);
+            return;
+        }
+        // opt B1：记录收包、处理完在 finally 清理线程上下文（16.18）
+        OptMqttStatus.markReceived();
+        OptMetrics.inc("mqtt.recv");
+        try {
+            doHandlerMessage(message);
+        } finally {
+            ContextUtil.remove();
+        }
+    }
+
+    private void doHandlerMessage(Message<String> message) {
 
         if (StringUtils.isEmpty(message.getPayload())) {
             return;
@@ -184,6 +203,21 @@ public class MqttReceiveServiceImpl implements MqttReceiveService {
      * @param receivedTopic
      */
     private void twinMqtt(Message<String> message, String receivedTopic) {
+        if (OptSwitch.on(OptSwitch.MQTT_ISOLATION)) {
+            // opt B1：payload 只解析一次；"~" 日志降为 debug 并限频
+            FeedbackInfoMsgMqttVO parsed = OptMqttPayloads.parseTwin(message.getPayload());
+            if (parsed == null) {
+                return;
+            }
+            parsed.setProjectId(projectCfg.getProjectId());
+            parsed.setGroupCode(projectCfg.getGroupCode());
+            if (null == parsed.getDataValue() || "~".equals(parsed.getDataValue())) {
+                OptMqttPayloads.logInvalidValue(message.getPayload());
+                return;
+            }
+            twinMqttExpense(parsed, message, receivedTopic);
+            return;
+        }
         //数据转化为JSON格式
         JSONObject obj = JSONObject.parseObject(message.getPayload());
         if (obj == null) {
@@ -206,6 +240,10 @@ public class MqttReceiveServiceImpl implements MqttReceiveService {
             ControlLogUtil.warn("MQTT推送数据，无效消息值-:{}", jsonValue.toJSONString());
             return;
         }
+        twinMqttExpense(vo, message, receivedTopic);
+    }
+
+    private void twinMqttExpense(FeedbackInfoMsgMqttVO vo, Message<String> message, String receivedTopic) {
         if (StringUtils.equals(compute, receivedTopic)) {
             //反馈值
             vo.setType(EnumIotDataType.FEEDBACK.getCode());

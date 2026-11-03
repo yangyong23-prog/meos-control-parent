@@ -8,6 +8,7 @@ import com.persagy.apccontrol.basic.model.entity.RcCalculateResult;
 import com.persagy.apccontrol.basic.model.entity.RcRunningLog;
 import com.persagy.apccontrol.basic.model.entity.RunningLog;
 import com.persagy.apccontrol.common.model.vo.PaasDataCacheVo;
+import com.persagy.apccontrol.common.opt.OptRunningLogUploader;
 import com.persagy.apccontrol.common.outside.feign.PaasDatatransferClient;
 import com.persagy.framework.common.context.ContextUtil;
 import com.persagy.framework.common.util.json.JsonUtils;
@@ -42,6 +43,10 @@ public class PaasDatatransferServer {
 
     @Autowired
     private PaasDatatransferClient paasDatatransferClient;
+
+    /** opt 分支 B1：switch.opt.runningLogQueue 打开时运行日志改为入本地队列异步合批发送 */
+    @Autowired(required = false)
+    private OptRunningLogUploader optRunningLogUploader;
 
     /**
      * 价值计算结果同步
@@ -276,6 +281,10 @@ public class PaasDatatransferServer {
         if (runningLog != null) {
             try {
                 PaasDataCacheVo kafkaMessage = getKafkaMessage(ContextUtil.getGroupCode(), runningLog, tenantUpper);
+                if (optRunningLogUploader != null && optRunningLogUploader.enabled()) {
+                    optRunningLogUploader.offer(Lists.newArrayList(kafkaMessage));
+                    return;
+                }
                 this.paasDatatransferClient.sendDataToKafka(Lists.newArrayList(kafkaMessage));
             } catch (Exception e) {
                 log.error("运行日志云边同步异常，异常数据: {}", JsonUtils.toJson(runningLog), e);
@@ -288,6 +297,12 @@ public class PaasDatatransferServer {
             try {
                 //先删除
                 PaasDataCacheVo kafkaMessageDelete = getKafkaMessageDelete(ContextUtil.getGroupCode(), runningLog, tenantUpper);
+                if (optRunningLogUploader != null && optRunningLogUploader.enabled()) {
+                    // 先删后增两条按顺序入队，由单线程按序发送
+                    optRunningLogUploader.offer(Lists.newArrayList(kafkaMessageDelete,
+                            getKafkaMessage(ContextUtil.getGroupCode(), runningLog, tenantUpper)));
+                    return;
+                }
                 this.paasDatatransferClient.sendDataToKafka(Lists.newArrayList(kafkaMessageDelete));
                 //新增
                 PaasDataCacheVo kafkaMessage = getKafkaMessage(ContextUtil.getGroupCode(), runningLog, tenantUpper);

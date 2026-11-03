@@ -15,6 +15,9 @@ import com.persagy.apccontrol.basic.outside.feign.model.param.rwd.DtpRwdObjectQu
 import com.persagy.apccontrol.basic.outside.feign.service.DtpRwdClientService;
 import com.persagy.apccontrol.basic.resource.RunningLogServiceResource;
 import com.persagy.apccontrol.basic.service.cache.RedissonDistributedLockerService;
+import com.persagy.apccontrol.basic.opt.OptMetrics;
+import com.persagy.apccontrol.basic.opt.OptSwitch;
+import com.persagy.apccontrol.common.opt.OptRecentKeys;
 import com.persagy.apccontrol.basic.service.runninglog.NowRunningLogService;
 import com.persagy.apccontrol.basic.service.runninglog.RunningLogTemplateConfig;
 import com.persagy.apccontrol.basic.service.runninglog.category.MdQueryObjStrategy;
@@ -36,6 +39,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -46,6 +50,12 @@ import java.util.stream.Collectors;
 public class RunningLogEdgeNowServiceImpl implements RunningLogEdgeNowService {
     
     private static final String LOG_TAG = "运行日志处理";
+
+    /**
+     * opt 分支 B1（switch.opt.autoLogDedupe）：已建档或已确认存在的 (traceId, objectId, infoCode)，10 分钟内的后续“未完成”帧直接跳过，
+     * 不再重复做分类远程查询、加锁和查库。
+     */
+    private static final OptRecentKeys AUTO_LOG_RECENT = new OptRecentKeys(10, TimeUnit.MINUTES, 100_000);
     
     @Resource
     private RunningLogServiceResource runningLogServiceResource;
@@ -374,6 +384,12 @@ public class RunningLogEdgeNowServiceImpl implements RunningLogEdgeNowService {
         if (!RunningLogSourceStateEnum.UNFINISHED.value().equals(vo.getResult()) || !isTwinWhitelisted(vo)) {
             return false;
         }
+        final String dedupeKey = OptSwitch.on(OptSwitch.AUTO_LOG_DEDUPE)
+                ? OptRecentKeys.key(vo.getTraceData(), vo.getObjectId(), vo.getInfoCode()) : null;
+        if (dedupeKey != null && AUTO_LOG_RECENT.contains(dedupeKey)) {
+            OptMetrics.inc("runningLog.autoDedupeHit");
+            return true;
+        }
         RunningLog runLog = buildTwinRunningLog(vo, RunningLogSourceStateEnum.UNFINISHED);
         if (runLog == null) {
             //没有时间 不记录(仍属建档帧，短路后续终态处理)
@@ -399,6 +415,9 @@ public class RunningLogEdgeNowServiceImpl implements RunningLogEdgeNowService {
             }
             save(runLog);
         });
+        if (dedupeKey != null) {
+            AUTO_LOG_RECENT.mark(dedupeKey);
+        }
         return true;
     }
     

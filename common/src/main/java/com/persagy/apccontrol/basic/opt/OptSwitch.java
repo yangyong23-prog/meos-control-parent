@@ -22,6 +22,15 @@ public class OptSwitch {
     /** B0：本地度量（每分钟打一行日志） */
     public static final String METRICS = "metrics";
 
+    /** B1：MQTT 消费只解析一次 payload、"~" 日志降级限频、ContextUtil 在 finally 清理、收包计数 */
+    public static final String MQTT_ISOLATION = "mqttIsolation";
+    /** B1：运行日志上云改为本地有界队列 + 后台合批发送 */
+    public static final String RUNNING_LOG_QUEUE = "runningLogQueue";
+    /** B1：自动日志建档按 traceId 进程内去重（10 分钟） */
+    public static final String AUTO_LOG_DEDUPE = "autoLogDedupe";
+    /** B1：修 16.9，同一控制指令“完成”帧先到后，丢弃后到的“进行中”帧 */
+    public static final String CTRL_FRAME_ORDER_FIX = "ctrlFrameOrderFix";
+
     private static volatile Environment environment;
 
     public OptSwitch(Environment environment) {
