@@ -1,5 +1,6 @@
 package com.persagy.apccontrol.basic.structure.common.strategy.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.map.MapUtil;
 import com.google.common.collect.Lists;
@@ -16,6 +17,9 @@ import com.persagy.apccontrol.basic.model.param.common.RunningMonitorEquipmentQu
 import com.persagy.apccontrol.basic.model.param.common.RunningMonitorSpaceQueryParam;
 import com.persagy.apccontrol.basic.model.param.weakpower.RunningMonitorWeakPowerEquipmentQueryParam;
 import com.persagy.apccontrol.basic.model.vo.weakpower.RunningMonitorWeakPowerEquipmentDTO;
+import com.persagy.apccontrol.basic.opt.OptMetrics;
+import com.persagy.apccontrol.basic.opt.OptRelationBatch;
+import com.persagy.apccontrol.basic.opt.OptSwitch;
 import com.persagy.apccontrol.basic.outside.feign.model.param.rwd.DtpRwdObjectQueryParam;
 import com.persagy.apccontrol.basic.outside.feign.model.param.rwd.DtpRwdObjectRelationQueryParam;
 import com.persagy.apccontrol.basic.structure.common.enumeration.InheritConfigTypeEnum;
@@ -376,6 +380,13 @@ public class RunningMonitorWeakPowerStrategy extends BaseRunningMonitorStrategy 
      * 根据设备类型查询下级设备
      */
     private List<RunningMonitorWeakPowerEquipmentDTO> queryChildrenByDeviceType(List<String> equipIdsInSystem,RunningMonitorEquipmentQueryParam param, DtpRwdEquipmentDTO device, Set<String> processedIds,int level) {
+        // opt B10（switch.opt.weakPowerRelationBatch）：下一层设备的关系查询按批预取
+        return queryChildrenByDeviceType(equipIdsInSystem, param, device, processedIds, level,
+                OptSwitch.on(OptSwitch.WEAK_POWER_RELATION_BATCH) ? new HashMap<>() : null);
+    }
+
+    private List<RunningMonitorWeakPowerEquipmentDTO> queryChildrenByDeviceType(List<String> equipIdsInSystem,RunningMonitorEquipmentQueryParam param, DtpRwdEquipmentDTO device, Set<String> processedIds,int level,
+                                                                                 Map<String, List<DtpRwdEquipmentDTO>> prefetched) {
         if (level > weakPowerRelationConfig.getMaxHierarchyDepth()) { // 限制层级上限
             return Lists.newArrayList();
         }
@@ -394,11 +405,14 @@ public class RunningMonitorWeakPowerStrategy extends BaseRunningMonitorStrategy 
         List<String> allEquipIdList = new ArrayList<>();
 
         for (WeakPowerRelationConfig.Relation relation : relations) {
-            // 查询关系数据
-            DtpRwdObjectQueryParam queryParam = new DtpRwdObjectQueryParam();
-            queryParam.setRelationTo(new DtpRwdObjectRelationQueryParam(
-                    relation.getGraphType(),relation.getEdgeType()).setObjFrom(Lists.newArrayList(deviceId)));
-            List<DtpRwdEquipmentDTO> equipmentDTOS = param.queryObject(queryParam);
+            // 查询关系数据（opt：已批量预取的直接取用）
+            List<DtpRwdEquipmentDTO> equipmentDTOS = prefetched == null ? null : prefetched.remove(relationKey(relation, deviceId));
+            if (equipmentDTOS == null) {
+                DtpRwdObjectQueryParam queryParam = new DtpRwdObjectQueryParam();
+                queryParam.setRelationTo(new DtpRwdObjectRelationQueryParam(
+                        relation.getGraphType(),relation.getEdgeType()).setObjFrom(Lists.newArrayList(deviceId)));
+                equipmentDTOS = param.queryObject(queryParam);
+            }
             //去重
             equipmentDTOS = equipmentDTOS.stream().filter(e -> !allEquipIdList.contains(e.getId())).collect(Collectors.toList());
             //去重后添加到集合中
@@ -430,6 +444,9 @@ public class RunningMonitorWeakPowerStrategy extends BaseRunningMonitorStrategy 
         Collator collator = Collator.getInstance(Locale.CHINA);   // 或 Locale.SIMPLIFIED_CHINESE
         collator.setStrength(Collator.PRIMARY);
         allEquipList.sort(Comparator.comparing(DtpRwdEquipmentDTO::getLocalName,collator));
+        if (prefetched != null && level + 1 <= weakPowerRelationConfig.getMaxHierarchyDepth()) {
+            prefetchRelations(equipIdsInSystem, param, allEquipList, processedIds, prefetched);
+        }
         for (DtpRwdEquipmentDTO weakPowerEquipmentDto: allEquipList) {
             RunningMonitorWeakPowerEquipmentDTO child = weakPowerConverter.toWeakPowerEquipmentDto(weakPowerEquipmentDto);
             // 避免循环引用
@@ -439,7 +456,7 @@ public class RunningMonitorWeakPowerStrategy extends BaseRunningMonitorStrategy 
             result.add(child);
             // 如果是需要继续查询的设备类型 & 设备是在系统下，递归查询
             if (weakPowerRelationConfig.getIntermediateDeviceTypes().contains(child.getClassCode()) && equipIdsInSystem.contains(child.getId())) {
-                List<RunningMonitorWeakPowerEquipmentDTO> subChildren = queryChildrenByDeviceType(equipIdsInSystem,param, child, processedIds, level + 1);
+                List<RunningMonitorWeakPowerEquipmentDTO> subChildren = queryChildrenByDeviceType(equipIdsInSystem,param, child, processedIds, level + 1, prefetched);
                 child.setChildren(subChildren);
             }else {
                 //不需要继续下钻查询时，添加到已处理列表中
@@ -450,4 +467,63 @@ public class RunningMonitorWeakPowerStrategy extends BaseRunningMonitorStrategy 
     }
 
 
+
+    private static String relationKey(WeakPowerRelationConfig.Relation relation, String deviceId) {
+        return relation.getGraphType() + "/" + relation.getEdgeType() + "|" + deviceId;
+    }
+
+    /**
+     * opt B10：对接下来会递归下钻的兄弟设备，按关系类型合并成一次查询（objFrom 为多个设备，200 一批），
+     * 再按 relObjIds 拆回各设备。结果只是原逐个查询的提前执行，递归顺序和 processedIds 判断不变。
+     * 无法按 relObjIds 归属时不预取，该批设备在递归时按原逻辑逐个查询。
+     */
+    private void prefetchRelations(List<String> equipIdsInSystem, RunningMonitorEquipmentQueryParam param,
+                                   List<DtpRwdEquipmentDTO> siblings, Set<String> processedIds,
+                                   Map<String, List<DtpRwdEquipmentDTO>> prefetched) {
+        Map<String, WeakPowerRelationConfig.Relation> relations = new LinkedHashMap<>();
+        Map<String, LinkedHashSet<String>> idsByRelation = new LinkedHashMap<>();
+        for (DtpRwdEquipmentDTO e : siblings) {
+            if (!weakPowerRelationConfig.getIntermediateDeviceTypes().contains(e.getClassCode())
+                    || !equipIdsInSystem.contains(e.getId()) || processedIds.contains(e.getId()) || e.getClassCode() == null) {
+                continue;
+            }
+            for (WeakPowerRelationConfig.Relation r : weakPowerRelationConfig.getRelationByMasterCode(e.getClassCode())) {
+                String rk = r.getGraphType() + "/" + r.getEdgeType();
+                relations.putIfAbsent(rk, r);
+                idsByRelation.computeIfAbsent(rk, k -> new LinkedHashSet<>()).add(e.getId());
+            }
+        }
+        idsByRelation.forEach((rk, ids) -> {
+            if (ids.size() < 2) {
+                return;
+            }
+            WeakPowerRelationConfig.Relation r = relations.get(rk);
+            for (List<String> part : Lists.partition(new ArrayList<>(ids), 200)) {
+                DtpRwdObjectQueryParam queryParam = new DtpRwdObjectQueryParam();
+                queryParam.setRelationTo(new DtpRwdObjectRelationQueryParam(
+                        r.getGraphType(), r.getEdgeType()).setObjFrom(new ArrayList<>(part)));
+                List<DtpRwdEquipmentDTO> rows;
+                try {
+                    rows = param.queryObject(queryParam);
+                } catch (RuntimeException ex) {
+                    // 预取失败不影响原流程：这批设备在递归时按原逻辑逐个查询（异常也在那时按原样抛出）
+                    OptMetrics.incAlways("weakPower.relationBatch.error");
+                    logProjectInstance().warn("弱电关系批量预取失败，退回逐个查询", ex);
+                    continue;
+                }
+                Map<String, List<DtpRwdEquipmentDTO>> split = OptRelationBatch.splitBySource(part, rows,
+                        DtpRwdObjectDTO::getRelObjIds, (row, source) -> {
+                            DtpRwdEquipmentDTO copy = BeanUtil.toBean(row, DtpRwdEquipmentDTO.class);
+                            copy.setRelObjIds(new HashSet<>(Collections.singleton(source)));
+                            return copy;
+                        });
+                if (split == null) {
+                    OptMetrics.incAlways("weakPower.relationBatch.fallback");
+                    continue;
+                }
+                OptMetrics.add("weakPower.relationBatch.saved", part.size() - 1L);
+                split.forEach((id, idRows) -> prefetched.put(r.getGraphType() + "/" + r.getEdgeType() + "|" + id, idRows));
+            }
+        });
+    }
 }

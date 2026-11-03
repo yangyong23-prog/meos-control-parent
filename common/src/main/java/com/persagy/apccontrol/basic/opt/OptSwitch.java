@@ -65,6 +65,8 @@ public class OptSwitch {
     public static final String COLD_SOURCE_GROUP_PARALLEL = "coldSourceGroupParallel";
     /** B10：系统图交互配置候选批量查询 + 同图对象列表复用 */
     public static final String SYSTEM_GRAPH_JUMP_BATCH = "systemGraphJumpBatch";
+    /** B10：弱电运行监测下钻时兄弟设备的关系查询合批 */
+    public static final String WEAK_POWER_RELATION_BATCH = "weakPowerRelationBatch";
 
     private static volatile Environment environment;
 
