@@ -82,4 +82,25 @@ public class OptPagedFetchTest {
         Assertions.assertEquals(1500, r.content.size());
         Assertions.assertEquals(1, calls.size());
     }
+
+    @Test
+    void verifyReturnsLegacyAndCountsMismatch() {
+        Resp legacyResp = new Resp(IntStream.range(0, 10).boxed().collect(Collectors.toList()), 10);
+        OptMetrics.drain();
+
+        Assertions.assertSame(legacyResp, OptPagedFetch.verify(legacyResp,
+                () -> new Resp(new ArrayList<>(legacyResp.content), 10), r -> r.content, "t"));
+        Assertions.assertEquals(Long.valueOf(1), OptMetrics.drain().get("feign.page.verifyMatch"));
+
+        // 两页之间数据变化导致漏行
+        Assertions.assertSame(legacyResp, OptPagedFetch.verify(legacyResp,
+                () -> new Resp(legacyResp.content.subList(0, 9), 10), r -> r.content, "t"));
+        Assertions.assertEquals(Long.valueOf(1), OptMetrics.drain().get("feign.page.verifyMismatch"));
+
+        // 分页查询失败不影响返回
+        Assertions.assertSame(legacyResp, OptPagedFetch.verify(legacyResp, () -> {
+            throw new IllegalStateException("down");
+        }, r -> r.content, "t"));
+        Assertions.assertEquals(Long.valueOf(1), OptMetrics.drain().get("feign.page.verifyError"));
+    }
 }

@@ -55,6 +55,15 @@ public interface DtpTwinClientService {
     void autoCommandBatchSend(@NonNull List<DtpTwinAutoBatchSendDTO> params);
 
     /**
+     * opt B8：与 {@link #autoCommandBatchSend} 相同，但返回是否下发成功（调用失败或 Twin 返回失败码为 false），
+     * 供照明“相同指令不重发”在失败时下一轮重发。默认实现无法感知失败，恒为 true。
+     */
+    default boolean autoCommandBatchSendChecked(@NonNull List<DtpTwinAutoBatchSendDTO> params) {
+        autoCommandBatchSend(params);
+        return true;
+    }
+
+    /**
      * 发送自动需求指令 批量下发
      */
     void autoSendBatch(List<DtpTwinAutoSendDTO> dtpTwinAutoSendDTOList);

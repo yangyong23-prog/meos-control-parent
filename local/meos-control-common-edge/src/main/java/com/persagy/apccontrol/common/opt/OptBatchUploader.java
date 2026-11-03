@@ -14,6 +14,7 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -27,7 +28,10 @@ import java.util.function.Consumer;
  *     <li>{@link #offer} 不阻塞：队列满时丢弃并计数 {@code <name>.drop}。</li>
  *     <li>后台线程每次最多取 {@code batchSize} 条，按入队顺序调用 sender；sender 抛异常视为失败。</li>
  *     <li>失败的批次按 JSON 行追加到 spool 文件（超过 maxSpoolBytes 时丢弃并计数 {@code <name>.spoolDrop}）。</li>
- *     <li>每次发送成功后，若 spool 文件存在则整体重放，重放失败的部分写回 spool。</li>
+ *     <li>spool 有积压时，新批次先追加到 spool 末尾，再从头按序重放，保证旧消息一定先于新消息到达；
+ *     重放失败的部分原样写回 spool。</li>
+ *     <li>重放中某批失败时逐条重试：某条失败而紧随其后的一条成功，判定前者为毒消息，移入 {@code <spool>.dead}
+ *     并计数 {@code <name>.dead}，不再卡住后续重放；连续两条失败视为下游不可用，停止本轮。</li>
  * </ul>
  * 单线程发送保证同一条日志的“先删后增”两条消息顺序不变。
  *
@@ -109,12 +113,25 @@ public class OptBatchUploader<T> {
     /**
      * 发送一批；成功后尝试重放 spool。包可见，便于单测同步驱动。
      */
-    void flush(List<T> batch) {
+    synchronized void flush(List<T> batch) {
+        if (hasSpool()) {
+            // 有积压时新批次排在积压之后，避免新消息先于旧消息到达
+            spool(batch);
+            replaySpool();
+            return;
+        }
         if (send(batch)) {
             OptMetrics.add(name + ".sent", batch.size());
-            replaySpool();
         } else {
             spool(batch);
+        }
+    }
+
+    private boolean hasSpool() {
+        try {
+            return spoolFile != null && Files.exists(spoolFile) && Files.size(spoolFile) > 0;
+        } catch (IOException e) {
+            return false;
         }
     }
 
@@ -130,17 +147,22 @@ public class OptBatchUploader<T> {
     }
 
     synchronized void spool(List<T> batch) {
-        if (spoolFile == null) {
+        appendTo(spoolFile, batch, true);
+    }
+
+    private void appendTo(Path file, List<T> batch, boolean limited) {
+        String drop = limited ? ".spoolDrop" : ".deadDrop";
+        if (file == null) {
             OptMetrics.addAlways(name + ".spoolDrop", batch.size());
             return;
         }
         try {
-            Files.createDirectories(spoolFile.toAbsolutePath().getParent());
-            if (Files.exists(spoolFile) && Files.size(spoolFile) >= maxSpoolBytes) {
-                OptMetrics.addAlways(name + ".spoolDrop", batch.size());
+            Files.createDirectories(file.toAbsolutePath().getParent());
+            if (Files.exists(file) && Files.size(file) >= maxSpoolBytes) {
+                OptMetrics.addAlways(name + drop, batch.size());
                 return;
             }
-            try (BufferedWriter w = Files.newBufferedWriter(spoolFile, StandardCharsets.UTF_8,
+            try (BufferedWriter w = Files.newBufferedWriter(file, StandardCharsets.UTF_8,
                     StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
                 for (T item : batch) {
                     w.write(mapper.writeValueAsString(item));
@@ -148,8 +170,8 @@ public class OptBatchUploader<T> {
                 }
             }
         } catch (IOException e) {
-            log.error("[opt] {} 写本地重放文件失败，丢弃 {} 条", name, batch.size(), e);
-            OptMetrics.addAlways(name + ".spoolDrop", batch.size());
+            log.error("[opt] {} 写本地文件 {} 失败，丢弃 {} 条", name, file, batch.size(), e);
+            OptMetrics.addAlways(name + drop, batch.size());
         }
     }
 
@@ -164,8 +186,7 @@ public class OptBatchUploader<T> {
             log.warn("[opt] {} 无法开始重放: {}", name, e.toString());
             return;
         }
-        int replayed = 0;
-        List<T> failed = new ArrayList<>();
+        Round round = new Round();
         try (BufferedReader r = Files.newBufferedReader(replaying, StandardCharsets.UTF_8)) {
             List<T> batch = new ArrayList<>(batchSize);
             String line;
@@ -173,14 +194,22 @@ public class OptBatchUploader<T> {
                 if (line.trim().isEmpty()) {
                     continue;
                 }
-                batch.add(mapper.readValue(line, type));
+                T item;
+                try {
+                    item = mapper.readValue(line, type);
+                } catch (IOException e) {
+                    // 无法解析的行同样按毒消息处理，不能让它中断整轮重放
+                    deadLine(line);
+                    continue;
+                }
+                batch.add(item);
                 if (batch.size() >= batchSize) {
-                    replayed += replayBatch(batch, failed);
+                    replayBatch(batch, round);
                     batch = new ArrayList<>(batchSize);
                 }
             }
             if (!batch.isEmpty()) {
-                replayed += replayBatch(batch, failed);
+                replayBatch(batch, round);
             }
         } catch (IOException e) {
             log.error("[opt] {} 读取重放文件失败", name, e);
@@ -190,22 +219,82 @@ public class OptBatchUploader<T> {
         } catch (IOException e) {
             log.warn("[opt] {} 删除重放文件失败: {}", name, e.toString());
         }
-        if (!failed.isEmpty()) {
-            spool(failed);
+        // 末尾单条失败无法判定是否毒消息，连同未发送部分一起写回，下一轮再判
+        round.failed.addAll(0, round.suspect);
+        if (!round.failed.isEmpty()) {
+            spool(round.failed);
         }
-        if (replayed > 0) {
-            OptMetrics.add(name + ".replayed", replayed);
-            log.info("[opt] {} 已重放 {} 条，仍失败 {} 条", name, replayed, failed.size());
+        if (round.replayed > 0) {
+            OptMetrics.add(name + ".replayed", round.replayed);
+            log.info("[opt] {} 已重放 {} 条，仍失败 {} 条", name, round.replayed, round.failed.size());
         }
     }
 
-    private int replayBatch(List<T> batch, List<T> failed) {
-        // 一旦失败，后续批次也不再尝试，原样写回，保持顺序
-        if (!failed.isEmpty() || !send(batch)) {
-            failed.addAll(batch);
-            return 0;
+    /** 一轮重放的状态 */
+    private final class Round {
+        int replayed;
+        /** 单独发送失败、尚待后一条判定的消息（至多 1 条） */
+        final List<T> suspect = new ArrayList<>(1);
+        /** 判定下游不可用后剩余的消息，按原顺序写回 */
+        final List<T> failed = new ArrayList<>();
+    }
+
+    private void replayBatch(List<T> batch, Round round) {
+        // 一旦判定下游不可用，后续批次不再尝试，原样写回，保持顺序
+        if (!round.failed.isEmpty()) {
+            round.failed.addAll(batch);
+            return;
         }
-        return batch.size();
+        if (round.suspect.isEmpty() && send(batch)) {
+            round.replayed += batch.size();
+            return;
+        }
+        replayOneByOne(batch, round);
+    }
+
+    /**
+     * 逐条重试：失败后紧跟一条成功，前面失败的就是毒消息；连续两条失败视为下游不可用，停止本轮。
+     */
+    private void replayOneByOne(List<T> batch, Round round) {
+        for (int i = 0; i < batch.size(); i++) {
+            T item = batch.get(i);
+            if (send(Collections.singletonList(item))) {
+                round.replayed++;
+                if (!round.suspect.isEmpty()) {
+                    dead(round.suspect);
+                    round.suspect.clear();
+                }
+            } else if (round.suspect.isEmpty()) {
+                round.suspect.add(item);
+            } else {
+                round.failed.addAll(round.suspect);
+                round.suspect.clear();
+                round.failed.addAll(batch.subList(i, batch.size()));
+                return;
+            }
+        }
+    }
+
+    private void deadLine(String line) {
+        OptMetrics.incAlways(name + ".dead");
+        log.error("[opt] {} 重放文件中有无法解析的行，移入 dead 文件", name);
+        try (BufferedWriter w = Files.newBufferedWriter(deadFile(), StandardCharsets.UTF_8,
+                StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+            w.write(line);
+            w.newLine();
+        } catch (IOException e) {
+            OptMetrics.incAlways(name + ".deadDrop");
+        }
+    }
+
+    private Path deadFile() {
+        return spoolFile.resolveSibling(spoolFile.getFileName() + ".dead");
+    }
+
+    private void dead(List<T> items) {
+        OptMetrics.addAlways(name + ".dead", items.size());
+        log.error("[opt] {} {} 条消息单独发送失败而后续成功，判定为毒消息，移入 dead 文件", name, items.size());
+        appendTo(deadFile(), items, false);
     }
 
     public void stop() {
