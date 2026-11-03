@@ -1,5 +1,11 @@
 package com.persagy.apccontrol.common.service.impl;
 
+import com.persagy.apccontrol.basic.config.ProjectCfg;
+import com.persagy.apccontrol.basic.opt.OptCallMemo;
+import com.persagy.apccontrol.basic.opt.OptSwitch;
+import com.persagy.apccontrol.basic.outside.feign.model.dto.DtpTwinIotData;
+import com.persagy.apccontrol.basic.utils.IotDataUtil;
+import com.persagy.apccontrol.common.opt.OptPointBatch;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateField;
@@ -91,6 +97,10 @@ public class RunningMonitorServiceImpl implements RunningMonitorService {
 
     @Autowired
     private DtpTwinClientService dtpTwinClientService;
+
+    /** opt B10（switch.opt.forceInfoBatch）：与 IotDataCacheServiceImpl 相同，用本项目配置查 Twin */
+    @Autowired(required = false)
+    private ProjectCfg projectCfg;
 
     @Autowired
     private BizDtpRwdService bizDtpRwdService;
@@ -953,6 +963,10 @@ public class RunningMonitorServiceImpl implements RunningMonitorService {
         if (CollectionUtil.isEmpty(forceInfoCodeInfos)) {
             return result;
         }
+        // opt B10（switch.opt.forceInfoBatch）：相同关系只查一次；各点的 Twin 当前值先登记，循环结束后一次查完再回填
+        boolean batch = OptSwitch.on(OptSwitch.FORCE_INFO_BATCH) && projectCfg != null;
+        OptPointBatch<RcInfoCodeCfg[]> points = batch ? new OptPointBatch<>() : null;
+        OptCallMemo<String, List<JSONObject>> relationMemo = OptCallMemo.create("forceInfoRelation", OptSwitch.FORCE_INFO_BATCH);
         for (ForceInfoCodeInfo forceInfoCodeInfo : forceInfoCodeInfos) {
             List<JSONObject> relationObjects = null;
             RcInfoCodeCfg rcInfoCodeCfg = this.localRedisCacheHandler.getInfoCodeConfig(forceInfoCodeInfo.getClassCode(), forceInfoCodeInfo.getInfoCode());
@@ -970,27 +984,50 @@ public class RunningMonitorServiceImpl implements RunningMonitorService {
                 // 必为相同的对象
                 RcInfoCodeCfg newCfg = new RcInfoCodeCfg();
                 BeanUtil.copyProperties(rcInfoCodeCfg, newCfg);
-                FeedbackInfoMsgMqttVO infoMsgMqttVO = this.iotDataCacheServerEdge.queryIotRealDataVO(groupCode, projectId, masterObjectId, rcInfoCodeCfg);
-                this.iotDataCacheServerEdge.setDataValueAndTime(infoMsgMqttVO, newCfg, null);
+                if (points != null) {
+                    points.add(masterObjectId, rcInfoCodeCfg.getInfoCode(), new RcInfoCodeCfg[]{rcInfoCodeCfg, newCfg});
+                } else {
+                    FeedbackInfoMsgMqttVO infoMsgMqttVO = this.iotDataCacheServerEdge.queryIotRealDataVO(groupCode, projectId, masterObjectId, rcInfoCodeCfg);
+                    this.iotDataCacheServerEdge.setDataValueAndTime(infoMsgMqttVO, newCfg, null);
+                }
                 newCfg.setObjectId(masterObjectId);
                 result.get(forceInfoCodeInfo.getClassCode()).get(forceInfoCodeInfo.getInfoCode()).add(newCfg);
                 continue;
             }
             // 需要根据关系查询
             if (queryRealtion) {
-                relationObjects = this.queryRelationObjectList(groupCode, projectId, Lists.newArrayList(masterObjectId), Lists.newArrayList(forceInfoCodeInfo.getClassCode()), forceInfoCodeInfo.getGraphCode(), forceInfoCodeInfo.getRelCode(), forceInfoCodeInfo.getRelDirection());
+                relationObjects = relationMemo.get(forceInfoCodeInfo.getClassCode() + "|" + forceInfoCodeInfo.getGraphCode() + "|" + forceInfoCodeInfo.getRelCode() + "|" + forceInfoCodeInfo.getRelDirection(),
+                        k -> this.queryRelationObjectList(groupCode, projectId, Lists.newArrayList(masterObjectId), Lists.newArrayList(forceInfoCodeInfo.getClassCode()), forceInfoCodeInfo.getGraphCode(), forceInfoCodeInfo.getRelCode(), forceInfoCodeInfo.getRelDirection()));
                 if (CollectionUtil.isNotEmpty(relationObjects)) {
                     for (JSONObject relationObject : relationObjects) {
                         RcInfoCodeCfg newCfg = new RcInfoCodeCfg();
                         BeanUtil.copyProperties(rcInfoCodeCfg, newCfg);
                         String relationObjectId = relationObject.getString("id");
-                        FeedbackInfoMsgMqttVO infoMsgMqttVO = this.iotDataCacheServerEdge.queryIotRealDataVO(groupCode, projectId, relationObjectId, rcInfoCodeCfg);
-                        this.iotDataCacheServerEdge.setDataValueAndTime(infoMsgMqttVO, newCfg, null);
+                        if (points != null) {
+                            points.add(relationObjectId, rcInfoCodeCfg.getInfoCode(), new RcInfoCodeCfg[]{rcInfoCodeCfg, newCfg});
+                        } else {
+                            FeedbackInfoMsgMqttVO infoMsgMqttVO = this.iotDataCacheServerEdge.queryIotRealDataVO(groupCode, projectId, relationObjectId, rcInfoCodeCfg);
+                            this.iotDataCacheServerEdge.setDataValueAndTime(infoMsgMqttVO, newCfg, null);
+                        }
                         newCfg.setObjectId(relationObjectId);
                         result.get(forceInfoCodeInfo.getClassCode()).get(forceInfoCodeInfo.getInfoCode()).add(newCfg);
                     }
                 }
             }
+        }
+        if (points != null) {
+            String gc = projectCfg.getGroupCode();
+            String pid = projectCfg.getProjectId();
+            // 与 IotDataCacheServiceImpl#queryIotRealDataVO 相同：查 Twin 当前值 → 取有效记录 → 按配置覆盖值 → 写入 newCfg
+            points.flush(pid,
+                    dto -> DtpTwinIotData.getVaildIotDatas(gc, pid, this.dtpTwinClientService.queryTwinDataOnMoment(gc, pid, null, dto)),
+                    FeedbackInfoMsgMqttVO::getObjectId, FeedbackInfoMsgMqttVO::getInfoCode,
+                    (cfgs, vo) -> {
+                        // 每个点用独立副本，避免同一记录被多次覆盖值
+                        FeedbackInfoMsgMqttVO copy = vo == null ? null : BeanUtil.toBean(vo, FeedbackInfoMsgMqttVO.class);
+                        IotDataUtil.overrideDataValue(copy, cfgs[0]);
+                        this.iotDataCacheServerEdge.setDataValueAndTime(copy, cfgs[1], null);
+                    });
         }
         return result;
     }
