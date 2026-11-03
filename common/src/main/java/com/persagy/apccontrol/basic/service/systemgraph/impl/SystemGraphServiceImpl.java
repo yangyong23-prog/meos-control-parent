@@ -9,6 +9,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.persagy.apccontrol.basic.opt.OptCallMemo;
+import com.persagy.apccontrol.basic.opt.OptCandidates;
+import com.persagy.apccontrol.basic.opt.OptMetrics;
+import com.persagy.apccontrol.basic.opt.OptSwitch;
 import com.persagy.apccontrol.basic.abstracts.AbstractCommonServer;
 import com.persagy.apccontrol.basic.convert.RcInfoCodeCfgConvert;
 import com.persagy.apccontrol.basic.handler.LocalRedisCacheHandler;
@@ -770,6 +774,15 @@ public class SystemGraphServiceImpl extends ServiceImpl<SystemGraphMapper, Syste
      */
     @Override
     public void buildInteractiveConfig(EquipmentNodeVo vo, String graphName, List<InteractiveConfigVo> interactiveConfig) {
+        buildInteractiveConfig(vo, graphName, interactiveConfig, null);
+    }
+
+    /**
+     * @param objectMemo opt B10：同一张图内按 classCode 查对象列表的结果复用，可为 null（每次都查）
+     */
+    @Override
+    public void buildInteractiveConfig(EquipmentNodeVo vo, String graphName, List<InteractiveConfigVo> interactiveConfig,
+                                       @Nullable OptCallMemo<String, List<DtpRwdObjectDTO>> objectMemo) {
         JSONObject dataObject = vo.getDataObject();
         if (dataObject.containsKey("items")) {
             dataObject = dataObject.getJSONArray("items").getJSONObject(0);
@@ -816,7 +829,14 @@ public class SystemGraphServiceImpl extends ServiceImpl<SystemGraphMapper, Syste
                 if ("SY".equals(objectType)) {
                     String diagramBaseObjectCode = graphConfigVo.getDiagramBaseObjectCode();
                     DtpRwdObjectQueryParam param = new DtpRwdObjectQueryParam().setClassCode(diagramBaseObjectCode);
-                    List<DtpRwdObjectDTO> dtpRwdObjectDTOs = dtpRwdClientService.listObject(param);
+                    List<DtpRwdObjectDTO> dtpRwdObjectDTOs = objectMemo == null ? dtpRwdClientService.listObject(param)
+                            : objectMemo.get("SY:" + diagramBaseObjectCode, k -> dtpRwdClientService.listObject(param));
+                    if (CollectionUtil.isNotEmpty(dtpRwdObjectDTOs) && OptSwitch.on(OptSwitch.SYSTEM_GRAPH_JUMP_BATCH)) {
+                        generateFirstJumpable(vo, dtpRwdObjectDTOs.stream()
+                                .map(o -> new AbstractMap.SimpleImmutableEntry<>(o.getId(), o.getClassCode()))
+                                .collect(Collectors.toList()), interactiveConfigVo);
+                        return;
+                    }
                     if (CollectionUtil.isNotEmpty(dtpRwdObjectDTOs)) {
                         for (DtpRwdObjectDTO rwdObject : dtpRwdObjectDTOs) {
                             generateInteractiveConfig(vo, rwdObject.getId(), rwdObject.getClassCode(), interactiveConfigVo);
@@ -845,7 +865,8 @@ public class SystemGraphServiceImpl extends ServiceImpl<SystemGraphMapper, Syste
                 return;
             }
             DtpRwdObjectQueryParam param = new DtpRwdObjectQueryParam().setClassCode(directRelationDTO.getToClassCode()).addWithColumnWithSimple();
-            List<DtpRwdObjectDTO> rwdObjectDTOS = dtpRwdClientService.listObject(param);
+            List<DtpRwdObjectDTO> rwdObjectDTOS = objectMemo == null ? dtpRwdClientService.listObject(param)
+                    : objectMemo.get("TO:" + directRelationDTO.getToClassCode(), k -> dtpRwdClientService.listObject(param));
             List<String> systemIds = rwdObjectDTOS.stream().map(DtpRwdObjectDTO::getId).collect(Collectors.toList());
             List<DtpRwdObjectDTO> list = queryRelation(vo.getDataObjectId(), directRelationDTO, directRelationDTO.getFromClassCode(), systemIds);
             if (CollectionUtil.isEmpty(list)) {
@@ -854,6 +875,13 @@ public class SystemGraphServiceImpl extends ServiceImpl<SystemGraphMapper, Syste
             DtpRwdObjectDTO rwdObject = list.get(0);
             Set<String> relObjIds = rwdObject.getRelObjIds();
             if (CollectionUtil.isEmpty(relObjIds)) {
+                return;
+            }
+            if (OptSwitch.on(OptSwitch.SYSTEM_GRAPH_JUMP_BATCH)) {
+                String toClassCode = directRelationDTO.getToClassCode();
+                generateFirstJumpable(vo, relObjIds.stream()
+                        .map(id -> new AbstractMap.SimpleImmutableEntry<>(id, toClassCode))
+                        .collect(Collectors.toList()), interactiveConfigVo);
                 return;
             }
             for (String relId : relObjIds) {
@@ -883,9 +911,56 @@ public class SystemGraphServiceImpl extends ServiceImpl<SystemGraphMapper, Syste
 
     @Override
     public void generateInteractiveConfig(EquipmentNodeVo vo, String dataObjectId, String classCode, InteractiveConfigVo interactiveConfigVo) {
-        interactiveConfigVo.setSystemObjectId(dataObjectId);
         SystemGraph pos = this.getSystemGraph(dataObjectId,
                 classCode, interactiveConfigVo.getGraphTypeCode());
+        applyInteractiveConfig(vo, dataObjectId, classCode, interactiveConfigVo, pos);
+    }
+
+    /**
+     * opt B10（switch.opt.systemGraphJumpBatch）：原逻辑对候选逐个 getSystemGraph（每个一次 SQL），找到可跳转的即停。
+     * 改为按 classCode 一次 IN 查询取齐，再按候选顺序挑第一个可跳转的；都不可跳转时与原逻辑一样落在最后一个候选上。
+     *
+     * @param candidates 候选 (objectId, classCode)，按原循环顺序
+     */
+    private void generateFirstJumpable(EquipmentNodeVo vo, List<? extends Map.Entry<String, String>> candidates, InteractiveConfigVo interactiveConfigVo) {
+        String graphTypeCode = interactiveConfigVo.getGraphTypeCode();
+        Map<String, Set<String>> idsByClass = new LinkedHashMap<>();
+        for (Map.Entry<String, String> c : candidates) {
+            if (StringUtils.isNotBlank(c.getKey()) && c.getValue() != null) {
+                idsByClass.computeIfAbsent(c.getValue(), k -> new LinkedHashSet<>()).add(c.getKey());
+            }
+        }
+        Map<String, SystemGraph> found = new HashMap<>();
+        idsByClass.forEach((cls, ids) -> {
+            for (List<String> part : Lists.partition(new ArrayList<>(ids), 500)) {
+                List<SystemGraph> rows = lambdaQuery()
+                        .in(SystemGraph::getSystemObjectId, part)
+                        .eq(SystemGraph::getStatus, true)
+                        .eq(SystemGraph::getPassBy, true)
+                        .eq(SystemGraph::getClassCode, cls)
+                        .eq(SystemGraph::getProjectId, ContextUtil.getProjectId())
+                        .eq(StringUtils.isNotBlank(graphTypeCode), SystemGraph::getGraphTypeCode, graphTypeCode)
+                        .select(SystemGraph::getId, SystemGraph::getGraphName, SystemGraph::getSystemGraphDuplicateId,
+                                SystemGraph::getSystemObjectId, SystemGraph::getGraphTypeCode)
+                        .list();
+                for (SystemGraph row : rows) {
+                    // 与 getSystemGraph 的 list.get(0) 一致：每个对象取第一条
+                    found.putIfAbsent(row.getSystemObjectId() + "|" + cls, row);
+                }
+            }
+        });
+        Function<Map.Entry<String, String>, SystemGraph> posOf = c -> found.get(c.getKey() + "|" + c.getValue());
+        Map.Entry<String, String> chosen = OptCandidates.firstOrLast(candidates,
+                c -> posOf.apply(c) != null && posOf.apply(c).getSystemGraphDuplicateId() != null);
+        if (chosen != null) {
+            OptMetrics.add("systemGraph.jumpBatch.candidates", candidates.size());
+            applyInteractiveConfig(vo, chosen.getKey(), chosen.getValue(), interactiveConfigVo, posOf.apply(chosen));
+        }
+    }
+
+    private void applyInteractiveConfig(EquipmentNodeVo vo, String dataObjectId, String classCode,
+                                        InteractiveConfigVo interactiveConfigVo, SystemGraph pos) {
+        interactiveConfigVo.setSystemObjectId(dataObjectId);
         //没有副本id说明未发布，则不跳转
         if (pos != null && pos.getSystemGraphDuplicateId() == null) {
             pos = null;

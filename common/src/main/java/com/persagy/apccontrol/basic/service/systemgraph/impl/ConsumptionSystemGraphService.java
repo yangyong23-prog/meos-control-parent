@@ -1,5 +1,7 @@
 package com.persagy.apccontrol.basic.service.systemgraph.impl;
 
+import com.persagy.apccontrol.basic.opt.OptCallMemo;
+import com.persagy.apccontrol.basic.opt.OptSwitch;
 import cn.hutool.core.date.StopWatch;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -199,13 +201,16 @@ public class ConsumptionSystemGraphService implements LogComponent {
         // 获取信息点配置
         Set<String> classCodeSet = equipmentNodeVos.stream().map(EquipmentNodeDto::getObjClassCode).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());
         Map<String, List<RcInfoCodeCfg>> mapListInfoCodeConfigs = localRedisCacheHandler.mapListInfoCodeConfigs(classCodeSet);
+        // opt B10（switch.opt.systemGraphJumpBatch）：同一张图内按 classCode 查询的对象列表只查一次
+        OptCallMemo<String, List<DtpRwdObjectDTO>> objectMemo = OptCallMemo.create("systemGraphObjects", OptSwitch.SYSTEM_GRAPH_JUMP_BATCH);
         List<CompletableFuture<Void>> futures = new ArrayList<>();
         equipmentNodeVos.forEach(vo -> futures.add(CompletableFuture.runAsync(() -> {
             List<CompletableFuture<Void>> voidCompletableFutures = new ArrayList<>();
             vo.setClassName(mapClassCodeAndName.get(vo.getObjClassCode()));
             // 构建交互配置
             if (CollectionUtils.isNotEmpty(interactiveConfig)) {
-                voidCompletableFutures.add(CompletableFuture.runAsync(() -> systemGraphService.buildInteractiveConfig(vo, graphName, interactiveConfig), executor));
+                voidCompletableFutures.add(CompletableFuture.runAsync(() -> systemGraphService.buildInteractiveConfig(vo, graphName, interactiveConfig,
+                        objectMemo.enabled() ? objectMemo : null), executor));
             }
             // 对供冷总览图做额外的交互处理
             if ((StringUtils.equals(graph.getClassCode(), DtpRwdClassCodeEnum.ACAC_SYSTEM.value()) || StringUtils.equals(graph.getClassCode(), DtpRwdClassCodeEnum.ACAH_SYSTEM.value())

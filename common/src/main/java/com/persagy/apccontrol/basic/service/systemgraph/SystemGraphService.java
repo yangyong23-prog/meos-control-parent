@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.persagy.apccontrol.basic.executor.log.LogComponent;
 import com.persagy.apccontrol.basic.model.base.InfoCodeEnum;
+import com.persagy.apccontrol.basic.model.dto.rwd.DtpRwdObjectDTO;
+import com.persagy.apccontrol.basic.opt.OptCallMemo;
 import com.persagy.apccontrol.basic.model.dto.knowledge.DtpKnowledgeInfoCodeDTO;
 import com.persagy.apccontrol.basic.model.dto.systemgraph.RequestSystemGraphDTO;
 import com.persagy.apccontrol.basic.model.dto.systemgraph.adm.GraphGenerateInstanceDto;
@@ -89,6 +91,14 @@ public interface SystemGraphService extends IService<SystemGraph>, LogComponent 
     boolean buildPanelNodeInformationList(EquipmentNodeVo vo, String graphName, Map<String, Set<String>> objectRuleMap, Map<String, List<RcInfoCodeCfg>> mapListInfoCodeConfigs);
 
     void buildInteractiveConfig(EquipmentNodeVo vo, String graphName, List<InteractiveConfigVo> configVoList);
+
+    /**
+     * opt B10：同一张图内复用按 classCode 查询的对象列表；objectMemo 为 null 时与三参数版本一致
+     */
+    default void buildInteractiveConfig(EquipmentNodeVo vo, String graphName, List<InteractiveConfigVo> configVoList,
+                                        @Nullable OptCallMemo<String, List<DtpRwdObjectDTO>> objectMemo) {
+        buildInteractiveConfig(vo, graphName, configVoList);
+    }
 
     void generateInteractiveConfig(EquipmentNodeVo vo, String dataObjectId, String classCode, InteractiveConfigVo interactiveConfigVo);
 
