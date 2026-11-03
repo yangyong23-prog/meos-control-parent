@@ -15,6 +15,8 @@ import com.persagy.apccontrol.basic.model.enumtype.AutoMaticInfoCodeEnum;
 import com.persagy.apccontrol.basic.model.enumtype.SourceFromEnum;
 import com.persagy.apccontrol.basic.model.enumtype.calendar.MidCalendarAcSeasonTypeEnum;
 import com.persagy.apccontrol.basic.model.param.strategy.StrategyFixedQueryParam;
+import com.persagy.apccontrol.basic.opt.OptCallMemo;
+import com.persagy.apccontrol.basic.opt.OptSwitch;
 import com.persagy.apccontrol.basic.outside.feign.model.param.rwd.DtpRwdObjectQueryParam;
 import com.persagy.apccontrol.basic.outside.feign.service.DtpRwdClientService;
 import com.persagy.apccontrol.basic.service.BizStrategyQueryService;
@@ -103,6 +105,9 @@ public class ScheduleInstructServiceImpl implements ScheduleInstructService {
         ControlLogUtil.info("手自动指令判断-进入时间表处理逻辑:{}:{}:{}", systemId, objId, infoCodeSyList);
         DtpRwdObjectDTO objectDTO = dtpRwdClientService.getObject(true, true,
                 projectId, new DtpRwdObjectQueryParam().setId(objId));
+        // opt B10（switch.opt.scheduleSeasonMemo）：同一天的季节只查一次
+        OptCallMemo<LocalDate, TreeMap<LocalDateTime, String>> seasonMemo =
+                OptCallMemo.create("scheduleSeason", OptSwitch.SCHEDULE_SEASON_MEMO);
 
         for (Map<LocalDateTime, String> localDateTimeStringMap : listMatic) {
             //当天时间
@@ -134,7 +139,7 @@ public class ScheduleInstructServiceImpl implements ScheduleInstructService {
                         continue;
                     }
 
-                    String infoCode = convertInfoCode(projectId, objectDTO, timeMatic, code);
+                    String infoCode = convertInfoCode(projectId, objectDTO, timeMatic, code, seasonMemo);
                     if (StringUtils.isBlank(infoCode)) {
                         continue;
                     }
@@ -186,9 +191,11 @@ public class ScheduleInstructServiceImpl implements ScheduleInstructService {
      * @param objectDTO
      * @param timeMatic
      * @param code
+     * @param seasonMemo 季节查询去重（开关关闭时每次都查）
      * @return
      */
-    private String convertInfoCode(String projectId, DtpRwdObjectDTO objectDTO, LocalDateTime timeMatic, AutoMaticInfoCodeEnum code) {
+    private String convertInfoCode(String projectId, DtpRwdObjectDTO objectDTO, LocalDateTime timeMatic, AutoMaticInfoCodeEnum code,
+                                   OptCallMemo<LocalDate, TreeMap<LocalDateTime, String>> seasonMemo) {
         //时间表开关机信息点和值转换
         String infoCode = SpecialInfoCodeUtil.getSysInfoCodeByClassCode(objectDTO.getClassCode(), code.getPracticalCode());
         //冷热站 出水温度信息点特殊处理
@@ -204,7 +211,7 @@ public class ScheduleInstructServiceImpl implements ScheduleInstructService {
             param.setBeginDateTime(st);
             param.setEndDateTime(et);
 
-            TreeMap<LocalDateTime, String> stList = rcSaasClientService.querySeasonByTime(param);
+            TreeMap<LocalDateTime, String> stList = seasonMemo.get(st, d -> rcSaasClientService.querySeasonByTime(param));
             if (CollectionUtil.isNotEmpty(stList)) {
                 //取第一个值
                 Map.Entry<LocalDateTime, String> firstEntry = stList.firstEntry();

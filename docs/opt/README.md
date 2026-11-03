@@ -38,6 +38,7 @@
 | `opt.realtime.twin-parallelism` | B10 | 4 | 需重启 | B2 读路径回源 Twin 时 ≤200 对象一片，多片用独立小池并行（满时调用线程执行） |
 | `switch.opt.twinWriteDiff` | B8 | false | 热生效 | 仅 InnerSchdule 壳配置定时同步内：Twin twc/conf 写入（saveList、saveClassConfs、deleteByClassConf、saveExclusions、deleteByConf、saveStartIntervals、reviseObjectInSys）按项记账 `apc:twinWrite:{group}:{projectId}:{identity}`，全部项不变且距上次成功写入不到 `opt.twin-write.full-rewrite-hours`（默认 24）小时不写；写入结果校验 isSuccess，失败抛异常、不记账、下一轮重写；设备频率快照改存合并后的全量、删除时移除 |
 | `switch.opt.lightingSendDiff` | B8 | false | 热生效 | 照明反馈调节（空间级、回路级）指令与上次相同不重发，距上次下发满 `opt.lighting.resend-rounds`（默认 6 轮 = 30 分钟）强制重发；下发失败的对象下一轮重发 |
+| `switch.opt.scheduleSeasonMemo` | B10 | false | 热生效（对下一次下发生效） | 时间表下发（distributionSchedule）一次调用内，冷热站出水温度点的季节查询 `querySeasonByTime` 按日期只调一次，结果复用；指标 `memo.scheduleSeason.hit` |
 | `opt.runninglog.queue-capacity` / `spool-file` / `spool-max-bytes` | B1 | 10000 / `./opt-spool/running-log.jsonl` / 50MB | 需重启 | 运行日志队列容量、本地重放文件位置和上限 |
 
 ## B0 试点站点建议的 Nacos 配置
