@@ -73,6 +73,8 @@ public class OptSwitch {
     public static final String MONITOR_SPACE_BY_ID = "monitorSpaceById";
     /** B10：强制信息点取值，关系查询去重、Twin 当前值合批 */
     public static final String FORCE_INFO_BATCH = "forceInfoBatch";
+    /** B10：壳配置实例化判断中相同的关系查询在一次请求内只查一次 */
+    public static final String SHELL_CONFIG_RELATION_MEMO = "shellConfigRelationMemo";
 
     private static volatile Environment environment;
 

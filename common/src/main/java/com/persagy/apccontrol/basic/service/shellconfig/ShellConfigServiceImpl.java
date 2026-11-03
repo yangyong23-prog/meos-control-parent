@@ -1,5 +1,8 @@
 package com.persagy.apccontrol.basic.service.shellconfig;
 
+import com.persagy.apccontrol.basic.opt.OptCallMemo;
+import com.persagy.apccontrol.basic.opt.OptJsonRows;
+import com.persagy.apccontrol.basic.opt.OptSwitch;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.collection.ConcurrentHashSet;
 import cn.hutool.core.map.MapUtil;
@@ -189,6 +192,8 @@ public class ShellConfigServiceImpl implements ShellConfigService {
      * @return
      */
     public List<ShellConfigGroup> getConfigValueByScene(String groupCode, List<ShellConfigGroup> groups, String projectId, RcBasicsConfig basicsConfig) {
+        // opt B10（switch.opt.shellConfigRelationMemo）：整个请求共用一个关系判断去重表
+        OptCallMemo<String, Object> relationMemo = newRelationMemo();
         if (CollectionUtils.isEmpty(groups)) {
             return new ArrayList<>();
         }
@@ -468,7 +473,7 @@ public class ShellConfigServiceImpl implements ShellConfigService {
 
                         // 优先处理 valSource 字段
                         List<ShellConfigItem> sysItems = BeanUtil.listCopyProperties(group.getItems(), ShellConfigItem.class);
-                        sysItems = this.getInstanceByValSource(sysItems, groupCode, projectId, objectId, object);
+                        sysItems = this.getInstanceByValSource(sysItems, groupCode, projectId, objectId, object, relationMemo);
 
                         Map<String, Integer> cooler = null;
                         // 查询系统下的冷机台数，及其冷机实例
@@ -743,6 +748,28 @@ public class ShellConfigServiceImpl implements ShellConfigService {
      * @return 返回处理后的 shellConfigItems，有可能数据会减少
      */
     private List<ShellConfigItem> getInstanceByValSource(List<ShellConfigItem> shellConfigItems, String groupCode, String projectId, String objectId, JSONObject object) {
+        return getInstanceByValSource(shellConfigItems, groupCode, projectId, objectId, object, newRelationMemo());
+    }
+
+    /** opt B10（switch.opt.shellConfigRelationMemo）：同一次请求内相同的关系判断只查一次；开关关闭时每次都查 */
+    private static OptCallMemo<String, Object> newRelationMemo() {
+        return OptCallMemo.create("shellConfigRelation", OptSwitch.SHELL_CONFIG_RELATION_MEMO);
+    }
+
+    /** 关系查询结果会被调用方修改（removeIf），复用时每次给出独立副本 */
+    @SuppressWarnings("unchecked")
+    private List<JSONObject> memoObjectList(OptCallMemo<String, Object> memo, String groupCode, String projectId, List<String> classCodes,
+                                            String graphCode, String relCode, List<String> objFrom, List<String> objTo) {
+        if (!memo.enabled()) {
+            return this.bizDtpRwdService.queryObjectList(groupCode, projectId, classCodes, graphCode, relCode, objFrom, objTo);
+        }
+        List<JSONObject> rows = (List<JSONObject>) memo.get("list|" + projectId + "|" + classCodes + "|" + graphCode + "|" + relCode + "|" + objFrom + "|" + objTo,
+                k -> this.bizDtpRwdService.queryObjectList(groupCode, projectId, classCodes, graphCode, relCode, objFrom, objTo));
+        return OptJsonRows.copyOf(rows);
+    }
+
+    private List<ShellConfigItem> getInstanceByValSource(List<ShellConfigItem> shellConfigItems, String groupCode, String projectId, String objectId, JSONObject object,
+                                                         OptCallMemo<String, Object> relationMemo) {
         if (object == null && objectId != null) {
             List<JSONObject> jsonObjects = this.bizDtpRwdService.queryObjectList(groupCode, projectId, Arrays.asList(objectId));
             object = CollectionUtil.isEmpty(jsonObjects) ? null : jsonObjects.get(0);
@@ -838,7 +865,8 @@ public class ShellConfigServiceImpl implements ShellConfigService {
                 String graphCode = valSource.getString("graphCode");
                 String relCode = valSource.getString("relCode");
                 String relDirection = valSource.getString("relDirection");
-                boolean existsObjects = this.bizDtpRwdService.existsObjects(groupCode, projectId, objectId, classCode, graphCode, relCode, relDirection);
+                boolean existsObjects = (Boolean) relationMemo.get("exists|" + projectId + "|" + objectId + "|" + classCode + "|" + graphCode + "|" + relCode + "|" + relDirection,
+                        k -> this.bizDtpRwdService.existsObjects(groupCode, projectId, objectId, classCode, graphCode, relCode, relDirection));
                 if (existsObjects) {
                     newShellConfigItems.add(shellConfigItem);
                 }
@@ -865,7 +893,8 @@ public class ShellConfigServiceImpl implements ShellConfigService {
                     queryParam.setRelationFrom(from ? null:relationQueryParam.setObjTo(objectId));
                     queryParam.setRelationTo(from ? relationQueryParam.setObjFrom(objectId):null);
                     queryParam.setWithColumns(Arrays.asList("id"));
-                    int count = this.dtpRwdClientService.countObject(queryParam);
+                    int count = (Integer) relationMemo.get("count|" + projectId + "|" + objectId + "|" + classCodes + "|" + graphCode + "|" + relCode + "|" + from,
+                            k -> this.dtpRwdClientService.countObject(queryParam));
                     if (count > 0) {
                         newShellConfigItems.add(shellConfigItem);
                         break;
@@ -889,7 +918,7 @@ public class ShellConfigServiceImpl implements ShellConfigService {
                         boolean from = CommonConst.FROM_RELATION.equals(relation.getString("relDirection"));
                         JSONArray classCodeCondition = relation.getJSONArray("classCode");
                         List<String> classCodes = classCodeCondition == null || classCodeCondition.size() == 0 ? null : classCodeCondition.toJavaList(String.class);
-                        List<JSONObject> coolerInstances = this.bizDtpRwdService.queryObjectList(groupCode, projectId, classCodes, relation.getString("graphCode"), relation.getString("relCode"),
+                        List<JSONObject> coolerInstances = this.memoObjectList(relationMemo, groupCode, projectId, classCodes, relation.getString("graphCode"), relation.getString("relCode"),
                                 from ? Lists.newArrayList(objectId) : null, from ? null : Lists.newArrayList(objectId));
                         Map<String, Integer> classCodeMap = new HashMap<>();
                         JSONObject infoCode = valSource.getJSONObject("infoCode");
@@ -972,7 +1001,7 @@ public class ShellConfigServiceImpl implements ShellConfigService {
                         boolean from = CommonConst.FROM_RELATION.equals(relation.getString("relDirection"));
                         JSONArray classCodeCondition = relation.getJSONArray("classCode");
                         List<String> classCodes = classCodeCondition == null || classCodeCondition.size() == 0 ? null : classCodeCondition.toJavaList(String.class);
-                        List<JSONObject> coolerInstances = this.bizDtpRwdService.queryObjectList(groupCode, projectId, classCodes, relation.getString("graphCode"), relation.getString("relCode"),
+                        List<JSONObject> coolerInstances = this.memoObjectList(relationMemo, groupCode, projectId, classCodes, relation.getString("graphCode"), relation.getString("relCode"),
                                 from ? Lists.newArrayList(objectId) : null, from ? null : Lists.newArrayList(objectId));
 
                         List<JSONObject> resultList = new ArrayList<>();
