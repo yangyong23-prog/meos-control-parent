@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class OptBatchUploaderTest {
 
@@ -50,6 +51,7 @@ public class OptBatchUploaderTest {
             }
             batch.forEach(m -> sent.add(m.key));
         }, 100, 2, spool, 1024 * 1024, new ObjectMapper());
+        uploader.setClockForTest(System::currentTimeMillis, 0);
 
         uploader.flush(Arrays.asList(new Msg("del-1"), new Msg("add-1")));
         uploader.flush(Collections.singletonList(new Msg("add-2")));
@@ -107,6 +109,7 @@ public class OptBatchUploaderTest {
             }
             batch.forEach(m -> sent.add(m.key));
         }, 100, 10, spool, 1024 * 1024, new ObjectMapper());
+        uploader.setClockForTest(System::currentTimeMillis, 0);
 
         uploader.flush(Arrays.asList(new Msg("a"), new Msg("poison"), new Msg("b")));
         down.set(false);
@@ -129,6 +132,7 @@ public class OptBatchUploaderTest {
             }
             batch.forEach(m -> sent.add(m.key));
         }, 100, 10, spool, 1024 * 1024, new ObjectMapper());
+        uploader.setClockForTest(System::currentTimeMillis, 0);
 
         uploader.flush(Collections.singletonList(new Msg("poison")));
         Assertions.assertTrue(Files.exists(spool), "单条失败无法判定，先留在积压里");
@@ -149,6 +153,7 @@ public class OptBatchUploaderTest {
             }
             batch.forEach(m -> sent.add(m.key));
         }, 100, 2, spool, 1024 * 1024, new ObjectMapper());
+        uploader.setClockForTest(System::currentTimeMillis, 0);
         for (int i = 0; i < 5; i++) {
             uploader.flush(Arrays.asList(new Msg("d" + i), new Msg("a" + i)));
         }
@@ -169,5 +174,39 @@ public class OptBatchUploaderTest {
         uploader.flush(Collections.singletonList(new Msg("c")));
         Assertions.assertEquals(Arrays.asList("a", "b", "c"), sent);
         Assertions.assertEquals(Collections.singletonList("not-json"), Files.readAllLines(dir.resolve("s.jsonl.dead")));
+    }
+
+    @Test
+    void outageBacksOffInsteadOfReplayingOnEveryBatch() throws Exception {
+        AtomicBoolean down = new AtomicBoolean(true);
+        AtomicLong now = new AtomicLong(1_000_000L);
+        List<String> sent = new CopyOnWriteArrayList<>();
+        java.util.concurrent.atomic.AtomicInteger calls = new java.util.concurrent.atomic.AtomicInteger();
+        Path spool = dir.resolve("s.jsonl");
+        OptBatchUploader<Msg> uploader = new OptBatchUploader<>("t", Msg.class, batch -> {
+            calls.incrementAndGet();
+            if (down.get()) {
+                throw new IllegalStateException("down");
+            }
+            batch.forEach(m -> sent.add(m.key));
+        }, 100, 10, spool, 1024 * 1024, new ObjectMapper());
+        uploader.setClockForTest(now::get, 30_000L);
+
+        uploader.flush(Collections.singletonList(new Msg("a")));
+        Assertions.assertEquals(1, calls.get());
+        for (int i = 0; i < 5; i++) {
+            now.addAndGet(1_000L);
+            uploader.flush(Collections.singletonList(new Msg("b" + i)));
+        }
+        Assertions.assertEquals(1, calls.get(), "退避期间只追加 spool，不发请求");
+        Assertions.assertEquals(6, Files.readAllLines(spool).size());
+
+        down.set(false);
+        uploader.retryBacklog();
+        Assertions.assertTrue(sent.isEmpty(), "退避未结束，空闲轮询也不重放");
+        now.addAndGet(30_000L);
+        uploader.retryBacklog();
+        Assertions.assertEquals(Arrays.asList("a", "b0", "b1", "b2", "b3", "b4"), sent);
+        Assertions.assertFalse(Files.exists(spool));
     }
 }
