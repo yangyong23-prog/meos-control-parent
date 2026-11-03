@@ -61,6 +61,8 @@ public class OptSwitch {
     public static final String LIGHTING_SEND_DIFF = "lightingSendDiff";
     /** B10：时间表下发时同一天的季节只查一次 */
     public static final String SCHEDULE_SEASON_MEMO = "scheduleSeasonMemo";
+    /** B10：冷源首页卡片各系统冷机分组并行查询 */
+    public static final String COLD_SOURCE_GROUP_PARALLEL = "coldSourceGroupParallel";
 
     private static volatile Environment environment;
 

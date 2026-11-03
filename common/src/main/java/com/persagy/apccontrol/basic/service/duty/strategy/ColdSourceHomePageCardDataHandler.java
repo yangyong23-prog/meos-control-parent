@@ -1,5 +1,8 @@
 package com.persagy.apccontrol.basic.service.duty.strategy;
 
+import com.persagy.apccontrol.basic.opt.OptParallelLookup;
+import com.persagy.apccontrol.basic.opt.OptSwitch;
+import com.persagy.apccontrol.basic.task.BusinessThreadPoolExecutor;
 import cn.hutool.core.date.DatePattern;
 import com.google.common.collect.Lists;
 import com.persagy.apccontrol.basic.abstracts.AbstractControlConsoleStrategyServer;
@@ -320,9 +323,20 @@ public class ColdSourceHomePageCardDataHandler extends AbstractHomePageCardDataH
     public Map<String, RunningStatisticsVO> numberOfLargeAndSmallCoolers(Set<String> systemIds) {
         ArrayList<String> objectIds = new ArrayList<>();
         Map<String, AcccccGroupDTO> acccccGroupMap = new HashMap<>();
+        // opt B10（switch.opt.coldSourceGroupParallel）：下游无批量接口，各系统的冷机分组并行查询
+        Map<String, AcccccGroupDTO> prefetched = null;
+        if (OptSwitch.on(OptSwitch.COLD_SOURCE_GROUP_PARALLEL)) {
+            String groupCode = ContextUtil.getGroupCode();
+            String projectId = ContextUtil.getProjectId();
+            prefetched = OptParallelLookup.map(systemIds,
+                    id -> bizDtpRwdService.queryAcccccGroupBySystemId(groupCode, projectId, id),
+                    BusinessThreadPoolExecutor.ttlExecutor());
+        }
+        Map<String, AcccccGroupDTO> finalPrefetched = prefetched;
         systemIds.forEach(systemId -> {
             // 查询当前运行的冷机台数
-            AcccccGroupDTO acccacGroup = bizDtpRwdService.queryAcccccGroupBySystemId(ContextUtil.getGroupCode(), ContextUtil.getProjectId(), systemId);
+            AcccccGroupDTO acccacGroup = finalPrefetched != null ? finalPrefetched.get(systemId)
+                    : bizDtpRwdService.queryAcccccGroupBySystemId(ContextUtil.getGroupCode(), ContextUtil.getProjectId(), systemId);
             List<String> small = acccacGroup.getSmall();
             if (CollectionUtils.isNotEmpty(small)) {
                 objectIds.addAll(small);
