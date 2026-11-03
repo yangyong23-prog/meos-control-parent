@@ -9,6 +9,7 @@ import com.persagy.framework.redis.cache.RedisCacheUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -68,7 +69,7 @@ public class OptSubscribePointRegistry {
     }
 
     public Set<String> autoPoints() {
-        Set<byte[]> raw = redisCacheUtil.getRedisTemplate()
+        Set<byte[]> raw = template()
                 .execute((RedisCallback<Set<byte[]>>) c -> c.sMembers(bytes(AUTO_KEY)));
         Set<String> result = new TreeSet<>();
         if (raw != null) {
@@ -84,7 +85,15 @@ public class OptSubscribePointRegistry {
             return;
         }
         byte[][] values = points.stream().map(OptSubscribePointRegistry::bytes).toArray(byte[][]::new);
-        redisCacheUtil.getRedisTemplate().execute((RedisCallback<Long>) c -> c.sAdd(bytes(AUTO_KEY), values));
+        template().execute((RedisCallback<Long>) c -> c.sAdd(bytes(AUTO_KEY), values));
+    }
+
+    /**
+     * RedisCacheUtil#getRedisTemplate 返回原始类型，直接 execute 会丢泛型；这里只用连接级回调。
+     */
+    @SuppressWarnings("unchecked")
+    private RedisOperations<Object, Object> template() {
+        return (RedisOperations<Object, Object>) redisCacheUtil.getRedisTemplate();
     }
 
     private Set<String> subscribedClasses() {
