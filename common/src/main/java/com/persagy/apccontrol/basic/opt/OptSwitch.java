@@ -59,6 +59,8 @@ public class OptSwitch {
     public static final String TWIN_WRITE_DIFF = "twinWriteDiff";
     /** B8：照明反馈调节指令相同不重发，N 轮强制重发 */
     public static final String LIGHTING_SEND_DIFF = "lightingSendDiff";
+    /** B10：时间表下发时同一天的季节只查一次 */
+    public static final String SCHEDULE_SEASON_MEMO = "scheduleSeasonMemo";
 
     private static volatile Environment environment;
 
