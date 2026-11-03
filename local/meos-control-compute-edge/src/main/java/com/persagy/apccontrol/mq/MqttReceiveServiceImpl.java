@@ -75,6 +75,10 @@ public class MqttReceiveServiceImpl implements MqttReceiveService {
     @Value("${mqtt.topic.dtp-meos.name}")
     private String dtpMeosServerEdge;
 
+    /** opt 分支 B3：Twin 按点订阅专用主题（twin/compute_meos），默认未配置 */
+    @Value("${mqtt.topic.meos-compute-point.name:}")
+    private String computePoint;
+
 
     /**
      * 务必实现，单点逻辑
@@ -148,6 +152,12 @@ public class MqttReceiveServiceImpl implements MqttReceiveService {
         //控制服务上报的日志信息
         if (StringUtils.equals(dtpMeosServerEdge, receivedTopic)) {
             dtpMeosServerEdge(message);
+            return;
+        }
+
+        // opt B3：按点订阅专用主题
+        if (StringUtils.isNotEmpty(computePoint) && StringUtils.equals(computePoint, receivedTopic)) {
+            computePointMqtt(message);
             return;
         }
 
@@ -248,6 +258,29 @@ public class MqttReceiveServiceImpl implements MqttReceiveService {
             return;
         }
         twinMqttExpense(vo, message, receivedTopic);
+    }
+
+    /**
+     * opt B3：专用主题报文总是写共享缓存；只有 switch.opt.meosTopicFullPipeline 打开时才按反馈值走完整处理
+     * （切换期两个主题并存，默认不重复处理）。
+     */
+    private void computePointMqtt(Message<String> message) {
+        FeedbackInfoMsgMqttVO parsed = OptMqttPayloads.parseTwin(message.getPayload());
+        if (parsed == null) {
+            return;
+        }
+        parsed.setProjectId(projectCfg.getProjectId());
+        parsed.setGroupCode(projectCfg.getGroupCode());
+        optRealtimeMqttWriter.onTwinFeedback(parsed);
+        OptMetrics.inc("mqtt.recv.point");
+        if (!OptSwitch.on(OptSwitch.MEOS_TOPIC_FULL_PIPELINE)) {
+            return;
+        }
+        if (null == parsed.getDataValue() || "~".equals(parsed.getDataValue())) {
+            OptMqttPayloads.logInvalidValue(message.getPayload());
+            return;
+        }
+        twinMqttExpense(parsed, message, compute);
     }
 
     /**

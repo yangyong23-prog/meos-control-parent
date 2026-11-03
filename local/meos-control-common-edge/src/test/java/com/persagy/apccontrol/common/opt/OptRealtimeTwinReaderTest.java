@@ -51,6 +51,7 @@ public class OptRealtimeTwinReaderTest {
         d.setDataIndate("15");
         d.setDataFlag(flag);
         d.setDataStatus(1);
+        d.setClassCode("ACCCCC");
         return d;
     }
 
@@ -160,5 +161,28 @@ public class OptRealtimeTwinReaderTest {
         Assertions.assertEquals(OptRealtimeTwinReader.Outcome.mismatch, OptRealtimeTwinReader.compare(null, "1"));
         Assertions.assertEquals(OptRealtimeTwinReader.Outcome.bothEmpty, OptRealtimeTwinReader.compare(null, null));
         Assertions.assertEquals(OptRealtimeTwinReader.Outcome.match, OptRealtimeTwinReader.compare("on", "on"));
+    }
+
+    @Test
+    void notifiesMissListenerOnlyForValidTwinFills() {
+        mode("on");
+        List<String> misses = new ArrayList<>();
+        reader.setMissListener((c, i) -> misses.add(c + ":" + i));
+        reader.query(request("Eq1", "a", "bad"), twin);
+        Assertions.assertEquals(Collections.singletonList("ACCCCC:a"), misses);
+        reader.query(request("Eq1", "a"), twin);
+        Assertions.assertEquals(1, misses.size(), "缓存命中不再回调");
+    }
+
+    @Test
+    void verifyModeNotifiesOnCacheMiss() {
+        mode("verify");
+        List<String> misses = new ArrayList<>();
+        reader.setMissListener((c, i) -> {
+            misses.add(c + ":" + i);
+            throw new IllegalStateException("监听器异常不影响查询");
+        });
+        Assertions.assertEquals(1, reader.query(request("Eq1", "a"), twin).size());
+        Assertions.assertEquals(Collections.singletonList("ACCCCC:a"), misses);
     }
 }

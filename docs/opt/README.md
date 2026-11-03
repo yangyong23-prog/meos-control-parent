@@ -24,6 +24,10 @@
 | `switch.opt.realtimeCacheWrite` | B2 | false | 热生效 | MQTT 反馈值在任何换算之前写 `apc:iot_real_time_data:{objectId}:{infoCode}`（Twin 原始值，`"~"` 写离线标记，旧帧不覆盖）。契约见 contract-iot-real-time-data.md |
 | `switch.opt.realtimeCacheRead` | B2 | off | 热生效 | `verify`：仍返回 Twin 结果，同时读缓存比对计数；`on`：Twin 当前值查询先读缓存，未命中按 ≤200 对象分片回源并回填，回源仍无效的点负缓存 60 秒 |
 | `opt.realtime.stale-seconds` / `negative-seconds` | B2 | 120 / 60 | 需重启 | 缓存陈旧阈值（超过即回源）、负缓存时长 |
+| `switch.opt.pointSubscribe` | B3 | false | 热生效 | 应用就绪后（本地缓存已加载）在 Twin 专用主题（topic=`opt.subscribe.topic`，默认 `meos` → `twin/compute_meos`）上按点订阅：每 `opt.subscribe.sync-interval-minutes`（默认 30）分钟查询现有规则求差量，先删后加；读路径发现未订阅点连续 `opt.subscribe.auto-threshold`（默认 3）次回源 Twin 且有效时自动补订阅（记入 Redis set `apc:opt:subscribe:auto`）。原按类订阅（topic=external）不动 |
+| `mqtt.topic.meos-compute-point.name` | B3 | 空 | 需重启 | 专用主题名，填 `twin/compute_meos`。必须与 `receive-topics` 同时配置，否则该主题报文会被当作控制值处理 |
+| `switch.opt.meosTopicFullPipeline` | B3 | false | 热生效 | 关：专用主题报文只写共享缓存（需同时打开 realtimeCacheWrite）；开：同时按反馈值走完整处理。只有在 receive-topics 去掉按类主题后才可打开，否则同一点会处理两次 |
+| `opt.subscribe.extra-points` | B3 | 空 | 下次同步生效 | 手工补充的订阅点，格式 `classCode:infoCode,classCode:infoCode` |
 | `opt.runninglog.queue-capacity` / `spool-file` / `spool-max-bytes` | B1 | 10000 / `./opt-spool/running-log.jsonl` / 50MB | 需重启 | 运行日志队列容量、本地重放文件位置和上限 |
 
 ## B0 试点站点建议的 Nacos 配置
@@ -56,6 +60,15 @@ management:
 
 以下属于运维操作，不在代码里：XXL 日志保留 3 天；停用 job_group=3 的“获取历史蓄冷蓄热标签”任务。
 
+## B3 外部前置条件与上线步骤
+
+1. 运维：Twin 的 Nacos `mqtt.topic.twin.sub` 增加 `'compute.meos':'twin/compute_meos'`（Twin 服务配置，非本仓）。
+2. 运维：meos-control 的 `paas.mqtt.receive-topics`（见 application-paas.yml）增加 `twin/compute_meos`，同时配置 `mqtt.topic.meos-compute-point.name: twin/compute_meos`，重启。
+3. 打开 `switch.opt.realtimeCacheWrite`、`switch.opt.pointSubscribe`；观察 `sub.sync`、`sub.autoAdded`、`mqtt.recv.point`，以及 `realtimeCacheRead=verify` 下 `rt.verify.cacheMiss` 是否下降。
+4. 确认专用主题覆盖完整后，才考虑去掉按类主题并打开 `meosTopicFullPipeline`（另行评审，本 PR 不做）。
+
+不做预热：读路径未命中会回源 Twin 并回填，首个同步周期内命中率偏低属正常。
+
 ## 度量指标名
 
 | 指标 | 来源 | 含义 |
@@ -69,3 +82,5 @@ management:
 | `rt.write` / `rt.write.olderSkipped` / `rt.write.duplicateSkipped` / `rt.write.error` | B2 | 写缓存次数、旧帧跳过、重复帧跳过、写失败（error 始终计数） |
 | `rt.read.hit` / `miss` / `negative` / `twinCall` / `twinFail` | B2 | 读缓存命中、未命中、负缓存命中的点数；回源 Twin 次数、回源失败次数 |
 | `rt.verify.match` / `mismatch` / `cacheMiss` / `bothEmpty` | B2 | 双读校验结果（始终计数）。验收：mismatch / (match + mismatch) < 0.1% |
+| `sub.sync` / `sub.addPoints` / `sub.autoPending` / `sub.autoAdded` / `sub.error` | B3 | 订阅全量同步次数、同步新增点数、待补订阅点数、自动补订阅点数、同步失败次数（始终计数） |
+| `mqtt.recv.point` | B3 | 专用主题收包数 |

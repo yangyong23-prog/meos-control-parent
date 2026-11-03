@@ -9,6 +9,7 @@ import com.persagy.apccontrol.basic.outside.feign.model.dto.DtpTwinIotData;
 import com.persagy.apccontrol.common.opt.OptRealtimeCacheCore.Lookup;
 import com.persagy.apccontrol.common.opt.OptRealtimeCacheCore.PointKey;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -49,9 +50,28 @@ public class OptRealtimeTwinReader {
 
     private final OptRealtimeCacheCore core;
     private final AtomicLong lastSampleLog = new AtomicLong();
+    /** B3：缓存没有而 Twin 有有效值时通知（自动补订阅），可为空 */
+    private volatile OptRealtimeMissListener missListener;
 
     public OptRealtimeTwinReader(OptRealtimeCacheCore core) {
         this.core = core;
+    }
+
+    @Autowired(required = false)
+    public void setMissListener(OptRealtimeMissListener missListener) {
+        this.missListener = missListener;
+    }
+
+    private void notifyMiss(DtpTwinIotData d) {
+        OptRealtimeMissListener l = missListener;
+        if (l == null || d == null) {
+            return;
+        }
+        try {
+            l.onTwinFill(d.getClassCode(), d.getInfoCode());
+        } catch (Exception e) {
+            log.debug("[opt] missListener 异常: {}", e.toString());
+        }
     }
 
     public static String mode() {
@@ -137,6 +157,7 @@ public class OptRealtimeTwinReader {
             DtpTwinIotData d = byPoint.get(miss);
             if (isValid(d)) {
                 core.write(fromTwin(d));
+                notifyMiss(d);
             } else {
                 core.markNegative(miss, d);
             }
@@ -148,10 +169,13 @@ public class OptRealtimeTwinReader {
     private void verify(List<PointKey> points, List<DtpTwinIotData> twinResult) {
         try {
             Map<PointKey, String> twinValues = new HashMap<>();
+            Map<PointKey, DtpTwinIotData> twinRecords = new HashMap<>();
             if (twinResult != null) {
                 for (DtpTwinIotData d : twinResult) {
                     if (isValid(d)) {
-                        twinValues.put(new PointKey(d.getObjectId(), d.getInfoCode()), d.getDataValue());
+                        PointKey key = new PointKey(d.getObjectId(), d.getInfoCode());
+                        twinValues.put(key, d.getDataValue());
+                        twinRecords.put(key, d);
                     }
                 }
             }
@@ -164,6 +188,8 @@ public class OptRealtimeTwinReader {
                 OptMetrics.incAlways("rt.verify." + outcome.name());
                 if (outcome == Outcome.mismatch) {
                     sampleLog(p, twinValue, cached);
+                } else if (outcome == Outcome.cacheMiss) {
+                    notifyMiss(twinRecords.get(p));
                 }
             }
         } catch (Exception e) {
