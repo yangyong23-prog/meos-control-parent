@@ -32,6 +32,7 @@ import com.persagy.apccontrol.basic.model.vo.systemgraph.InteractiveConfigVo;
 import com.persagy.apccontrol.basic.outside.feign.model.param.rwd.DtpRwdObjectQueryParam;
 import com.persagy.apccontrol.basic.outside.feign.model.param.rwd.DtpRwdObjectRelationQueryParam;
 import com.persagy.apccontrol.basic.outside.feign.service.DtpKnowledgeClientService;
+import com.persagy.apccontrol.basic.opt.OptSwitch;
 import com.persagy.apccontrol.basic.outside.feign.service.DtpRwdClientService;
 import com.persagy.apccontrol.basic.service.BizDtpRwdService;
 import com.persagy.apccontrol.basic.service.EquipRecordService;
@@ -42,6 +43,7 @@ import com.persagy.apccontrol.basic.structure.common.strategy.impl.RunningMonito
 import com.persagy.apccontrol.basic.utils.systemgraph.ObjTypeUtil;
 import com.persagy.apccontrol.common.model.param.client.EquipmentInfoCodeConfigByObjectQueryClientParam;
 import com.persagy.apccontrol.common.model.vo.SystemRelationVO;
+import com.persagy.apccontrol.common.opt.OptSystemObjectsPrefetch;
 import com.persagy.apccontrol.common.model.vo.client.*;
 import com.persagy.apccontrol.common.server.IotDataCacheServerEdge;
 import com.persagy.framework.common.context.ContextUtil;
@@ -196,6 +198,8 @@ public class ClientServerHandler {
         }
         // 获取所有的绑点信息
         Map<String, Set<String>> mapObjectInfoCodeRules = this.abstractCommonServer.queryObjectsExistRuleMap(groupCode, projectId, classCodeList);
+        // opt B10（switch.opt.clientSystemRelationBatch）：各系统的空间一次查完，按系统拆分
+        OptSystemObjectsPrefetch prefetch = prefetchSystemObjects(groupCode, projectId, systemIds, null);
         for (DtpRwdObjectDTO system : systemList) {
             CompletableFuture<SystemRelationVO> future = CompletableFuture.supplyAsync(() -> {
                 String systemId = system.getId();
@@ -212,7 +216,8 @@ public class ClientServerHandler {
                 systemInfo.setEquipments(equipments);
 
                 // 获取所有的空间
-                List<JSONObject> allSpaces = this.bizDtpRwdService.queryObjectList(groupCode, projectId, Lists.newArrayList(DtpRwdClassCodeEnum.SPACE.getValue()), "ArchforMech", "Sp2Sy", null, Lists.newArrayList(systemId));
+                List<JSONObject> allSpaces = prefetch != null && prefetch.spaces(systemId) != null ? prefetch.spaces(systemId)
+                        : this.bizDtpRwdService.queryObjectList(groupCode, projectId, Lists.newArrayList(DtpRwdClassCodeEnum.SPACE.getValue()), "ArchforMech", "Sp2Sy", null, Lists.newArrayList(systemId));
                 systemInfo.setSpaces(this.fillSpaceFloorInfoBySystemClassCode(allSpaces, spaceInfo, floorInfo));
                 return systemInfo;
             }, executorService);
@@ -223,6 +228,26 @@ public class ClientServerHandler {
         return resultList;
     }
 
+
+    /** 系统下的管网类编码（原在 querySystemRelationObjectsByAccc 循环内每次新建，内容不变） */
+    private static final Set<String> MESH_CODES = Collections.unmodifiableSet(
+            Sets.newHashSet("ACPPCE", "ACPPCP", "ACPPCR", "ACPPCS", "ACPPOP", "ACPPOR", "ACPPOS", "ACPPWC"));
+
+    /** opt B10：开关关闭或系统数 ≤1 时返回 null，调用方按原逻辑逐个系统查询 */
+    @Nullable
+    private OptSystemObjectsPrefetch prefetchSystemObjects(String groupCode, String projectId, Collection<String> systemIds,
+                                                           @Nullable Set<String> meshCodes) {
+        if (!OptSwitch.on(OptSwitch.CLIENT_SYSTEM_RELATION_BATCH) || systemIds == null || systemIds.size() <= 1) {
+            return null;
+        }
+        OptSystemObjectsPrefetch prefetch = OptSystemObjectsPrefetch.load(
+                (classCodes, graph, rel, objFrom, objTo) -> this.bizDtpRwdService.queryObjectList(groupCode, projectId, classCodes, graph, rel, objFrom, objTo),
+                systemIds, DtpRwdClassCodeEnum.SPACE.getValue(), meshCodes, "ACPPCS");
+        if (prefetch.failure() != null) {
+            log.warn("系统关联对象批量查询失败，退回按系统逐个查询", prefetch.failure());
+        }
+        return prefetch;
+    }
 
     public List<JSONObject> querySystemRelationObjectsByAccc(String groupCode, String projectId, String systemClassCode) {
         // 1. 优先获取所有的空间信息
@@ -283,6 +308,10 @@ public class ClientServerHandler {
             infoCodeCfgMap.put(equipmentCode, this.localRedisCacheHandler.getInfoCodeConfigs(equipmentCode, true, false));
         }
         Map<String, Set<String>> mapObjectInfoCodeRules = this.abstractCommonServer.queryObjectsExistRuleMap(groupCode, projectId, classCodeList);
+        // opt B10（switch.opt.clientSystemRelationBatch）：各系统的管网、竖井、空间各查一次，按系统拆分
+        OptSystemObjectsPrefetch prefetch = prefetchSystemObjects(groupCode, projectId, values.stream()
+                .filter(sys -> StrUtil.isBlank(systemClassCode) || sys.getClassCode().equals(systemClassCode))
+                .map(BasePropertyDTO::getId).collect(Collectors.toList()), MESH_CODES);
         for (BasePropertyDTO system : values) {
             String systemId = system.getId();
             String classCode = system.getClassCode();
@@ -298,21 +327,24 @@ public class ClientServerHandler {
                 systemInfo.put("equipments", this.convertEquipmentInfoBySystemClassCode(groupCode, projectId, equipCodes, space_info, floor_info, allEquipObjects, mapObjectInfoCodeRules, infoCodeCfgMap));
 
                 // 获取该系统下所有的管网
-                Set<String> mesheCodes = Sets.newHashSet("ACPPCE", "ACPPCP", "ACPPCR", "ACPPCS", "ACPPOP", "ACPPOR", "ACPPOS", "ACPPWC");
-                List<JSONObject> allMeshes = CollectionUtil.isEmpty(mesheCodes) ? null : this.bizDtpRwdService.queryObjectList(groupCode, projectId, Lists.newArrayList(mesheCodes), "MechSubset", "Sy2Eq", Lists.newArrayList(systemId), null);
+                Set<String> mesheCodes = MESH_CODES;
+                List<JSONObject> allMeshes = prefetch != null && prefetch.meshes(systemId) != null ? prefetch.meshes(systemId)
+                        : CollectionUtil.isEmpty(mesheCodes) ? null : this.bizDtpRwdService.queryObjectList(groupCode, projectId, Lists.newArrayList(mesheCodes), "MechSubset", "Sy2Eq", Lists.newArrayList(systemId), null);
                 systemInfo.put("meshes", this.fillSpaceFloorInfoBySystemClassCode(allMeshes, space_info, floor_info));
 
                 // 根据冷冻水供水管，获取所有的竖井
                 Set<String> allACPPCSIds = CollectionUtil.isEmpty(allMeshes) ? Sets.newHashSet()
                         : allMeshes.stream().filter(item -> "ACPPCS".equals(item.getString("classCode"))).map(item -> item.getString("id")).collect(Collectors.toSet());
 
-                List<JSONObject> allShafts = CollectionUtil.isEmpty(allACPPCSIds) ? null : this.bizDtpRwdService.queryObjectList(groupCode, projectId, Lists.newArrayList("shaft"), "MechInArch", "Eq2Sh", Lists.newArrayList(allACPPCSIds), null);
+                List<JSONObject> allShafts = CollectionUtil.isEmpty(allACPPCSIds) ? null
+                        : prefetch != null && prefetch.shafts(systemId) != null ? prefetch.shafts(systemId) : this.bizDtpRwdService.queryObjectList(groupCode, projectId, Lists.newArrayList("shaft"), "MechInArch", "Eq2Sh", Lists.newArrayList(allACPPCSIds), null);
                 systemInfo.put("shafts", CollectionUtil.isEmpty(allShafts) ? Lists.newArrayList()
                         : JsonUtils.fromJson(JsonUtils.toJson(allShafts), new TypeReference<List<BaseShaftPropertyDTO>>() {
                 }));
 
                 // 获取所有的空间
-                List<JSONObject> allSpaces = this.bizDtpRwdService.queryObjectList(groupCode, projectId, Lists.newArrayList(DtpRwdClassCodeEnum.SPACE.getValue()), "ArchforMech", "Sp2Sy", null, Lists.newArrayList(systemId));
+                List<JSONObject> allSpaces = prefetch != null && prefetch.spaces(systemId) != null ? prefetch.spaces(systemId)
+                        : this.bizDtpRwdService.queryObjectList(groupCode, projectId, Lists.newArrayList(DtpRwdClassCodeEnum.SPACE.getValue()), "ArchforMech", "Sp2Sy", null, Lists.newArrayList(systemId));
                 systemInfo.put("spaces", this.fillSpaceFloorInfoBySystemClassCode(allSpaces, space_info, floor_info));
                 return systemInfo;
             }, executorService);
