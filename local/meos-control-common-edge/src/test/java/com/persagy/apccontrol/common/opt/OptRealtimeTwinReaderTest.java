@@ -131,15 +131,17 @@ public class OptRealtimeTwinReaderTest {
     }
 
     @Test
-    void twinFailureReturnsCachedPartOrRethrowsWhenNothingCached() {
+    void twinFailureIsRethrownEvenWhenPartlyCached() {
         mode("on");
         reader.query(request("Eq1", "a"), twin);
+        IllegalStateException boom = new IllegalStateException("twin down");
         Function<QueryTwinDataDTO, List<DtpTwinIotData>> down = dto -> {
-            throw new IllegalStateException("twin down");
+            throw boom;
         };
-        List<DtpTwinIotData> partial = reader.query(request("Eq1", "a", "b"), down);
-        Assertions.assertEquals(1, partial.size());
+        Assertions.assertSame(boom, Assertions.assertThrows(IllegalStateException.class,
+                () -> reader.query(request("Eq1", "a", "b"), down)), "部分命中也整体抛出，不返回残缺结果");
         Assertions.assertThrows(IllegalStateException.class, () -> reader.query(request("Eq9", "z"), down));
+        Assertions.assertEquals(1, reader.query(request("Eq1", "a"), down).size(), "全部命中时不回源，不受 Twin 故障影响");
     }
 
     @Test
