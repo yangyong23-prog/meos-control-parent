@@ -43,6 +43,7 @@
 | `switch.opt.systemGraphJumpBatch` | B10 | false | 热生效 | 系统图交互配置（buildInteractiveConfig）：候选跳转对象原来逐个 `getSystemGraph`（每个一次 SQL）直到可跳转，改为按 classCode 一次 IN 查询后按原顺序挑选；同一张图内按 classCode 查询的对象列表（`listObject`）只查一次。指标 `systemGraph.jumpBatch.candidates`、`memo.systemGraphObjects.hit` |
 | `switch.opt.weakPowerRelationBatch` | B10 | false | 热生效 | 弱电运行监测按关系下钻（queryChildrenByDeviceType）：原来每个设备×每种关系查一次 RWD；改为对同一层将要下钻的兄弟设备按关系类型合批（objFrom 多个，200 一批），按 relObjIds 拆回各设备后递归照常进行。无法归属或预取失败时退回逐个查询。指标 `weakPower.relationBatch.saved`、`.fallback`、`.error` |
 | `switch.opt.clientSystemRelationBatch` | B10 | false | 热生效 | ClientServerHandler 系统关联对象：`querySystemRelationBySystemClassCode` 各系统的空间、`querySystemRelationObjectsByAccc` 各系统的管网/竖井/空间，原来每个系统各查一次 RWD，改为每类一次（200 个一批）后按 relObjIds 拆回各系统；无法归属或失败时退回逐个系统查询。指标 `clientRelation.batch.saved`、`.fallback`、`.error` |
+| `switch.opt.monitorSpaceById` | B10 | false | 热生效 | 运行监测按系统查设备（AbstractRunningMonitorServer.convertEquipmentInfo）：原来每次请求先查全项目所有空间再按设备所在空间取用，改为先查设备→空间关系，再按这些空间 id 查（条件同为 classCode=space、valid=1，500 个一批） |
 | `opt.runninglog.queue-capacity` / `spool-file` / `spool-max-bytes` | B1 | 10000 / `./opt-spool/running-log.jsonl` / 50MB | 需重启 | 运行日志队列容量、本地重放文件位置和上限 |
 
 ## B0 试点站点建议的 Nacos 配置

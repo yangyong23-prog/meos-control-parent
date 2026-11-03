@@ -69,6 +69,8 @@ public class OptSwitch {
     public static final String WEAK_POWER_RELATION_BATCH = "weakPowerRelationBatch";
     /** B10：客户端系统关联对象（空间/管网/竖井）按系统合批查询 */
     public static final String CLIENT_SYSTEM_RELATION_BATCH = "clientSystemRelationBatch";
+    /** B10：运行监测设备空间只按关联的空间 id 查询，不再查全项目空间 */
+    public static final String MONITOR_SPACE_BY_ID = "monitorSpaceById";
 
     private static volatile Environment environment;
 
