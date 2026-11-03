@@ -36,6 +36,11 @@ public class OptSwitch {
     /** B2：Twin on-moment 查询读缓存，三态 off / verify / on */
     public static final String REALTIME_CACHE_READ = "realtimeCacheRead";
 
+    /** B3：按点订阅 Twin 专用主题（twin/compute_meos），定时差量同步订阅规则并自动补订阅 */
+    public static final String POINT_SUBSCRIBE = "pointSubscribe";
+    /** B3：专用主题的报文是否走完整反馈值处理（默认只写共享缓存，避免与按类主题重复处理） */
+    public static final String MEOS_TOPIC_FULL_PIPELINE = "meosTopicFullPipeline";
+
     private static volatile Environment environment;
 
     public OptSwitch(Environment environment) {
