@@ -67,6 +67,8 @@ public class OptSwitch {
     public static final String SYSTEM_GRAPH_JUMP_BATCH = "systemGraphJumpBatch";
     /** B10：弱电运行监测下钻时兄弟设备的关系查询合批 */
     public static final String WEAK_POWER_RELATION_BATCH = "weakPowerRelationBatch";
+    /** B10：客户端系统关联对象（空间/管网/竖井）按系统合批查询 */
+    public static final String CLIENT_SYSTEM_RELATION_BATCH = "clientSystemRelationBatch";
 
     private static volatile Environment environment;
 
