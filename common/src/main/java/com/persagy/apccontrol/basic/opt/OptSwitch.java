@@ -71,6 +71,8 @@ public class OptSwitch {
     public static final String CLIENT_SYSTEM_RELATION_BATCH = "clientSystemRelationBatch";
     /** B10：运行监测设备空间只按关联的空间 id 查询，不再查全项目空间 */
     public static final String MONITOR_SPACE_BY_ID = "monitorSpaceById";
+    /** B10：强制信息点取值，关系查询去重、Twin 当前值合批 */
+    public static final String FORCE_INFO_BATCH = "forceInfoBatch";
 
     private static volatile Environment environment;
 
