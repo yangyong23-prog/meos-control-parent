@@ -103,4 +103,39 @@ public class OptPagedFetchTest {
         }, r -> r.content, "t"));
         Assertions.assertEquals(Long.valueOf(1), OptMetrics.drain().get("feign.page.verifyError"));
     }
+
+    public static class Row {
+        private final String id;
+
+        Row(String id) {
+            this.id = id;
+        }
+
+        public String getId() {
+            return id;
+        }
+    }
+
+    @Test
+    void verifyDetectsDuplicateAndMissingRowsWithSameCount() {
+        List<Row> legacyRows = java.util.Arrays.asList(new Row("a"), new Row("b"), new Row("c"));
+        OptMetrics.drain();
+        // 分页时一页重复 b、漏掉 c：条数相同
+        OptPagedFetch.verify(legacyRows, () -> java.util.Arrays.asList(new Row("a"), new Row("b"), new Row("b")),
+                r -> r, "t");
+        Assertions.assertEquals(Long.valueOf(1), OptMetrics.drain().get("feign.page.verifyMismatch"));
+        // 顺序不同不算不一致
+        OptPagedFetch.verify(legacyRows, () -> java.util.Arrays.asList(new Row("c"), new Row("a"), new Row("b")),
+                r -> r, "t");
+        Assertions.assertEquals(Long.valueOf(1), OptMetrics.drain().get("feign.page.verifyMatch"));
+    }
+
+    @Test
+    void sortedIdsSupportsMapsAndFallsBackWhenIdMissing() {
+        java.util.Map<String, Object> m = new java.util.HashMap<>();
+        m.put("id", "x");
+        Assertions.assertEquals(java.util.Collections.singletonList("x"),
+                OptPagedFetch.sortedIds(java.util.Collections.singletonList(m)));
+        Assertions.assertNull(OptPagedFetch.sortedIds(java.util.Arrays.asList(1, 2)), "无 id 时只比条数");
+    }
 }
