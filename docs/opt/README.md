@@ -17,10 +17,10 @@
 | `opt.scheduling.pool-size` | B0 | 1 | 需重启 | >1 时 `@Scheduled` 使用该大小的独立线程池；≤1 不做任何改动 |
 | `opt.xxl.executor-timeout` | B0 | 0 | 新注册的任务生效 | XXL 任务执行超时（秒），0 为不限制 |
 | `switch.opt.mqttIsolation` | B1 | false | 热生效 | Twin 报文只解析一次；`"~"` 日志降为 debug、warn 每分钟一条；`handlerMessage` 结束在 finally 清理 ContextUtil（16.18）；记录收包时间和 `mqtt.recv` |
-| `switch.opt.runningLogQueue` | B1 | false | 热生效 | 运行日志上云改为本地有界队列（默认 1 万）+ 后台线程合批发送；失败写本地文件，恢复后按序重放 |
+| `switch.opt.runningLogQueue` | B1 | false | 热生效 | 运行日志上云改为本地有界队列（默认 1 万）+ 后台线程合批发送；失败写本地文件，恢复后按序重放；有积压时新消息排在积压之后，保证旧消息先到；单条发送失败而紧随其后的一条成功时，判定为毒消息移入 `<spool-file>.dead`（指标 `runningLog.dead`），不卡住重放 |
 | `switch.opt.autoLogDedupe` | B1 | false | 热生效 | 自动日志建档按 (traceId, objectId, infoCode) 进程内去重 10 分钟，后续“未完成”帧不再做分类远程查询、加锁、查库 |
 | `switch.opt.ctrlFrameOrderFix` | B1 | false | 热生效 | 修 16.9：同一控制指令“完成”帧已在缓存时，丢弃后到的帧（不计算、不写缓存、不推送；运行日志仍处理） |
-| `switch.opt.mqttHealth` | B1 | false | 需重启 | 注册 MQTT 健康检查 `optMqtt`：超过 `opt.mqtt.health.max-silence-seconds`（默认 600）未收包为 DOWN。依赖 mqttIsolation 记录收包时间 |
+| `switch.opt.mqttHealth` | B1 | false | 需重启 | 注册 MQTT 健康检查 `optMqtt`：超过 `opt.mqtt.health.max-silence-seconds`（默认 600）未收包为 DOWN。依赖 mqttIsolation 记录收包时间。**⚠ 必须与 mqttIsolation 同时打开**：只开 mqttHealth 时收包时间从不更新，10 分钟后健康检查恒为 DOWN；若存活探针用 `/actuator/health`，服务会被反复重启 |
 | `switch.opt.realtimeCacheWrite` | B2 | false | 热生效 | MQTT 反馈值在任何换算之前写 `apc:iot_real_time_data:{objectId}:{infoCode}`（Twin 原始值，`"~"` 写离线标记，旧帧不覆盖）。契约见 contract-iot-real-time-data.md |
 | `switch.opt.realtimeCacheRead` | B2 | off | 热生效 | `verify`：仍返回 Twin 结果，同时读缓存比对计数；`on`：Twin 当前值查询先读缓存，未命中按 ≤200 对象分片回源并回填，回源仍无效的点负缓存 60 秒 |
 | `opt.realtime.stale-seconds` / `negative-seconds` | B2 | 120 / 60 | 需重启 | 缓存陈旧阈值（超过即回源）、负缓存时长 |
@@ -34,7 +34,7 @@
 | `switch.opt.sseCoalesce` | B9 | false | 热生效 | `opt.sse.coalesce-events`（默认 LIGHT_LOOP、LIGHT_SPACE_STATUS、LIGHT_EQUIPMENT_STATUS、LIGHT_DEMAND_CHANGE）的全量重算触发，同一 (事件, 项目, 订阅类型) 在 `opt.sse.coalesce-window-ms`（默认 3000）内只执行一次，最大延迟一个窗口 |
 | `switch.opt.ssePushDedupe` | B9 | false | 热生效 | 定时全量推送内容与上次相同且距上次推送不到 `opt.sse.full-push-minutes`（默认 15）分钟时不推；有新连接加入该 eventKey 时立即推 |
 | `executor.pool.sse.queueCapacity` | B9 | 1000000（bootstrap.yml） | 需重启 | 建议试点在 Nacos 覆盖为 10000；满时由原拒绝策略丢弃最老任务 |
-| `switch.opt.feignPageFirstLimit` | B10 | false | 热生效 | FeignPageExecutor 不分页查询的首发由 size=Integer.MAX_VALUE 改为按 `page.size.limit`（默认 1000）分页，再按 total 拉剩余页、按页序拼接；下游不返回 total 且首页已满时退回原逻辑 |
+| `switch.opt.feignPageFirstLimit` | B10 | false | 热生效 | FeignPageExecutor 不分页查询的首发由 size=Integer.MAX_VALUE 改为按 `page.size.limit`（默认 1000）分页，再按 total 拉剩余页、按页序拼接；下游不返回 total 且首页已满时退回原逻辑。**⚠ 最后打开**：分页依赖下游排序稳定、两页之间数据不变，否则会重复或漏行。先取 `verify`（仍返回原逻辑结果，另按分页查一次比对条数，指标 `feign.page.verifyMatch` / `verifyMismatch` / `verifyError`；下游查询量约翻倍），观察 `verifyMismatch` 持续为 0 后再取 `true` |
 | `opt.realtime.twin-parallelism` | B10 | 4 | 需重启 | B2 读路径回源 Twin 时 ≤200 对象一片，多片用独立小池并行（满时调用线程执行） |
 | `switch.opt.twinWriteDiff` | B8 | false | 热生效 | 仅 InnerSchdule 壳配置定时同步内：Twin twc/conf 写入（saveList、saveClassConfs、deleteByClassConf、saveExclusions、deleteByConf、saveStartIntervals、reviseObjectInSys）按项记账 `apc:twinWrite:{group}:{projectId}:{identity}`，全部项不变且距上次成功写入不到 `opt.twin-write.full-rewrite-hours`（默认 24）小时不写；写入结果校验 isSuccess，失败抛异常、不记账、下一轮重写；设备频率快照改存合并后的全量、删除时移除 |
 | `switch.opt.lightingSendDiff` | B8 | false | 热生效 | 照明反馈调节（空间级、回路级）指令与上次相同不重发，距上次下发满 `opt.lighting.resend-rounds`（默认 6 轮 = 30 分钟）强制重发；下发失败的对象下一轮重发 |
