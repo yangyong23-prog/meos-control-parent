@@ -3,6 +3,8 @@ import com.persagy.apccontrol.basic.utils.i18n.LocaleMessageUtil;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.persagy.apccontrol.basic.model.page.DefaultListPage;
+import com.persagy.apccontrol.basic.opt.OptPagedFetch;
+import com.persagy.apccontrol.basic.opt.OptSwitch;
 import com.persagy.apccontrol.basic.model.page.Pageable;
 import com.persagy.apccontrol.basic.model.page.query.PageQuery;
 import com.persagy.apccontrol.basic.outside.dto.DmpResult;
@@ -125,6 +127,18 @@ public class FeignPageExecutor {
             @NonNull Function<PageQuery, CustomerResponse<List<T>>> callback, int limit) {
         // 当分页参数为空时, 递归执行分页逻辑
         if (Objects.isNull(pageQuery) || ObjectUtils.allNull(pageQuery.getPageNo(), pageQuery.getPageSize())) {
+            // opt B10：首发也按 limit 分页，不再一次请求 Integer.MAX_VALUE 条
+            if (OptSwitch.on(OptSwitch.FEIGN_PAGE_FIRST_LIMIT)) {
+                return OptPagedFetch.fetchAll(limit,
+                        (no, size) -> callback.apply(new PageQuery(no, size)),
+                        CustomerResponse::getContent, CustomerResponse::getTotal,
+                        (r, all) -> {
+                            r.setContent(all);
+                            r.setCount(all.size());
+                        },
+                        () -> execute(new PageQuery(1, Integer.MAX_VALUE), callback, limit),
+                        BusinessThreadPoolExecutor.ttlExecutor());
+            }
             return execute(new PageQuery(1, Integer.MAX_VALUE), callback, limit);
         }
         // 当仅查询数量时, 直接执行
@@ -187,6 +201,18 @@ public class FeignPageExecutor {
             @NonNull Function<PageQuery, DmpResult<List<T>>> callback, int limit) {
         // 当分页参数为空时, 递归执行分页逻辑
         if (Objects.isNull(pageQuery) || ObjectUtils.allNull(pageQuery.getPageNo(), pageQuery.getPageSize())) {
+            // opt B10：首发也按 limit 分页；与原逻辑一致，剩余页顺序请求
+            if (OptSwitch.on(OptSwitch.FEIGN_PAGE_FIRST_LIMIT)) {
+                return OptPagedFetch.fetchAll(limit,
+                        (no, size) -> callback.apply(new PageQuery(no, size)),
+                        DmpResult::getData, DmpResult::getTotal,
+                        (r, all) -> {
+                            r.setData(all);
+                            r.setCount(all.size());
+                        },
+                        () -> executeToDmpResult(new PageQuery(1, Integer.MAX_VALUE), callback, limit),
+                        null);
+            }
             return executeToDmpResult(new PageQuery(1, Integer.MAX_VALUE), callback, limit);
         }
         // 当仅查询数量时, 直接执行
