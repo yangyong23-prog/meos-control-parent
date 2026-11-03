@@ -41,6 +41,13 @@ public class OptSwitch {
     /** B3：专用主题的报文是否走完整反馈值处理（默认只写共享缓存，避免与按类主题重复处理） */
     public static final String MEOS_TOPIC_FULL_PIPELINE = "meosTopicFullPipeline";
 
+    /** B9：SSE 连接超时、30 秒心跳、ping 租约回收 */
+    public static final String SSE_KEEPALIVE = "sseKeepalive";
+    /** B9：SSE 空间带状态在对象模型新缓存 READY 后读缓存，不再每拍查 RWD */
+    public static final String SSE_SPACE_STATUS_CACHE = "sseSpaceStatusCache";
+    /** B9：按条件推送的 SSE 事件先按订阅者范围过滤，再提交线程池计算 */
+    public static final String SSE_PRE_FILTER = "ssePreFilter";
+
     private static volatile Environment environment;
 
     public OptSwitch(Environment environment) {

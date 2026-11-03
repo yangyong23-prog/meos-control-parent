@@ -1,6 +1,7 @@
 package com.persagy.apccontrol.basic.controller;
 
 import com.persagy.apccontrol.basic.config.cache.LocalContextStorage;
+import com.persagy.apccontrol.basic.opt.OptSseKeepalive;
 import com.persagy.apccontrol.basic.sse.SseEmitterObject;
 import com.persagy.apccontrol.basic.sse.SseEmitterServer;
 import com.persagy.apccontrol.basic.sse.SseEmitters;
@@ -39,6 +40,9 @@ public class SseEmitterController {
     @Autowired
     private SseEmitters sseEmitters;
 
+    @Autowired
+    private OptSseKeepalive optSseKeepalive;
+
     @GetMapping(path = "/sse/subscribe", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter addClient(@Validated @ModelAttribute SseSubscribeParam param) {
         param.setGroupCode(ContextUtil.getGroupCode());
@@ -50,6 +54,14 @@ public class SseEmitterController {
     public SseEmitter multiSubscribe(@Validated @RequestBody List<SseSubscribeParam> params) {
         params.forEach(p -> p.setRemoveDefaultIpType(LocalContextStorage.isRemoveDefaultIpType()));
         return sseEmitterServer.addMulti(params);
+    }
+
+    /**
+     * opt B9：客户端保活。eventKey 为连接建立时 EVENT_ID 事件里的值；switch.opt.sseKeepalive 关闭时为空操作。
+     */
+    @GetMapping(path = "/sse/ping")
+    public void ping(@RequestParam("eventKey") String eventKey) {
+        optSseKeepalive.ping(eventKey);
     }
 
     @PostMapping(path = "/sse/send")

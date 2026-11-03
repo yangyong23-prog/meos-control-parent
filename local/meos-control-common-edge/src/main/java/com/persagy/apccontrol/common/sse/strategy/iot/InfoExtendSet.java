@@ -25,6 +25,21 @@ public class InfoExtendSet extends AbstractSseEventStrategyTemplate {
         return SseEmitterEventEnum.INFO_EXTEND_SET;
     }
 
+    /**
+     * opt B9：与 getSseEmitterObject 的项目、对象范围过滤一致；不在范围内的订阅者不再提交计算任务。
+     */
+    @Override
+    protected boolean skipBeforeCompute(SseSubscribeParam param, Object condition) {
+        if (!(condition instanceof FeedbackInfoMsgMqttVO)) {
+            return true;
+        }
+        FeedbackInfoMsgMqttVO vo = (FeedbackInfoMsgMqttVO) condition;
+        if (!param.getProjectId().equals(vo.getProjectId())) {
+            return true;
+        }
+        return checkClaasCode2objectIds(param, vo.getClassCode(), vo.getObjectId());
+    }
+
     @Override
     protected SseEmitterObject getSseEmitterObject(SseSubscribeParam param, Object condition) {
         if (condition instanceof FeedbackInfoMsgMqttVO) {

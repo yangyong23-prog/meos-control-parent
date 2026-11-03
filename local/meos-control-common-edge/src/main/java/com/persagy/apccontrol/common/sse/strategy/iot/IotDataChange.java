@@ -70,6 +70,22 @@ public class IotDataChange extends AbstractSseEventStrategyTemplate {
     }
 
 
+    /**
+     * opt B9：与 getSseEmitterObject 的项目、对象范围过滤一致；推送范围尚未计算时不过滤（保留原来的懒加载）。
+     */
+    @Override
+    protected boolean skipBeforeCompute(SseSubscribeParam param, Object condition) {
+        if (!(condition instanceof FeedbackInfoMsgMqttVO)) {
+            return true;
+        }
+        FeedbackInfoMsgMqttVO vo = (FeedbackInfoMsgMqttVO) condition;
+        if (!param.getProjectId().equals(vo.getProjectId())) {
+            return true;
+        }
+        return param.getClaasCode2objectIds() != null
+                && checkClaasCode2objectIds(param, vo.getClassCode(), vo.getObjectId());
+    }
+
     @Override
     protected SseEmitterObject getSseEmitterObject(SseSubscribeParam param, Object condition) {
         if (condition instanceof FeedbackInfoMsgMqttVO) {
