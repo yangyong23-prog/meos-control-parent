@@ -63,6 +63,8 @@ public class OptSwitch {
     public static final String SCHEDULE_SEASON_MEMO = "scheduleSeasonMemo";
     /** B10：冷源首页卡片各系统冷机分组并行查询 */
     public static final String COLD_SOURCE_GROUP_PARALLEL = "coldSourceGroupParallel";
+    /** B10：系统图交互配置候选批量查询 + 同图对象列表复用 */
+    public static final String SYSTEM_GRAPH_JUMP_BATCH = "systemGraphJumpBatch";
 
     private static volatile Environment environment;
 

@@ -40,6 +40,7 @@
 | `switch.opt.lightingSendDiff` | B8 | false | 热生效 | 照明反馈调节（空间级、回路级）指令与上次相同不重发，距上次下发满 `opt.lighting.resend-rounds`（默认 6 轮 = 30 分钟）强制重发；下发失败的对象下一轮重发 |
 | `switch.opt.scheduleSeasonMemo` | B10 | false | 热生效（对下一次下发生效） | 时间表下发（distributionSchedule）一次调用内，冷热站出水温度点的季节查询 `querySeasonByTime` 按日期只调一次，结果复用；指标 `memo.scheduleSeason.hit` |
 | `switch.opt.coldSourceGroupParallel` | B10 | false | 热生效 | 冷源首页卡片「大小冷机运行台数」：各系统的 `queryAcccccGroupBySystemId`（下游无批量接口）用 ttlExecutor 并行查询，结果按系统合并，与逐个查询一致；任一失败按原样抛出 |
+| `switch.opt.systemGraphJumpBatch` | B10 | false | 热生效 | 系统图交互配置（buildInteractiveConfig）：候选跳转对象原来逐个 `getSystemGraph`（每个一次 SQL）直到可跳转，改为按 classCode 一次 IN 查询后按原顺序挑选；同一张图内按 classCode 查询的对象列表（`listObject`）只查一次。指标 `systemGraph.jumpBatch.candidates`、`memo.systemGraphObjects.hit` |
 | `opt.runninglog.queue-capacity` / `spool-file` / `spool-max-bytes` | B1 | 10000 / `./opt-spool/running-log.jsonl` / 50MB | 需重启 | 运行日志队列容量、本地重放文件位置和上限 |
 
 ## B0 试点站点建议的 Nacos 配置
