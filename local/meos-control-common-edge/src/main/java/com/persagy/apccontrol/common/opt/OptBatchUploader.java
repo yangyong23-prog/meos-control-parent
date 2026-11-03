@@ -20,6 +20,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+import java.util.function.LongSupplier;
 
 /**
  * B1：有界本地队列 + 单个后台线程合批上传，失败落本地文件，恢复后重放。
@@ -31,7 +32,11 @@ import java.util.function.Consumer;
  *     <li>spool 有积压时，新批次先追加到 spool 末尾，再从头按序重放，保证旧消息一定先于新消息到达；
  *     重放失败的部分原样写回 spool。</li>
  *     <li>重放中某批失败时逐条重试：某条失败而紧随其后的一条成功，判定前者为毒消息，移入 {@code <spool>.dead}
- *     并计数 {@code <name>.dead}，不再卡住后续重放；连续两条失败视为下游不可用，停止本轮。</li>
+ *     并计数 {@code <name>.dead}，不再卡住后续重放；连续两条失败视为下游不可用，停止本轮。
+ *     下游抖动时正常消息也可能被误判，.dead 文件需人工核对后补发。</li>
+ *     <li>判定下游不可用（直接发送失败或重放中连续两条失败）后退避 30 秒：期间新批次只追加到 spool，
+ *     不重放、不发请求，避免断网时反复读写整个 spool、等待 Feign 超时拖住发送线程；
+ *     退避结束后由下一批新消息或空闲轮询触发重放。</li>
  * </ul>
  * 单线程发送保证同一条日志的“先删后增”两条消息顺序不变。
  *
@@ -50,6 +55,10 @@ public class OptBatchUploader<T> {
     private final ObjectMapper mapper;
     private final Thread worker;
     private volatile boolean running = true;
+    /** 判定下游不可用后的退避时长：期间新批次只追加到 spool，不重放、不发请求 */
+    private long backoffMillis = 30_000L;
+    private LongSupplier clock = System::currentTimeMillis;
+    private long blockedUntil;
 
     public OptBatchUploader(String name, Class<T> type, Consumer<List<T>> sender, int capacity, int batchSize,
                             Path spoolFile, long maxSpoolBytes, ObjectMapper mapper) {
@@ -95,6 +104,8 @@ public class OptBatchUploader<T> {
             try {
                 T first = queue.poll(1, TimeUnit.SECONDS);
                 if (first == null) {
+                    // 没有新消息时也定期重放积压
+                    retryBacklog();
                     continue;
                 }
                 List<T> batch = new ArrayList<>(batchSize);
@@ -117,14 +128,37 @@ public class OptBatchUploader<T> {
         if (hasSpool()) {
             // 有积压时新批次排在积压之后，避免新消息先于旧消息到达
             spool(batch);
-            replaySpool();
+            if (!blocked()) {
+                replaySpool();
+            }
             return;
         }
         if (send(batch)) {
             OptMetrics.add(name + ".sent", batch.size());
         } else {
             spool(batch);
+            markDown();
         }
+    }
+
+    /** 退避结束且有积压时重放，供后台线程空闲时调用 */
+    synchronized void retryBacklog() {
+        if (hasSpool() && !blocked()) {
+            replaySpool();
+        }
+    }
+
+    private boolean blocked() {
+        return clock.getAsLong() < blockedUntil;
+    }
+
+    private void markDown() {
+        blockedUntil = clock.getAsLong() + backoffMillis;
+    }
+
+    void setClockForTest(LongSupplier clock, long backoffMillis) {
+        this.clock = clock;
+        this.backoffMillis = backoffMillis;
     }
 
     private boolean hasSpool() {
@@ -218,6 +252,10 @@ public class OptBatchUploader<T> {
             Files.deleteIfExists(replaying);
         } catch (IOException e) {
             log.warn("[opt] {} 删除重放文件失败: {}", name, e.toString());
+        }
+        if (!round.failed.isEmpty()) {
+            // 判定下游不可用：退避一段时间再重放，期间不读写整个 spool、不发请求
+            markDown();
         }
         // 末尾单条失败无法判定是否毒消息，连同未发送部分一起写回，下一轮再判
         round.failed.addAll(0, round.suspect);
