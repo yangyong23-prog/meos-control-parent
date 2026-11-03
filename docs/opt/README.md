@@ -31,6 +31,8 @@
 | `switch.opt.sseKeepalive` | B9 | false | 热生效（超时对新连接生效） | 新建 SSE 连接带 `opt.sse.emitter-timeout-minutes`（默认 30）超时，浏览器自动重连；每 `opt.sse.heartbeat-seconds`（默认 30）秒发注释心跳，写失败即回收；调用过 `GET /server-event/sse/ping?eventKey=` 的前端超过 `opt.sse.lease-seconds`（默认 60）秒未再 ping 即回收（拔网线场景） |
 | `switch.opt.sseSpaceStatusCache` | B9 | false | 热生效 | SSE 空间带状态在对象模型新缓存 READY 后读缓存（同 listSpaceEquipment 的 READY 路径）+ 补标签，不再每拍查 RWD；未 READY 仍走原实现 |
 | `switch.opt.ssePreFilter` | B9 | false | 热生效 | IOT_DATA_CHANGE / INFO_EXTEND_SET / RELEASE_INTERVENTION 按订阅者范围先过滤，再提交 SSE 线程池 |
+| `switch.opt.sseCoalesce` | B9 | false | 热生效 | `opt.sse.coalesce-events`（默认 LIGHT_LOOP、LIGHT_SPACE_STATUS、LIGHT_EQUIPMENT_STATUS、LIGHT_DEMAND_CHANGE）的全量重算触发，同一 (事件, 项目, 订阅类型) 在 `opt.sse.coalesce-window-ms`（默认 3000）内只执行一次，最大延迟一个窗口 |
+| `switch.opt.ssePushDedupe` | B9 | false | 热生效 | 定时全量推送内容与上次相同且距上次推送不到 `opt.sse.full-push-minutes`（默认 15）分钟时不推；有新连接加入该 eventKey 时立即推 |
 | `executor.pool.sse.queueCapacity` | B9 | 1000000（bootstrap.yml） | 需重启 | 建议试点在 Nacos 覆盖为 10000；满时由原拒绝策略丢弃最老任务 |
 | `opt.runninglog.queue-capacity` / `spool-file` / `spool-max-bytes` | B1 | 10000 / `./opt-spool/running-log.jsonl` / 50MB | 需重启 | 运行日志队列容量、本地重放文件位置和上限 |
 
@@ -90,3 +92,4 @@ management:
 | `mqtt.recv.point` | B3 | 专用主题收包数 |
 | `sse.heartbeat` / `sse.heartbeatFail` / `sse.leaseExpired` | B9 | 心跳发送数、心跳失败回收的连接数、租约过期回收的连接数（后两者始终计数） |
 | `sse.spaceStatus.cache` / `sse.preFiltered` | B9 | 空间带状态走缓存的次数、提交前被过滤掉的订阅者任务数 |
+| `sse.coalesced` / `sse.pushSkipped` | B9 | 被窗口合并掉的触发次数、内容无变化跳过的推送次数 |

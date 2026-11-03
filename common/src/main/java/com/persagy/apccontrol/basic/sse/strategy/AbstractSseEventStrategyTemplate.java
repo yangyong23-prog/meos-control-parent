@@ -1,6 +1,8 @@
 package com.persagy.apccontrol.basic.sse.strategy;
 
 import com.persagy.apccontrol.basic.opt.OptMetrics;
+import com.persagy.apccontrol.basic.opt.OptSseCoalescer;
+import com.persagy.apccontrol.basic.opt.OptSsePushDedupe;
 import com.persagy.apccontrol.basic.opt.OptSwitch;
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.nacos.api.cmdb.pojo.EntityEventType;
@@ -46,6 +48,12 @@ public abstract class AbstractSseEventStrategyTemplate implements SseEventStrate
     @Autowired
     @Qualifier("asyncSSEExecutor")
     private ThreadPoolTaskExecutor asyncSSEExecutor;
+
+    @Resource
+    private OptSseCoalescer optSseCoalescer;
+
+    @Resource
+    private OptSsePushDedupe optSsePushDedupe;
 
     /**
      * 锁等待和自动释放时间定义
@@ -97,6 +105,17 @@ public abstract class AbstractSseEventStrategyTemplate implements SseEventStrate
             throw new IllegalArgumentException("projectId and subscribeType must not be null");
         }
 
+        // opt B9（switch.opt.sseCoalesce）：照明等全量重算事件按窗口合并
+        String eventType = getEventType() == null ? null : getEventType().name();
+        if (optSseCoalescer.applies(eventType)
+                && optSseCoalescer.offer(eventType + "|" + projectId + "|" + subscribeType,
+                () -> doOperationNow(projectId, subscribeType))) {
+            return;
+        }
+        doOperationNow(projectId, subscribeType);
+    }
+
+    private void doOperationNow(String projectId, SubscribeTypeEnum subscribeType) {
         // 根据项目ID获取所有订阅者
         Map<String, SseSubscribeParam> eventKeyMap = sseEmitterServer.getEventKeys(projectId, subscribeType);
         if (CollUtil.isEmpty(eventKeyMap)) {
@@ -183,7 +202,12 @@ public abstract class AbstractSseEventStrategyTemplate implements SseEventStrate
             ContextUtil.setTenant(subscriberParam.getGroupCode());
             ContextUtil.setProjectId(subscriberParam.getProjectId());
             // 设置上下文，并执行事件发布逻辑
-            sseEmitterServer.publishEvent(eventKey, getSseEmitterObject(subscriberParam));
+            SseEmitterObject object = getSseEmitterObject(subscriberParam);
+            // opt B9（switch.opt.ssePushDedupe）：内容未变化且未到兜底时间不推
+            if (object != null && optSsePushDedupe.shouldSkip(eventKey, String.valueOf(object.getEventType()), object.getData())) {
+                return;
+            }
+            sseEmitterServer.publishEvent(eventKey, object);
         } catch (Exception e) {
             log.error("发布事件失败。Event Key: {}, param:{}", eventKey, subscriberParam, e);
         } finally {
