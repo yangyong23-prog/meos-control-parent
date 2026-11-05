@@ -9,6 +9,9 @@ import com.persagy.apccontrol.basic.convert.MidPermissionConvert;
 import com.persagy.apccontrol.basic.model.base.CacheKey;
 import com.persagy.apccontrol.basic.model.dto.GroupDTO;
 import com.persagy.apccontrol.basic.model.dto.ProjectDTO;
+import com.persagy.apccontrol.basic.opt.OptOperatorNames;
+import com.persagy.apccontrol.basic.opt.OptProjectInfo;
+import com.persagy.apccontrol.basic.opt.OptSwitch;
 import com.persagy.apccontrol.basic.outside.feign.client.MidPermissionClient;
 import com.persagy.apccontrol.basic.outside.feign.model.param.midpermission.GroupQueryParam;
 import com.persagy.apccontrol.basic.outside.feign.model.param.midpermission.LoginUserParam;
@@ -50,12 +53,20 @@ public class MidPermissionClientServiceImpl implements MidPermissionClientServic
     private MidPermissionConvert midPermissionConvert;
     @Autowired
     private MidPermissionClient midPermissionClient;
+    @Autowired
+    private OptProjectInfo optProjectInfo;
+    @Autowired
+    private OptOperatorNames optOperatorNames;
 
     @Override
     public Map<String, String> getUserNameByUserIds(String groupCode, Set<String> userIds) {
         Map<String, String> result = new HashMap<>();
         if (CollectionUtil.isEmpty(userIds)) {
             return result;
+        }
+        if (OptSwitch.on(OptSwitch.OPERATOR_NAME_LOCAL)) {
+            // B15：只用前端随请求带来的姓名，取不到的 userId 不返回（调用方保持写 userId）
+            return optOperatorNames.lookupAll(userIds);
         }
         try {
             //查询用户id对应的账号信息
@@ -90,6 +101,17 @@ public class MidPermissionClientServiceImpl implements MidPermissionClientServic
     public ProjectDTO getProject() {
         String groupCode = ContextUtil.getGroupCode();
         String projectId = ContextUtil.getProjectId();
+        if (OptSwitch.on(OptSwitch.PROJECT_FROM_RWD)) {
+            ProjectDTO project = optProjectInfo.get(groupCode, projectId, id -> remoteGetProject(groupCode, id));
+            if (project == null) {
+                throw new IllegalStateException("project not found: " + projectId);
+            }
+            return project;
+        }
+        return remoteGetProject(groupCode, projectId);
+    }
+
+    private ProjectDTO remoteGetProject(String groupCode, String projectId) {
         ProjectQueryParam projectQueryParam = new ProjectQueryParam();
         projectQueryParam.setGroupCode(groupCode);
         projectQueryParam.setProjectId(projectId);
@@ -103,7 +125,13 @@ public class MidPermissionClientServiceImpl implements MidPermissionClientServic
             unless = "#result == null || #result.isEmpty()")
     public ProjectDTO getProject(boolean queryCache, boolean isThrows, @NonNull String projectId) {
         String groupCode = getGroupCode();
+        if (OptSwitch.on(OptSwitch.PROJECT_FROM_RWD)) {
+            return optProjectInfo.get(groupCode, projectId, id -> remoteGetProject(isThrows, groupCode, id));
+        }
+        return remoteGetProject(isThrows, groupCode, projectId);
+    }
 
+    private ProjectDTO remoteGetProject(boolean isThrows, String groupCode, String projectId) {
         ProjectQueryParam projectQueryParam = new ProjectQueryParam();
         projectQueryParam.setGroupCode(groupCode);
         projectQueryParam.setProjectId(projectId);

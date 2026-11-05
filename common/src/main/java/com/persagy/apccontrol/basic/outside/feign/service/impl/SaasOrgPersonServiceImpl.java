@@ -8,6 +8,8 @@ import com.google.common.collect.Sets;
 import com.persagy.apccontrol.basic.outside.feign.client.MidPermissionClient;
 import com.persagy.apccontrol.basic.outside.feign.client.SaasOrgPersonClient;
 import com.persagy.apccontrol.basic.outside.feign.model.response.CustomerResponse;
+import com.persagy.apccontrol.basic.opt.OptOperatorNames;
+import com.persagy.apccontrol.basic.opt.OptSwitch;
 import com.persagy.apccontrol.basic.outside.feign.service.SaasOrgPersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -36,6 +38,8 @@ public class SaasOrgPersonServiceImpl implements SaasOrgPersonService {
     private SaasOrgPersonClient saasOrgPersonClient;
     @Autowired
     private MidPermissionClient midPermissionClient;
+    @Autowired
+    private OptOperatorNames optOperatorNames;
 
     @Override
     public Map<String, String> queryPersonNameByUserIds(String groupCode, String projectId, Set<String> personUserIds) {
@@ -64,7 +68,10 @@ public class SaasOrgPersonServiceImpl implements SaasOrgPersonService {
 
         Map<String, String> result = queryPersonNameByUserIds(groupCode, projectId, personUserIds);
         Set<String> userIds = personUserIds.stream().filter(person -> StringUtils.isEmpty(result.get(person))).collect(Collectors.toSet());
-        if (CollectionUtil.isNotEmpty(userIds)) {
+        if (CollectionUtil.isNotEmpty(userIds) && OptSwitch.on(OptSwitch.OPERATOR_NAME_LOCAL)) {
+            // B15：不再向 mid-permission 反查，只用前端随请求带来的姓名
+            result.putAll(optOperatorNames.lookupAll(userIds));
+        } else if (CollectionUtil.isNotEmpty(userIds)) {
             //查询用户id对应的账号信息
             JSONObject jsonObj = new JSONObject();
             jsonObj.put("userIds", Sets.newHashSet(userIds));
