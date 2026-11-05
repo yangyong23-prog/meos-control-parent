@@ -76,6 +76,11 @@ public class OptSwitch {
     /** B10：壳配置实例化判断中相同的关系查询在一次请求内只查一次 */
     public static final String SHELL_CONFIG_RELATION_MEMO = "shellConfigRelationMemo";
 
+    /** B15：项目名、城市编码改读 dtp-rwd 项目对象并缓存，读不到再调一次 mid-permission getProject */
+    public static final String PROJECT_FROM_RWD = "projectFromRwd";
+    /** B15：操作人姓名由前端请求头带来并按 userId 记下，不再向 mid-permission 反查 */
+    public static final String OPERATOR_NAME_LOCAL = "operatorNameLocal";
+
     private static volatile Environment environment;
 
     public OptSwitch(Environment environment) {
