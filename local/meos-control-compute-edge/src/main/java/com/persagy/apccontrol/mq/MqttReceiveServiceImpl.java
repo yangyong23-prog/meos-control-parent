@@ -27,6 +27,7 @@ import com.persagy.framework.mqtt.service.MqttReceiveService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +57,7 @@ public class MqttReceiveServiceImpl implements MqttReceiveService {
     SseHandlerContext sshHandlerContext;
 
     /** opt 分支 B2（switch.opt.realtimeCacheWrite）：反馈值第一步写共享缓存 */
+    @Lazy
     @Resource
     OptRealtimeMqttWriter optRealtimeMqttWriter;
 
