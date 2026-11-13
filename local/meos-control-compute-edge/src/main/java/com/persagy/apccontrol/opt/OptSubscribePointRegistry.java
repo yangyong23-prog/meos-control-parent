@@ -8,6 +8,7 @@ import com.persagy.apccontrol.basic.service.infocodeconfig.InfoCodeConfigService
 import com.persagy.framework.redis.cache.RedisCacheUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.stereotype.Component;
@@ -37,6 +38,7 @@ public class OptSubscribePointRegistry {
 
     @Resource
     private RedisCacheUtil redisCacheUtil;
+    @Lazy
     @Resource
     private InfoCodeConfigService infoCodeConfigService;
     @Resource

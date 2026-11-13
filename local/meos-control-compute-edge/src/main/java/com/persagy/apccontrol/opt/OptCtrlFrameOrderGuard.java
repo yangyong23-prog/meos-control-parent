@@ -7,6 +7,7 @@ import com.persagy.apccontrol.basic.opt.OptMetrics;
 import com.persagy.apccontrol.basic.opt.OptSwitch;
 import com.persagy.apccontrol.common.service.IotDataCacheService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -26,7 +27,7 @@ public class OptCtrlFrameOrderGuard {
 
     private final IotDataCacheService iotDataCacheService;
 
-    public OptCtrlFrameOrderGuard(IotDataCacheService iotDataCacheService) {
+    public OptCtrlFrameOrderGuard(@Lazy IotDataCacheService iotDataCacheService) {
         this.iotDataCacheService = iotDataCacheService;
     }
 

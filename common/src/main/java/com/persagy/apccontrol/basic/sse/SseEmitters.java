@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
@@ -45,6 +46,7 @@ public class SseEmitters {
     @Qualifier("asyncSSEExecutor")
     private ThreadPoolTaskExecutor asyncSSEExecutor;
 
+    @Lazy
     @Autowired(required = false)
     private OptSsePushDedupe optSsePushDedupe;
 

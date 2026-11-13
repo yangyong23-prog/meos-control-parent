@@ -17,6 +17,7 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -49,9 +50,11 @@ public abstract class AbstractSseEventStrategyTemplate implements SseEventStrate
     @Qualifier("asyncSSEExecutor")
     private ThreadPoolTaskExecutor asyncSSEExecutor;
 
+    @Lazy
     @Resource
     private OptSseCoalescer optSseCoalescer;
 
+    @Lazy
     @Resource
     private OptSsePushDedupe optSsePushDedupe;
 
