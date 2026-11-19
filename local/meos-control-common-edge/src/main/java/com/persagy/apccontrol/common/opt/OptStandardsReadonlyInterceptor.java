@@ -31,7 +31,9 @@ public class OptStandardsReadonlyInterceptor implements HandlerInterceptor {
     public static final String MESSAGE = "由云端运行标准管理";
 
     /**
-     * 默认只读清单：空调需求配置、实例归属/编组、黑名单、需求日历模板、价值选择、MPC 智能体配置。
+     * 默认只读清单：空调需求配置、实例归属/编组、黑名单、需求日历模板、价值选择、MPC 智能体配置；
+     * 2026-11-19 Blake 定安防/通风/排油烟需求、干预任务、壳配置也归运行标准服务与 dtp-meos，追加干预任务/干预配置与壳配置写接口
+     * （安防/通风/排油烟需求经 /demand/addDemandConfig 等通用接口写入，已在清单内）。
      * 多数需求配置写接口只在云端包存在，边缘包实际命中的是 /valueSelection/saveConfig、/shellConfig/mpcAgentCfg；
      * 清单与前端（meos-control-web src/apis/standards.js）保持一致，便于云端将来复用。
      */
@@ -48,7 +50,13 @@ public class OptStandardsReadonlyInterceptor implements HandlerInterceptor {
             "/demand/template/applyTemplateByDate",
             "/demand/template/clearCalendar",
             "/valueSelection/saveConfig",
-            "/shellConfig/mpcAgentCfg"));
+            "/shellConfig/mpcAgentCfg",
+            "/shellConfig/save",
+            "/shellConfig/changeAlgorithmConfig",
+            "/shellConfig/changeLtsmConfig",
+            "/interventionTaskConfig/saveOrUpdate",
+            "/interventionTaskConfig/remove",
+            "/intervention/config/saveOrUpdate"));
 
     private static final AntPathMatcher MATCHER = new AntPathMatcher();
 

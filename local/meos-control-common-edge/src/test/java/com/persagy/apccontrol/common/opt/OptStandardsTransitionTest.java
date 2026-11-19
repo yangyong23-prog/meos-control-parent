@@ -135,6 +135,9 @@ class OptStandardsTransitionTest {
 
         Assertions.assertEquals("true", write("/shellConfig/mpcAgentCfg", "PjOld").getHeader("x-pass"), "未切项目照旧可写");
         Assertions.assertEquals("true", write("/shellConfig/queryMpcAgentCfg", "PjNew").getHeader("x-pass"), "查询不拦");
+        Assertions.assertEquals("false", write("/interventionTaskConfig/saveOrUpdate", "PjNew").getHeader("x-pass"), "干预任务归运行标准");
+        Assertions.assertEquals("false", write("/shellConfig/save", "PjNew").getHeader("x-pass"), "壳配置归运行标准");
+        Assertions.assertEquals("true", write("/intervention/release", "PjNew").getHeader("x-pass"), "解除干预是手动操作，不拦");
         Assertions.assertEquals("true", write("/valueSelection/saveConfig", null).getHeader("x-pass"), "无项目放行");
     }
 
