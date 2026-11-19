@@ -1,5 +1,9 @@
 package com.persagy.apccontrol.config;
 
+import com.persagy.apccontrol.common.opt.OptDtpMeosCallCounter;
+import com.persagy.apccontrol.common.opt.OptStandardsReadonlyInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.persagy.apccontrol.interceptor.LoginTokenInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +17,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
+
+    /** 运行标准过渡 B2 / B3：开关默认关闭，关闭时两个拦截器直接放行 */
+    @Autowired
+    private OptStandardsReadonlyInterceptor optStandardsReadonlyInterceptor;
+    @Autowired
+    private OptDtpMeosCallCounter optDtpMeosCallCounter;
     @Bean
     public LoginTokenInterceptor loginTokenInterceptor() {
         return new LoginTokenInterceptor();
@@ -32,6 +42,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/swagger/**", "/swagger-resources/**", "/webjars/**", "/v2/**", "/doc.html/**", "**/swagger-config")
                 .excludePathPatterns("/strategyIntervention/chillerStrategy/queryByParam")
                 .excludePathPatterns("/callback/time/strategy");
+        registry.addInterceptor(optDtpMeosCallCounter).addPathPatterns(OptDtpMeosCallCounter.PATHS);
+        registry.addInterceptor(optStandardsReadonlyInterceptor).addPathPatterns("/**");
     }
 
     @Override

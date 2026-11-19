@@ -48,6 +48,26 @@
 | `switch.opt.shellConfigRelationMemo` | B10 | false | 热生效 | 壳配置按场景取值（ShellConfigServiceImpl.getConfigValueByScene → getInstanceByValSource）：同一请求内相同的 existsObjects / countObject / 关系 queryObjectList 只查一次；列表结果每次给独立副本（调用方会 removeIf）。指标 `memo.shellConfigRelation.hit` |
 | `opt.runninglog.queue-capacity` / `spool-file` / `spool-max-bytes` | B1 | 10000 / `./opt-spool/running-log.jsonl` / 50MB | 需重启 | 运行日志队列容量、本地重放文件位置和上限 |
 
+## 运行标准过渡（2026-11-18，改动清单 B1–B4、B6）
+
+背景：运行标准和配置改由 ids-mpc-operation-standards-server 管理，dtp-meos 读取；meos-control 只保留监测和手动控制，配置管理在新服务联调通过前保留。下表编号对应《运行标准服务对 meos-control 配置的覆盖评估》的改动清单，与上面第 2 波的 B 编号无关。全部只在边缘包（meos-control-server-edge）生效，云端不注册这些拦截器和接口。
+
+| 开关 / 配置 | 改动 | 默认 | 是否热生效 | 打开后的行为 |
+|---|---|---|---|---|
+| `switch.opt.standardsMode` | B1 | false | 热生效 | `GET /standards/mode?projectId=` 返回 `{projectId, mode: STANDARD/LEGACY, readOnly, source, error}`。判定与 dtp-meos 一致：`demand_custom_config` 中 project_id = object_id = 项目、module_code = CALCULATE、config_type = STANDRAD_CONFIG 有记录即 STANDARD。关闭时恒为 LEGACY 且不查库 |
+| `switch.opt.standards.mode-source` | B1 | db | 热生效 | `db` 读上表；`list` 只看 `switch.opt.standards.switched-projects`（逗号分隔），用于拆库后或联调时人工指定 |
+| `switch.opt.standards.mode-cache-seconds` | B1 | 60 | 热生效 | 判定结果按项目缓存秒数；`POST /standards/mode/evict` 立即清空。查库失败按 LEGACY 处理，错误写在 `error` 字段，同样缓存 |
+| `switch.opt.standardsReadonly` | B2 | false | 热生效 | 需同时开 standardsMode。项目为 STANDARD 时，命中只读清单的请求不进 Controller，返回 HTTP 200 + `{code: "A0403", message: "由云端运行标准管理"}`；未切项目照旧可写；取不到 projectId 的请求放行（计数 `standards.readonly.noProject`） |
+| `switch.opt.standards.readonly-paths` | B2 | 见下 | 热生效 | Ant 风格、逗号分隔，覆盖默认清单 |
+| `switch.opt.dtpMeosCallCounter` | B3 | false | 热生效 | dtp-meos 调我方的 5 个接口（`/demand/config/listConfigsByInstance`、`/demand/listInstanceConfig`、`/outside/intervention/taskConfigList`、`/external/demand/config/listConfigResultsByInstance`、`/valueSelection/currentApplyConfig`）按（接口, 项目, 调用方 browser/service）计数：Redis hash `apc:opt:dtpMeosCall:{yyyyMMdd}`（保留 40 天）+ `apc:opt:dtpMeosCall:last`（最近调用时间）；`GET /standards/dtpMeosCalls?days=7` 查看。接口本身不改 |
+| `switch.opt.standardsDisplay` | B4 | false | 热生效 | `POST /standards/display/computeResult`（按日，入参 instanceIds、instanceGroup、instanceType、standardDate 或 beginDate/endDate、standardTarget = TDB/CO2/PRESS）和 `POST /standards/display/computeResultDetail`（按时间点，入参 standardTime 或 beginTime/endTime、standardType）转查 dtp-meos `/calculate/listStandardComputeResultService`、`/calculate/listStandardComputeResultDetailService`，返回其 data 原样。projectId 以请求头为准。关闭时返回 A0403“未开启”。不依赖 mpc-common-edge |
+
+B2 默认只读清单（与前端 meos-control-web `src/apis/standards.js` 一致）：`/demand/addInstanceConfig`、`/demand/addDemandConfig`、`/demand/clearSettings`、`/demand/referenceSettings`、`/demand/copyConfigs`、`/demand/blacklist/addRules`、`/demand/instanceGroup/add`、`/demand/instanceGroup/edit`、`/demand/instanceGroup/copy`、`/demand/template/applyTemplateByDate`、`/demand/template/clearCalendar`、`/valueSelection/saveConfig`、`/shellConfig/mpcAgentCfg`，以及 2026-11-19 追加的壳配置 `/shellConfig/save`、`/shellConfig/changeAlgorithmConfig`、`/shellConfig/changeLtsmConfig` 和干预 `/interventionTaskConfig/saveOrUpdate`、`/interventionTaskConfig/remove`、`/intervention/config/saveOrUpdate`（Blake 11-19 定：安防/通风/排油烟需求、干预任务、壳配置都由运行标准服务和 dtp-meos 负责；前三类需求经 `/demand/addDemandConfig` 等通用接口写入，已在清单内）。其中需求类多数只在云端包存在，边缘包实际命中的是价值选择、MPC 智能体、壳配置和干预这几类。照明场景（`/demand/scene/*`）不在清单内。解除干预 `/intervention/release`、手自动切换等手动控制操作不拦（B5 改走 dtp-meos 接口，待 dtp-meos 提供）。
+
+B6 表归属见 [table-ownership.md](table-ownership.md)。
+
+建议的打开顺序：B3（先攒调用证据）→ B1（核对 `/standards/mode` 与 dtp-meos 实际行为一致）→ B4（前端 W3 联调）→ B2（新服务联调通过、项目正式切换时）。
+
 ## B0 试点站点建议的 Nacos 配置
 
 ```yaml
@@ -108,3 +128,7 @@ management:
 | `feign.page.limitedFirst` / `feign.page.noTotalFallback` | B10 | 首发按 limit 分页的次数、因下游无 total 退回原逻辑的次数（后者始终计数） |
 | `twinWrite.skipped` / `twinWrite.written` / `twinWrite.fail` | B8 | 壳配置同步跳过、实际写入、写入失败的调用数（fail 始终计数）。验收：配置不变时每轮 written 接近 0 |
 | `lighting.sendSkipped` | B8 | 照明反馈调节未重发的指令数 |
+| `standards.mode.load` / `standards.mode.error` | 运行标准 B1 | 判定查库次数、查库失败次数（error 始终计数） |
+| `standards.readonly.blocked` / `standards.readonly.noProject` | 运行标准 B2 | 被拦截的配置写入次数、取不到项目放行的次数（始终计数） |
+| `dtpMeosCall.<接口>` / `dtpMeosCall.error` | 运行标准 B3 | 5 个接口每分钟调用次数、计数写 Redis 失败次数（始终计数） |
+| `standards.display.result` / `standards.display.detail` | 运行标准 B4 | 转查 dtp-meos 解析结果的次数 |
