@@ -10,6 +10,7 @@ import com.persagy.apccontrol.basic.outside.feign.model.param.rwd.common.DtpRwdP
 import com.persagy.apccontrol.basic.outside.feign.service.MidPermissionClientService;
 import com.persagy.apccontrol.basic.outside.feign.wrapper.DtpRwdClientPageWrapper;
 import com.persagy.apccontrol.basic.utils.DMPResultUtil;
+import com.persagy.framework.common.context.ContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,12 +131,24 @@ public class OptProjectInfo {
         if (!OptSwitch.on(OptSwitch.PROJECT_FROM_RWD) || projectCfg == null || StringUtils.isBlank(projectCfg.getProjectId())) {
             return;
         }
-        String projectId = projectCfg.getProjectId();
+        String projectId = projectCfg.getProjectId().trim();
+        String groupCode = StringUtils.trimToNull(projectCfg.getGroupCode());
         Thread t = new Thread(() -> {
             try {
+                // 预读线程没有请求上下文，getProject 从 ContextUtil 取 groupCode 会是空，dtp-rwd 返回 A0400。
+                // 这里用本站点配置的 project.groupcode / project.id 补上。
+                if (groupCode != null) {
+                    ContextUtil.setGroupCode(groupCode);
+                    ContextUtil.setTenant(groupCode);
+                } else {
+                    log.warn("[opt-project] 未配置 project.groupcode，预读可能失败 projectId={}", projectId);
+                }
+                ContextUtil.setProjectId(projectId);
                 midPermissionClientService.getProject(false, false, projectId);
             } catch (RuntimeException e) {
                 log.warn("[opt-project] 预读项目信息失败 projectId={}：{}", projectId, e.toString());
+            } finally {
+                ContextUtil.unloadContext();
             }
         }, "opt-project-preload");
         t.setDaemon(true);
