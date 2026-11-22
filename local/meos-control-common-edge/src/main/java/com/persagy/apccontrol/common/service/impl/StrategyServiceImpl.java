@@ -58,6 +58,7 @@ import com.persagy.apccontrol.basic.utils.ParameterCheck;
 import com.persagy.apccontrol.common.model.dto.CommandExecuteDTO;
 import com.persagy.apccontrol.common.model.param.strategy.StrategyQueryParam;
 import com.persagy.apccontrol.common.model.param.strategy.StrategyTypeChangeInsertParam;
+import com.persagy.apccontrol.basic.opt.OptEdgeScope;
 import com.persagy.apccontrol.common.outside.feign.AlgorithmChillerPlantFeignClient;
 import com.persagy.apccontrol.common.service.DataBoardService;
 import com.persagy.apccontrol.common.service.IotDataCacheService;
@@ -441,6 +442,10 @@ public class StrategyServiceImpl implements StrategyService {
 
     @Override
     public Boolean fetchSupportAi(StrategyQueryParam param) {
+        if (OptEdgeScope.noAiAu()) {
+            // opt（switch.opt.edgeNoAiAu）：边缘盒子无 ai-au
+            return false;
+        }
         try {
             CustomerResponse<Boolean> res = algorithmChillerPlantFeignClient.modelEvalResult(JSONObject.parseObject(JSON.toJSONString(param)));
             if (res != null && res.getContent() != null) {

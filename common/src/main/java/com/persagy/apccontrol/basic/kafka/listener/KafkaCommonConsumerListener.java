@@ -45,7 +45,9 @@ public class KafkaCommonConsumerListener implements LogComponent {
     @KafkaListener(topics = "${kafka.topic.yiheng-cloud-business.topic:yiheng-cloud-business-topic}",
             groupId = "#{T(com.persagy.apccontrol.basic.kafka.listener.GroupIdGenerator).generateId()}-danger-instance-tree",
             properties = {AUTO_OFFSET_RESET_CONFIG + "=latest"},
-            id = CommonConst.APPLICATION_NAME + "-danger-instance-tree")
+            id = CommonConst.APPLICATION_NAME + "-danger-instance-tree",
+            // opt（switch.opt.edgeNoYiheng=true）：边缘盒子不启动该监听，避免订阅不存在的主题（需重启生效）
+            autoStartup = "#{'${switch.opt.edgeNoYiheng:false}'.trim() != 'true'}")
     public void instanceTreeMonitoringSituationChange(ConsumerRecord<String, String> output) {
         String message = output.value();
 

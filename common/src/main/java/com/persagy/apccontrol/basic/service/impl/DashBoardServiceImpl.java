@@ -33,6 +33,7 @@ import com.persagy.apccontrol.basic.outside.dto.DmpResult;
 import com.persagy.apccontrol.basic.outside.dto.EnergyDataResponse;
 import com.persagy.apccontrol.basic.outside.dto.ObjectsExistRule;
 import com.persagy.apccontrol.basic.outside.feign.client.DtpRwdClient;
+import com.persagy.apccontrol.basic.opt.OptEdgeScope;
 import com.persagy.apccontrol.basic.outside.feign.client.EnergyDdpServerClient;
 import com.persagy.apccontrol.basic.outside.feign.model.param.rwd.DtpRwdObjectQueryParam;
 import com.persagy.apccontrol.basic.outside.feign.model.param.rwd.DtpRwdRelationQueryParam;
@@ -100,9 +101,12 @@ public class DashBoardServiceImpl implements DashBoardService {
         jsonObject.put("projectId", param.getProjectId());
 
         //查询后评估报告的最近一条配置
-        String listCustomerResponse = energyDdpServerClient.queryByProjectId(ContextUtil.getGroupCode(), jsonObject);
-
-        JSONArray energyDdpList = ((JSONObject) JSONObject.parse(listCustomerResponse)).getJSONArray("Content");
+        JSONArray energyDdpList = null;
+        if (!OptEdgeScope.noEnergyDdp()) {
+            String listCustomerResponse = energyDdpServerClient.queryByProjectId(ContextUtil.getGroupCode(), jsonObject);
+            energyDdpList = ((JSONObject) JSONObject.parse(listCustomerResponse)).getJSONArray("Content");
+        }
+        // opt（switch.opt.edgeNoEnergyDdp）：边缘盒子无 energy-ddp，等级区间为空，效率值照常计算
 
         JSONArray efficiencyConfigList = null;
 

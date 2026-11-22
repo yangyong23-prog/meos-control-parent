@@ -1,5 +1,6 @@
 package com.persagy.apccontrol.basic.outside.feign.service.impl;
 
+import com.persagy.apccontrol.basic.opt.OptEdgeScope;
 import com.persagy.apccontrol.basic.outside.feign.client.DangerEventClient;
 import com.persagy.apccontrol.basic.outside.feign.model.param.exceptionevent.DangerEventQueryParam;
 import com.persagy.apccontrol.basic.outside.feign.model.param.exceptionevent.DangerInstanceTreeQueryParam;
@@ -36,6 +37,10 @@ public class ExceptionEventClientServiceImpl implements ExceptionEventClientServ
 
     @Override
     public List<DangerEventInstance> listDangerEvent(@NonNull DangerEventQueryParam param) throws FeignException {
+        if (OptEdgeScope.noYiheng()) {
+            // opt（switch.opt.edgeNoYiheng）：边缘盒子已无 yiheng 风险事件服务
+            return new ArrayList<>();
+        }
 
         return query(false, ContextUtil.getGroupCode(), ContextUtil.getProjectId(), "", param,
                 () -> dangerEventClientPageWrapper.listDangerEvents(param), ArrayList::new);
@@ -43,6 +48,9 @@ public class ExceptionEventClientServiceImpl implements ExceptionEventClientServ
 
     @Override
     public List<DangerEventInstance> listDangerEventTest(@NonNull DangerEventQueryParam param) throws FeignException {
+        if (OptEdgeScope.noYiheng()) {
+            return new ArrayList<>();
+        }
 
         return query(false, ContextUtil.getGroupCode(), ContextUtil.getProjectId(), "", param,
                 () -> dangerEventClient.listDangerEvents(param), ArrayList::new);
@@ -50,6 +58,9 @@ public class ExceptionEventClientServiceImpl implements ExceptionEventClientServ
 
     @Override
     public List<DangerInstanceTreeResponse> listDangerInstanceTree(DangerInstanceTreeQueryParam param) {
+        if (OptEdgeScope.noYiheng()) {
+            return new ArrayList<>();
+        }
         return query(false, "查询风险事件实例树", param,
                 () -> exceptionEventClientPageWrapper.listDangerInstanceTree(param), ArrayList::new);
     }
