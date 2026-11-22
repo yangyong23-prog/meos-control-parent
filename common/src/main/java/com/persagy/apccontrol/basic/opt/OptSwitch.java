@@ -80,6 +80,14 @@ public class OptSwitch {
     public static final String PROJECT_FROM_RWD = "projectFromRwd";
     /** B15：操作人姓名由前端请求头带来并按 userId 记下，不再向 mid-permission 反查 */
     public static final String OPERATOR_NAME_LOCAL = "operatorNameLocal";
+    /** 运行标准过渡 B1：按项目判定是否已切到新运行标准（与 dtp-meos 的 STANDRAD_CONFIG 口径一致），关闭时恒为旧模式 */
+    public static final String STANDARDS_MODE = "standardsMode";
+    /** 运行标准过渡 B2：已切项目的配置写接口只读（依赖 standardsMode） */
+    public static final String STANDARDS_READONLY = "standardsReadonly";
+    /** 运行标准过渡 B3：dtp-meos 调我方的 5 个接口按项目、调用方计数 */
+    public static final String DTP_MEOS_CALL_COUNTER = "dtpMeosCallCounter";
+    /** 运行标准过渡 B4：监测页标准值经我方转查 dtp-meos 的运行标准解析结果 */
+    public static final String STANDARDS_DISPLAY = "standardsDisplay";
 
     private static volatile Environment environment;
 
