@@ -10,6 +10,7 @@ import com.persagy.apccontrol.service.handler.RunningLogHandle;
 import com.persagy.apccontrol.websocket.handler.ComputeIotDataHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -34,6 +35,7 @@ public class PushIOTEventListener {
     private LocalRedisCacheHandler localRedisCacheHandler;
 
     /** opt 分支 B1（switch.opt.ctrlFrameOrderFix）：16.9 完成帧先到时丢弃后到的进行中帧 */
+    @Lazy
     @Autowired
     private OptCtrlFrameOrderGuard optCtrlFrameOrderGuard;
     
