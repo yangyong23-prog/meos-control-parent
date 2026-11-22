@@ -2,6 +2,7 @@ package com.persagy.apccontrol.basic.task;
 
 import com.alibaba.ttl.TtlRunnable;
 import com.persagy.apccontrol.basic.config.cache.LocalContextStorage;
+import com.persagy.framework.common.context.ContextUtil;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.lang.NonNull;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -70,16 +71,51 @@ public class BusinessThreadPoolExecutor {
                     TTL_EXEXUTOR.setQueueCapacity(0);
                     TTL_EXEXUTOR.setThreadNamePrefix("ttl-thread-pool-");
                     TTL_EXEXUTOR.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-                    TTL_EXEXUTOR.setTaskDecorator(runnable -> {
-                        Runnable decorated = TtlRunnable.get(runnable);
-                        return Objects.requireNonNull(decorated);
-                    });
+                    TTL_EXEXUTOR.setTaskDecorator(BusinessThreadPoolExecutor::decorateWithContext);
                     TTL_EXEXUTOR.initialize();
                 }
             }
         }
 
         return TTL_EXEXUTOR;
+    }
+
+    /**
+     * 把提交线程的租户上下文（tenant / groupCode / projectId）带进异步任务。
+     * <p>
+     * ContextUtil 不是 TransmittableThreadLocal，仅靠 TtlRunnable 传不过去：
+     * 异步任务里租户为空时，SCHEMA 多租户拦截器不给表名加集团前缀，SQL 会落到全局库
+     * （例如缓存热刷新查 cache_info_code_template 报 meos_control 库表不存在）。
+     * 与 {@code AsyncTaskConfigurer#taskDecorator} 的做法一致；区别是结束后恢复执行线程原有上下文，
+     * 因为 CallerRunsPolicy 下任务可能直接在提交线程里执行，不能把调用方的上下文清掉。
+     *
+     * @param runnable 原始任务
+     * @return 带上下文的任务
+     */
+    static Runnable decorateWithContext(Runnable runnable) {
+        String tenant = ContextUtil.getTenant();
+        String groupCode = ContextUtil.getGroupCode();
+        String projectId = ContextUtil.getProjectId();
+        Runnable withContext = () -> {
+            String prevTenant = ContextUtil.getTenant();
+            String prevGroupCode = ContextUtil.getGroupCode();
+            String prevProjectId = ContextUtil.getProjectId();
+            ContextUtil.setTenant(tenant);
+            ContextUtil.setGroupCode(groupCode);
+            ContextUtil.setProjectId(projectId);
+            try {
+                runnable.run();
+            } finally {
+                if (prevTenant == null && prevGroupCode == null && prevProjectId == null) {
+                    ContextUtil.remove();
+                } else {
+                    ContextUtil.setTenant(prevTenant);
+                    ContextUtil.setGroupCode(prevGroupCode);
+                    ContextUtil.setProjectId(prevProjectId);
+                }
+            }
+        };
+        return Objects.requireNonNull(TtlRunnable.get(withContext));
     }
 
     public static <T> List<T> getResult(List<CompletableFuture<T>> futures) {
