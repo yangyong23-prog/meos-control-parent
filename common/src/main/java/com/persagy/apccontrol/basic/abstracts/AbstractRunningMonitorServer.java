@@ -118,6 +118,7 @@ public abstract class AbstractRunningMonitorServer {
     InfoCodeSetExtendService infoCodeSetExtendService;
 
     /** opt B10：按 id 取空间（switch.opt.monitorSpaceById） */
+    @Lazy
     @Autowired(required = false)
     protected OptRwdObjectsById optRwdObjectsById;
 

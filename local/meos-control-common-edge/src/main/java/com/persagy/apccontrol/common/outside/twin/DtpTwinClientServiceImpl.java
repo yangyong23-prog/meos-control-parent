@@ -30,6 +30,7 @@ import com.persagy.framework.common.enums.ResponseCode;
 import com.persagy.framework.common.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -58,10 +59,12 @@ public class DtpTwinClientServiceImpl implements DtpTwinClientService, BaseFeign
     private DtpTwinClient dtpTwinClient;
 
     /** opt 分支 B2（switch.opt.realtimeCacheRead）：当前值查询先读共享缓存 */
+    @Lazy
     @Resource
     private OptRealtimeTwinReader optRealtimeTwinReader;
 
     /** opt 分支 B8：壳配置定时同步只写差量 */
+    @Lazy
     @Resource
     private OptTwinWriteGuard optTwinWriteGuard;
 

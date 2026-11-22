@@ -15,6 +15,7 @@ import com.persagy.framework.common.util.json.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -45,6 +46,7 @@ public class PaasDatatransferServer {
     private PaasDatatransferClient paasDatatransferClient;
 
     /** opt 分支 B1：switch.opt.runningLogQueue 打开时运行日志改为入本地队列异步合批发送 */
+    @Lazy
     @Autowired(required = false)
     private OptRunningLogUploader optRunningLogUploader;
 

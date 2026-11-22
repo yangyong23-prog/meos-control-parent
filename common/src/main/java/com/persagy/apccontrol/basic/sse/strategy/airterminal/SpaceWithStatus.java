@@ -9,6 +9,7 @@ import com.persagy.apccontrol.basic.sse.SseEmitterEventEnum;
 import com.persagy.apccontrol.basic.sse.SseEmitterObject;
 import com.persagy.apccontrol.basic.sse.SseSubscribeParam;
 import com.persagy.apccontrol.basic.sse.strategy.AbstractSseEventStrategyTemplate;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -26,6 +27,7 @@ public class SpaceWithStatus extends AbstractSseEventStrategyTemplate {
     @Resource
     AirTerminalService airportService;
 
+    @Lazy
     @Resource
     OptSpaceWithStatusCacheReader optSpaceWithStatusCacheReader;
 
