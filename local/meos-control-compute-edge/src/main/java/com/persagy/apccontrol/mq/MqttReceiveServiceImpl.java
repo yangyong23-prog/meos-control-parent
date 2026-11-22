@@ -10,6 +10,7 @@ import com.persagy.apccontrol.basic.model.dto.twin.BusinessExternalPushDTO;
 import com.persagy.apccontrol.basic.model.enumtype.EnumIotDataType;
 import com.persagy.apccontrol.basic.model.enumtype.websocket.WebSocketTypeEnum;
 import com.persagy.apccontrol.basic.model.vo.FeedbackInfoMsgMqttVO;
+import com.persagy.apccontrol.basic.opt.OptEdgeScope;
 import com.persagy.apccontrol.basic.opt.OptMetrics;
 import com.persagy.apccontrol.basic.opt.OptSwitch;
 import com.persagy.apccontrol.opt.OptMqttPayloads;
@@ -141,13 +142,18 @@ public class MqttReceiveServiceImpl implements MqttReceiveService {
 
         // 异常事件
         if (StringUtils.equals(eventChange, receivedTopic)) {
-            eventChange(message);
+            // opt（switch.opt.edgeNoYiheng）：边缘盒子无 yiheng，异常/风险事件推送不处理
+            if (!OptEdgeScope.noYiheng()) {
+                eventChange(message);
+            }
             return;
         }
 
         // 风险事件
         if (StringUtils.equals(dangerEvent, receivedTopic)) {
-            dangerEvent(message);
+            if (!OptEdgeScope.noYiheng()) {
+                dangerEvent(message);
+            }
             return;
         }
 
