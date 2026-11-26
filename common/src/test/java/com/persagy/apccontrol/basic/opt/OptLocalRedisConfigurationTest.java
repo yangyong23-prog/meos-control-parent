@@ -50,6 +50,9 @@ public class OptLocalRedisConfigurationTest {
             Assertions.assertTrue(ctx.getBeansOfType(LettuceConnectionFactory.class).isEmpty());
             Assertions.assertEquals("OptLocalRedissonClient", ctx.getBean(RedissonClient.class).toString());
             Assertions.assertEquals(ctx.getBean(RedissonClient.class), ctx.getBean(RedisLockUtil.class).getRedissonClient());
+            // 4.91 实测：Redisson starter 的 redissonReactive / redissonRx 会被实例化（@Lazy 也会被依赖拉起），不能抛异常
+            Assertions.assertNotNull(ctx.getBean(org.redisson.api.RedissonReactiveClient.class));
+            Assertions.assertNotNull(ctx.getBean(org.redisson.api.RedissonRxClient.class));
             RedisCacheUtil util = ctx.getBean(RedisCacheUtil.class);
             util.set("apc:info_code_config_new:C:I", "cfg");
             Assertions.assertEquals("cfg", util.get("apc:info_code_config_new:C:I"));
