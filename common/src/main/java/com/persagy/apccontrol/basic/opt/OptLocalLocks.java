@@ -206,6 +206,10 @@ public final class OptLocalLocks {
                     return shutdown;
                 case "getId":
                     return "opt-local";
+                case "reactive":
+                case "rxJava":
+                    // Redisson starter 会用它们注册 redissonReactive / redissonRx Bean；业务未使用，给一个调用即报错的占位
+                    return unusedClient(method.getReturnType());
                 case "equals":
                     return proxy == args[0];
                 case "hashCode":
@@ -217,6 +221,29 @@ public final class OptLocalLocks {
                             "本地 Redis（switch.opt.localRedis）的 RedissonClient 只支持锁，未实现: " + method.getName());
             }
         }
+    }
+
+    /** reactive()/rxJava() 的占位客户端：能注册成 Bean、能关闭，调用任何业务方法都抛异常 */
+    private static Object unusedClient(Class<?> type) {
+        return Proxy.newProxyInstance(OptLocalLocks.class.getClassLoader(), new Class<?>[]{type},
+                (proxy, method, args) -> {
+                    switch (method.getName()) {
+                        case "shutdown":
+                            return null;
+                        case "isShutdown":
+                        case "isShuttingDown":
+                            return false;
+                        case "equals":
+                            return proxy == args[0];
+                        case "hashCode":
+                            return System.identityHashCode(proxy);
+                        case "toString":
+                            return "OptLocalUnused" + type.getSimpleName();
+                        default:
+                            throw new UnsupportedOperationException("本地 Redis（switch.opt.localRedis）未提供 "
+                                    + type.getSimpleName() + "." + method.getName());
+                    }
+                });
     }
 
     private final class LockHandler implements InvocationHandler {
