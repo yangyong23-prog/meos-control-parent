@@ -92,6 +92,12 @@ public class OptSwitch {
     /** 运行标准过渡 B4：监测页标准值经我方转查 dtp-meos 的运行标准解析结果 */
     public static final String STANDARDS_DISPLAY = "standardsDisplay";
 
+    /**
+     * 去 Redis：meos-control 私有数据改存进程内存、Redisson 锁改 JVM 锁，与 dtp-meos 共享的键仍走 Redis。
+     * 启动时生效（改后需重启），只允许边缘服务打开。见 {@link OptLocalRedisConfiguration}。
+     */
+    public static final String LOCAL_REDIS = "localRedis";
+
     private static volatile Environment environment;
 
     public OptSwitch(Environment environment) {
