@@ -22,6 +22,7 @@ import com.persagy.apccontrol.basic.outside.feign.model.param.rwd.common.DtpRwdC
 import com.persagy.apccontrol.basic.outside.feign.service.DtpTwinClientService;
 import com.persagy.apccontrol.basic.utils.BeanUtil;
 import com.persagy.apccontrol.basic.utils.i18n.LocaleMessageUtil;
+import com.persagy.apccontrol.common.opt.OptHubTwinReader;
 import com.persagy.apccontrol.common.opt.OptRealtimeTwinReader;
 import com.persagy.apccontrol.common.opt.OptTwinWriteGuard;
 import com.persagy.apccontrol.common.outside.feign.DtpTwinClient;
@@ -63,6 +64,11 @@ public class DtpTwinClientServiceImpl implements DtpTwinClientService, BaseFeign
     @Resource
     private OptRealtimeTwinReader optRealtimeTwinReader;
 
+    /** opt 孪生数据源切换（switch.opt.twinSource）：当前值改读 meos-hub */
+    @Lazy
+    @Resource
+    private OptHubTwinReader optHubTwinReader;
+
     /** opt 分支 B8：壳配置定时同步只写差量 */
     @Lazy
     @Resource
@@ -94,7 +100,12 @@ public class DtpTwinClientServiceImpl implements DtpTwinClientService, BaseFeign
     public List<DtpTwinIotData> queryTwinDataOnMoment(String groupCode, String projectId, String userId, QueryTwinDataDTO queryTwinDataDTO) {
         if (optRealtimeTwinReader.handles(queryTwinDataDTO)) {
             List<DtpTwinIotData> content = optRealtimeTwinReader.query(queryTwinDataDTO,
-                    dto -> queryTwinDataOnMomentFromTwin(groupCode, projectId, userId, dto));
+                    dto -> queryTwinDataOnMomentFromSource(groupCode, projectId, userId, dto));
+            handleTwinDataOnMoment(content);
+            return content;
+        }
+        if (optHubTwinReader.handles(queryTwinDataDTO)) {
+            List<DtpTwinIotData> content = queryTwinDataOnMomentFromSource(groupCode, projectId, userId, queryTwinDataDTO);
             handleTwinDataOnMoment(content);
             return content;
         }
@@ -110,6 +121,21 @@ public class DtpTwinClientServiceImpl implements DtpTwinClientService, BaseFeign
             throw new BusinessException(ResponseCode.USER_ERROR_A0400.getCode(), LocaleMessageUtil.getMessage("key_0f41958a07e54e9d8e64a0a967358e71"));
         }
         return Lists.newArrayList();
+    }
+
+    /**
+     * opt 孪生数据源切换：按 switch.opt.twinSource 取当前值（twin 原样调 dtp-twin；verify 返回 dtp-twin 并与 meos-hub 比对；
+     * hub 改读 meos-hub）。meos-hub 调用失败与 dtp-twin 失败同样抛业务异常。
+     */
+    private List<DtpTwinIotData> queryTwinDataOnMomentFromSource(String groupCode, String projectId, String userId, QueryTwinDataDTO queryTwinDataDTO) {
+        try {
+            return optHubTwinReader.fetch(queryTwinDataDTO, dto -> queryTwinDataOnMomentFromTwin(groupCode, projectId, userId, dto));
+        } catch (BusinessException e) {
+            throw e;
+        } catch (Exception e) {
+            log.error("[opt] 查询 meos-hub 孪生当前值失败", e);
+            throw new BusinessException(ResponseCode.USER_ERROR_A0400.getCode(), LocaleMessageUtil.getMessage("key_0f41958a07e54e9d8e64a0a967358e71"));
+        }
     }
 
     /**
