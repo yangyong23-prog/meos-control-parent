@@ -93,6 +93,12 @@ public class OptSwitch {
     public static final String STANDARDS_DISPLAY = "standardsDisplay";
 
     /**
+     * 孪生数据源切换：当前值查询与实时推送从 dtp-twin 改读 meos-hub，三态 twin（默认）/ verify / hub。
+     * 只在边缘模块接入，热生效。见 docs/opt/hub-twin.md。
+     */
+    public static final String TWIN_SOURCE = "twinSource";
+
+    /**
      * 去 Redis：meos-control 私有数据改存进程内存、Redisson 锁改 JVM 锁，与 dtp-meos 共享的键仍走 Redis。
      * 启动时生效（改后需重启），只允许边缘服务打开。见 {@link OptLocalRedisConfiguration}。
      */

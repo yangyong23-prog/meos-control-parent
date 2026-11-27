@@ -13,6 +13,7 @@ import com.persagy.apccontrol.basic.model.vo.FeedbackInfoMsgMqttVO;
 import com.persagy.apccontrol.basic.opt.OptEdgeScope;
 import com.persagy.apccontrol.basic.opt.OptMetrics;
 import com.persagy.apccontrol.basic.opt.OptSwitch;
+import com.persagy.apccontrol.opt.OptHubTwinMqtt;
 import com.persagy.apccontrol.opt.OptMqttPayloads;
 import com.persagy.apccontrol.opt.OptMqttStatus;
 import com.persagy.apccontrol.basic.outside.dto.dangerevent.DangerEventMsgDTO;
@@ -81,6 +82,14 @@ public class MqttReceiveServiceImpl implements MqttReceiveService {
     /** opt 分支 B3：Twin 按点订阅专用主题（twin/compute_meos），默认未配置 */
     @Value("${mqtt.topic.meos-compute-point.name:}")
     private String computePoint;
+
+    /** opt 孪生数据源切换：meos-hub 盒内业务 MQTT 出口主题（hub.exit.mqtt-topic），默认未配置 */
+    @Value("${mqtt.topic.meos-hub-twin.name:}")
+    private String hubTwin;
+
+    @Lazy
+    @Resource
+    OptHubTwinMqtt optHubTwinMqtt;
 
 
     /**
@@ -160,6 +169,19 @@ public class MqttReceiveServiceImpl implements MqttReceiveService {
         //控制服务上报的日志信息
         if (StringUtils.equals(dtpMeosServerEdge, receivedTopic)) {
             dtpMeosServerEdge(message);
+            return;
+        }
+
+        // opt 孪生数据源切换：meos-hub 孪生推送
+        if (StringUtils.isNotEmpty(hubTwin) && StringUtils.equals(hubTwin, receivedTopic)) {
+            hubTwinMqtt(message);
+            return;
+        }
+        // 切到 meos-hub 且已接入其推送时，dtp-twin 反馈值主题不再处理，避免两个数据源交替覆盖同一点
+        if (StringUtils.isNotEmpty(hubTwin) && OptHubTwinMqtt.hubPrimary()
+                && (StringUtils.equals(compute, receivedTopic)
+                || (StringUtils.isNotEmpty(computePoint) && StringUtils.equals(computePoint, receivedTopic)))) {
+            OptMetrics.inc("mqtt.recv.twinSkipped");
             return;
         }
 
@@ -289,6 +311,28 @@ public class MqttReceiveServiceImpl implements MqttReceiveService {
             return;
         }
         twinMqttExpense(parsed, message, compute);
+    }
+
+    /**
+     * opt 孪生数据源切换：meos-hub 一条报文拆成多条反馈值。开关为 hub 时写共享缓存并按反馈值走完整处理；
+     * 其余模式只计数，不影响 dtp-twin 数据。
+     */
+    private void hubTwinMqtt(Message<String> message) {
+        List<FeedbackInfoMsgMqttVO> list = optHubTwinMqtt.parse(message.getPayload());
+        OptMetrics.inc("mqtt.recv.hub");
+        if (!OptHubTwinMqtt.hubPrimary()) {
+            return;
+        }
+        for (FeedbackInfoMsgMqttVO vo : list) {
+            vo.setProjectId(projectCfg.getProjectId());
+            vo.setGroupCode(projectCfg.getGroupCode());
+            optRealtimeMqttWriter.onTwinFeedback(vo);
+            if (!OptHubTwinMqtt.usable(vo)) {
+                OptMetrics.inc("mqtt.hub.invalidValue");
+                continue;
+            }
+            twinMqttExpense(vo, message, compute);
+        }
     }
 
     /**
