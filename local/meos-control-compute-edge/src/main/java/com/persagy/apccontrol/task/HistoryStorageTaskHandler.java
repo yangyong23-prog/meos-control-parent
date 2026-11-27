@@ -7,6 +7,7 @@ import com.persagy.apccontrol.basic.model.dto.rwd.DtpRwdObjectDTO;
 import com.persagy.apccontrol.basic.model.entity.HistoryStorageResult;
 import com.persagy.apccontrol.basic.model.enumtype.dtprwd.DtpRwdClassCodeEnum;
 import com.persagy.apccontrol.basic.model.enumtype.system.DataTypeEnum;
+import com.persagy.apccontrol.basic.opt.OptEdgeScope;
 import com.persagy.apccontrol.basic.outside.enums.StorageTagEnum;
 import com.persagy.apccontrol.basic.outside.feign.model.param.SyncHistoryStorageParam;
 import com.persagy.apccontrol.basic.outside.feign.model.param.rwd.DtpRwdObjectQueryParam;
@@ -52,6 +53,11 @@ public class HistoryStorageTaskHandler implements LogComponent {
      */
     @XxlJob("historyStorageHandler")
     public void execute(LocalDate syncDate) {
+        if (OptEdgeScope.noAiAu()) {
+            // 边缘盒子不部署 ai-au，算法服务不可达，直接跳过（任务也不再自动注册，见 InitXxlJob）
+            logProjectInstance().info("switch.opt.edgeNoAiAu 已开启，跳过获取蓄冷蓄热标签");
+            return;
+        }
         ContextUtil.setGroupCode(projectCfg.getGroupCode());
         ContextUtil.setTenant(projectCfg.getGroupCode());
         ContextUtil.setProjectId(projectCfg.getProjectId());

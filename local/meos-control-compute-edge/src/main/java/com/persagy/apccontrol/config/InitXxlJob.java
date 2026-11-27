@@ -4,6 +4,7 @@ import cn.hutool.core.collection.ListUtil;
 import com.persagy.apccontrol.basic.config.xxljob.XxlJobConfig;
 import com.persagy.apccontrol.basic.config.xxljob.XxlJobService;
 import com.persagy.apccontrol.basic.config.xxljob.XxlJobVo;
+import com.persagy.apccontrol.basic.opt.OptEdgeScope;
 import com.persagy.apccontrol.basic.utils.i18n.LocaleMessageUtil;
 import com.persagy.apccontrol.common.config.SystemInitService;
 import com.xxl.job.core.enums.ExecutorBlockStrategyEnum;
@@ -58,8 +59,12 @@ public class InitXxlJob implements SystemInitService {
 
         //重新创建任务
         List<XxlJobVo> list = ListUtil.toList();
-        list.add(new XxlJobVo(LocaleMessageUtil.getMessage("key_7050bf83c2e24116a819c1bc5795282e"), "0 5 0 * * ?", "historyStorageHandler"
-                , ExecutorBlockStrategyEnum.DISCARD_LATER, ""));
+        // 蓄冷蓄热标签依赖 ai-au 算法服务；边缘盒子不部署 ai-au（switch.opt.edgeNoAiAu=true）时不注册，
+        // 已存在的任务会被下面的 removeJob(list) 当作“不在列表中”删除
+        if (!OptEdgeScope.noAiAu()) {
+            list.add(new XxlJobVo(LocaleMessageUtil.getMessage("key_7050bf83c2e24116a819c1bc5795282e"), "0 5 0 * * ?", "historyStorageHandler"
+                    , ExecutorBlockStrategyEnum.DISCARD_LATER, ""));
+        }
         // rcRunStatus补偿任务，每30秒执行一次
         list.add(new XxlJobVo(LocaleMessageUtil.getMessage("key_rc_runstatus_compensation_task"), "0/30 * * * * ?", "rcRunStatusCompensationHandler"
                 , ExecutorBlockStrategyEnum.DISCARD_LATER, ""));
