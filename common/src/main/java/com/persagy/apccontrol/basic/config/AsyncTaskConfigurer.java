@@ -59,13 +59,17 @@ public class AsyncTaskConfigurer extends AsyncConfigurerSupport {
         return runnable -> {
             String tenant = ContextUtil.getTenant();
             String groupCode = ContextUtil.getGroupCode();
-            return Objects.requireNonNull(TtlRunnable.get(() -> {
-                ContextUtil.setTenant(tenant);
-                ContextUtil.setGroupCode(groupCode);
-                try {
-                    runnable.run();
-                } finally {
-                    ContextUtil.remove();
+            // 用具名包装类（而不是 lambda），opt 拒绝策略需要拆包看到原始任务，判断是否有人在等它完成
+            return Objects.requireNonNull(TtlRunnable.get(new OptRejectedExecutionHandler.WrappedRunnable(runnable) {
+                @Override
+                public void run() {
+                    ContextUtil.setTenant(tenant);
+                    ContextUtil.setGroupCode(groupCode);
+                    try {
+                        runnable.run();
+                    } finally {
+                        ContextUtil.remove();
+                    }
                 }
             }));
         };
