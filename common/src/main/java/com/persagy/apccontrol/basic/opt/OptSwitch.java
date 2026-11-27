@@ -78,6 +78,9 @@ public class OptSwitch {
 
     /** B15：项目名、城市编码改读 dtp-rwd 项目对象并缓存，读不到再调一次 mid-permission getProject */
     public static final String PROJECT_FROM_RWD = "projectFromRwd";
+
+    /** 边缘前端原先直连云端的天气、电价、碳排、工作历日期标签改由本服务转发（/opt/edgeCloudProxy/*） */
+    public static final String EDGE_CLOUD_PROXY = "edgeCloudProxy";
     /** B15：操作人姓名由前端请求头带来并按 userId 记下，不再向 mid-permission 反查 */
     public static final String OPERATOR_NAME_LOCAL = "operatorNameLocal";
     /** 运行标准过渡 B1：按项目判定是否已切到新运行标准（与 dtp-meos 的 STANDRAD_CONFIG 口径一致），关闭时恒为旧模式 */
